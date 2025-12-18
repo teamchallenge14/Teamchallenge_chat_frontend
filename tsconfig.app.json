@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    /* Core project settings */
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "useDefineForClassFields": true, // Recommended for modern TS and class fields
+    "jsx": "react-jsx", // JSX transform for React
+    "noEmit": true, // Vite handles JS output instead of TypeScript
+
+    /* Bundler-related config (Vite) */
+    "module": "ESNext",
+    "moduleResolution": "bundler", // Best option for Vite in 2024–2025
+    "allowImportingTsExtensions": true, // Allows importing .ts/.tsx explicitly
+    "verbatimModuleSyntax": true, // Enforces modern import/export behavior
+
+    /* Helper features */
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true, // Allows 'import React from "react"'
+    "skipLibCheck": true, // Speeds up build by skipping type checks in node_modules
+    "types": ["vite/client"], // Vite-specific type definitions
+
+    /* Path aliases (src → @/) */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    /* Type safety & quality checks */
+    "strict": true, // Enables all strict checks
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true, // Extra safety for side-effect imports
+
+    /* Recommended extras */
+    "forceConsistentCasingInFileNames": true // Prevents case mismatch issues on different OS
+  },
+
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
