@@ -3,5 +3,19 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"], // root alias
+      "@app/*": ["./src/app/*"], // app alias
+      "@components/*": ["./src/components/*"], // components alias
+      "@pages/*": ["./src/pages/*"], // pages alias
+      "@widgets/*": ["./src/widgets/*"], // widgets alias
+      "@features/*": ["./src/features/*"], // features alias
+      "@entities/*": ["./src/entities/*"], // entities alias
+      "@shared/*": ["./src/shared/*"], // shared alias
+      "@processes/*": ["./src/processes/*"] // processes alias
+    }
+  }
 }

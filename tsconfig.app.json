@@ -22,15 +22,24 @@
     "types": ["vite/client"], // Vite-specific type definitions
 
     /* Path aliases (src → @/) */
-    "baseUrl": ".",
+    "baseUrl": ".", // Required for path aliases
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@app/*": ["./src/app/*"],
+      "@components/*": ["./src/components/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@widgets/*": ["./src/widgets/*"],
+      "@features/*": ["./src/features/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@processes/*": ["./src/processes/*"]
     },
 
     /* Type safety & quality checks */
     "strict": true, // Enables all strict checks
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": true, // Reports unused local variables
+    "noUnusedParameters": true, // Reports unused function parameters
+    "noImplicitReturns": true, // Ensures all code paths return a value
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true, // Extra safety for side-effect imports
 
