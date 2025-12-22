@@ -1,4 +1,3 @@
-````markdown
 # Real-Time Chat Application — Team Challenge
 
 <p align="center">
@@ -77,23 +76,26 @@ This project highlights skills that are directly applicable in modern frontend a
 
 We strictly follow **Feature-Sliced Design**. The codebase is organized by layers:
 
-```text
-src/
-├── app/          # Global entry (styles, providers, router)
-├── pages/        # Route components (composition of widgets)
-├── widgets/      # Big standalone blocks (Sidebar, ChatWindow)
-├── features/     # User interactions (Auth, SendMessage)
-├── entities/     # Business logic (User, Message, Room)
-├── shared/       # Reusable primitives (UI kit, API, Utils)
-└── components/   # (Temporary) Base UI components from Shadcn
 ```
-````
+
+src/
+├── app/ # Global entry (styles, providers, router)
+├── pages/ # Route components (composition of widgets)
+├── widgets/ # Big standalone blocks (Sidebar, ChatWindow)
+├── features/ # User interactions (Auth, SendMessage)
+├── entities/ # Business logic (User, Message, Room)
+├── shared/ # Reusable primitives (UI kit, API, Utils)
+└── components/ # (Temporary) Base UI components from Shadcn
+
+```
+
+```
 
 **Key aliases:**
 
 - `@/shared`, `@/features`, `@/app` mapping to `src/*` folders.
 
----
+```
 
 ## Getting Started
 
@@ -137,7 +139,7 @@ pnpm dev
 
 Open `http://localhost:5173` to view the app.
 
----
+```
 
 ## Contribution Guidelines
 
@@ -146,9 +148,13 @@ Open `http://localhost:5173` to view the app.
   `pnpm dlx shadcn@latest add [component-name]`
 - **Imports:** Always use absolute paths (e.g., `@/shared/lib/utils`).
 
----
+```
 
 ## Localization
 
 - 🇬🇧 **English** (This file)
 - 🇺🇦 [Ukrainian version](https://www.google.com/search?q=./README.ua.md) (Coming soon)
+
+```
+
+```
