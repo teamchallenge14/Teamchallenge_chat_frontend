@@ -1,18 +1,17 @@
-````markdown
-# Real-Time Chat Application — Team Challenge
+# QTalk — Real-Time Chat Application
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-18-blue?logo=react" />
   <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript" />
   <img src="https://img.shields.io/badge/Vite-5-646CFF?logo=vite" />
   <img src="https://img.shields.io/badge/TailwindCSS-3-38BDF8?logo=tailwindcss" />
-  <img src="https://img.shields.io/badge/Architecture-FSD-green" />
+  <img src="https://img.shields.io/badge/Architecture-FSD--inspired-green" />
   <img src="https://img.shields.io/badge/UI-Shadcn-black" />
   <img src="https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel" />
 </p>
 
-This repository contains the **Frontend** source code for a real-time chat application developed as part of the Team Challenge initiative.
-The goal is to provide a modern, responsive messaging experience powered by a clean, scalable architecture.
+**QTalk** (Quick Chat) is a modern messaging platform developed as part of the Team Challenge initiative.
+The goal is to provide a responsive, real-time messaging experience powered by a clean, scalable **FSD-inspired architecture**.
 
 ---
 
@@ -25,6 +24,7 @@ This project highlights skills that are directly applicable in modern frontend a
 - **TypeScript-Driven:** Shows comfort with strict typing, interfaces, and safe API contracts.
 - **Modern UI/UX:** Implementation of **Shadcn/UI**, Tailwind CSS, and accessible design patterns.
 - **Engineering Culture:** Configuring environment variables, proxies, aliases, and clean Git flow.
+- **Decision Documentation:** Architectural decisions are explicitly documented (ADR), demonstrating engineering reasoning beyond implementation.
 
 ---
 
@@ -32,8 +32,8 @@ This project highlights skills that are directly applicable in modern frontend a
 
 ### Core Functionality (MVP)
 
-- ✅ **Real-time messaging** using WebSockets
 - ✅ **Clean UI** with Tailwind & Shadcn
+- 🟡 **Real-time messaging** using WebSockets (In Progress)
 - 🔄 **Persistent username** (stored locally)
 - 🔄 **Auto-scroll** to latest message
 
@@ -59,39 +59,50 @@ This project highlights skills that are directly applicable in modern frontend a
 
 ---
 
-## 🛠 Technology Stack
+## Technology Stack
 
-| Category         | Technology          | Purpose                                        |
-| :--------------- | :------------------ | :--------------------------------------------- |
-| **Framework**    | **React 18** + Vite | High-performance rendering & tooling.          |
-| **Language**     | **TypeScript**      | Type safety & scalability.                     |
-| **Architecture** | **FSD**             | "Feature-Sliced Design" for folder structure.  |
-| **Styling**      | **Tailwind CSS**    | Utility-first styling.                         |
-| **Components**   | **Shadcn/UI**       | Accessible, re-usable component library.       |
-| **State**        | **Zustand**         | (Planned) Lightweight global state management. |
-| **Validation**   | **Zod**             | Schema validation.                             |
+| Category         | Technology          | Purpose                                                             |
+| :--------------- | :------------------ | :------------------------------------------------------------------ |
+| **Framework**    | **React 18** + Vite | High-performance rendering & tooling.                               |
+| **Language**     | **TypeScript**      | Type safety & scalability.                                          |
+| **Architecture** | **FSD**             | Folder structure follows Feature-Sliced principles where applicable |
+| **Styling**      | **Tailwind CSS**    | Utility-first styling.                                              |
+| **Components**   | **Shadcn/UI**       | Accessible, re-usable component library.                            |
+| **State**        | **Zustand**         | (Planned) Lightweight global state management.                      |
+| **Validation**   | **Zod**             | Schema validation.                                                  |
 
 ---
 
 ## Architecture Overview (FSD)
 
-We strictly follow **Feature-Sliced Design**. The codebase is organized by layers:
+The project follows a **Feature-Sliced Design (FSD)–inspired architecture**.
 
-```text
-src/
-├── app/          # Global entry (styles, providers, router)
-├── pages/        # Route components (composition of widgets)
-├── widgets/      # Big standalone blocks (Sidebar, ChatWindow)
-├── features/     # User interactions (Auth, SendMessage)
-├── entities/     # Business logic (User, Message, Room)
-├── shared/       # Reusable primitives (UI kit, API, Utils)
-└── components/   # (Temporary) Base UI components from Shadcn
+This approach helps organize the codebase by business responsibility
+rather than technical concerns, improving scalability and maintainability
+as the application grows.
+
 ```
-````
+src/
+├── app/        # Application entry point (global styles, providers)
+├── pages/      # Route-level components (page composition)
+├── widgets/    # Large UI blocks (e.g. ChatWindow, Sidebar)
+├── features/   # User interactions (SendMessage, Auth)
+├── entities/   # Core business entities (User, Message, Room)
+├── shared/     # Reusable primitives (UI, API, utilities)
+└── components/ # Temporary UI components (shadcn/ui integration)
+
+```
+
+> Note: The `components/` directory is temporary and will be gradually
+> merged into the appropriate FSD layers as the project evolves.
 
 **Key aliases:**
 
 - `@/shared`, `@/features`, `@/app` mapping to `src/*` folders.
+
+## Architectural Decision Records (ADR)
+
+Documentation of architectural decisions is coming soon.
 
 ---
 
@@ -107,16 +118,14 @@ src/
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/teamchallenge14/Teamchallenge_chat_frontend.git
+git clone [https://github.com/teamchallenge14/Teamchallenge_chat_frontend.git](https://github.com/teamchallenge14/Teamchallenge_chat_frontend.git) teamchallenge-chat-frontend
 cd teamchallenge-chat-frontend
-
 ```
 
 2. **Install dependencies:**
 
 ```bash
 pnpm install
-
 ```
 
 3. **Environment Setup:**
@@ -125,30 +134,71 @@ pnpm install
 ```env
 VITE_API_URL=http://localhost:3000/api
 VITE_WS_URL=ws://localhost:3000
-
 ```
 
-_(Note: Local development uses Vite Proxy to handle CORS automatically)._ 4. **Run Locally:**
+_(Note: Local development uses Vite Proxy to handle CORS automatically)._
+
+4. **Run Locally:**
 
 ```bash
 pnpm dev
-
 ```
 
 Open `http://localhost:5173` to view the app.
 
 ---
 
+## Code Quality Gates (Standard Established)
+
+This project now enforces the following **Code Quality Gates**:
+
+### Static Analysis & Type Safety
+
+- **ESLint (Flat Config)** with strict rules enabled via `@typescript-eslint`
+- Disallows unsafe patterns such as:
+  - non-null assertions (`!`)
+  - unused variables and parameters
+  - unchecked side effects
+- Ensures consistent and predictable code structure across the project
+
+### Formatting Consistency
+
+- **Prettier** is integrated with ESLint
+- Formatting issues are treated as linting errors
+- **Tailwind CSS class sorting** is enforced automatically via plugin
+- Guarantees a uniform code style regardless of contributor
+
+## How to Test
+
+Reviewers can verify the setup by running the following commands:
+
+1. Check for linting errors (should be clean):
+
+```bash
+pnpm lint
+```
+
+2. Check formatting:
+
+```bash
+pnpm format
+```
+
+---
+
 ## Contribution Guidelines
 
-- **Language:** English only (code & comments).
-- **UI Components:** Use the CLI to add new Shadcn components:
-  `pnpm dlx shadcn@latest add [component-name]`
-- **Imports:** Always use absolute paths (e.g., `@/shared/lib/utils`).
+Please read our [Contributing Guide](CONTRIBUTING.md) for development standards and workflow.
+
+**Quick Rules:**
+
+- **Language:** English only.
+- **UI Components:** Use `pnpm dlx shadcn@latest add [component-name]`.
+- **Imports:** Use absolute paths (e.g., `@/shared/lib/utils`).
 
 ---
 
 ## Localization
 
 - 🇬🇧 **English** (This file)
-- 🇺🇦 [Ukrainian version](https://www.google.com/search?q=./README.ua.md) (Coming soon)
+- 🇺🇦 [Ukrainian version](./README.ua.md) (Coming soon)
