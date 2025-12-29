@@ -1,12 +1,18 @@
+import { NavLink } from 'react-router-dom';
 import { Button } from '../ui/button';
+
+// interface MainWindowProps {
+//   setOpenSingUp: (open: boolean) => void;
+// }
+
 export const MainWindow = () => {
   return (
-    <section className="flex flex-col item-center justify-center h-screen mx-4">
+    <section className="flex flex-col item-center justify-center h-screen">
       <div className="flex flex-col items-center justify-center flex-1">
         <img src="img/icon.svg" alt="icon" className="icon" />
 
         <div>
-          <h1 className="text-base font-bold leading-[40px] mt-[20px] mb-[8px] ml-0 text-center">
+          <h1 className="text-[30px] font-bold leading-[40px] mt-[20px] mb-[8px] ml-0 text-center">
             ChatApp
           </h1>
           <h2 className="mt-0 mb-0 ml-0 font-normal text-[14px]">
@@ -14,7 +20,10 @@ export const MainWindow = () => {
           </h2>
         </div>
         <div className="flex flex-col gap-3 mt-[8px] gap-[8px] w-full">
-          <Button variant="default">Sign Up</Button>
+          <NavLink to="/register" className='w-full flex'>
+            <Button variant="default">Sign Up</Button>
+          </NavLink>
+
           <Button variant="secondary">Log In</Button>
           <Button variant="ghost">Guest Entry</Button>
         </div>
