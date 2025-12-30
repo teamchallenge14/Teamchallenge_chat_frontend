@@ -7,7 +7,7 @@ interface LabelProps {
 }
 
 export const Label: FC<LabelProps> = ({ htmlFor, children }) => (
-  <RadixLabel.Root htmlFor={htmlFor} className="text-sm font-medium">
+  <RadixLabel.Root htmlFor={htmlFor} className="text-sm font-medium text-left flex mb-[12px]">
     {children}
   </RadixLabel.Root>
 );

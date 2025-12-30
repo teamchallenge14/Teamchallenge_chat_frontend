@@ -1,52 +1,47 @@
-import type React from 'react';
+import { Label } from '@radix-ui/react-label';
 import { Button } from '../ui/button';
 import { Header } from '../ui/Header';
 import { Input } from '../ui/Input';
-import { Label } from '../ui/Label';
 import { NavLink } from 'react-router-dom';
 
-interface Step1Props {
-  onNext: () => void;
-}
-
-export const Step1: React.FC<Step1Props> = ({ onNext }) => {
+export const LogIn = () => {
   return (
     <div className="flex flex-col h-screen overflow-hidden">
-      <Header title="Sing Up" />
+      <Header title="Log In" />
       <div className="flex flex-col h-screen">
         <div className="flex-1 flex flex-col items-center justify-center">
           <div className="flex flex-col items-center w-full max-w-md">
             <img src="img/user.svg" alt="icon" className="icon mb-5" />
 
             <div className="text-center mb-8">
-              <h1 className="text-[30px] font-bold leading-[40px] mb-2">Join ChatApp</h1>
-              <h2 className="font-normal text-[14px] text-gray-600">
-                Sign up with your email and password to get started
-              </h2>
+              <h1 className="text-[30px] font-bold leading-[40px] mb-2">Welcome back</h1>
+              <h2 className="font-normal text-[14px] text-gray-600">Log in to continue chatting</h2>
             </div>
 
             <form className="w-full flex flex-col gap-[16px]">
               <div>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="mb-[12px]">
+                  Email or Username
+                </Label>
                 <Input id="email" type="email" placeholder="example@gmail.com" />
               </div>
               <div>
-                <Label htmlFor="password">Password</Label>
+                <div className="flex justify-between mb-[12px]">
+                  <Label htmlFor="password">Password</Label>
+                  {/* NanLink */}
+                  <p className="font-medium text-[14px] text-[#171717]">Forgot password?</p>
+                </div>
                 <Input id="password" type="password" placeholder="Enter your password" />
               </div>
 
-              <p className="font-medium text-[12px] text-[#A3A3A3]">At least 8 characters</p>
-
-              <Button variant="default" onClick={onNext}>
-                Create Account
-              </Button>
+              <Button variant="default">Log In</Button>
 
               <div className="flex justify-between">
                 <p className="font-[400] text-[14px] leading-[20px] text-[#525252]">
-                  Already have an account?
+                  Don't have an account?
                 </p>
-                <NavLink to="/login">
-                  <p className="font-medium text-[14px] leading-[100%] text-[#171717]">Log In</p>
+                <NavLink to='/register'>
+                  <p className="font-medium text-[14px] leading-[100%] text-[#171717]">Sign Up</p>
                 </NavLink>
               </div>
             </form>

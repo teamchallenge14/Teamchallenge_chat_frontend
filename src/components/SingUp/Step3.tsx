@@ -4,7 +4,11 @@ import { Header } from '../ui/Header';
 import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 
-export const Step3 = () => {
+interface Step3Props {
+  onNext: () => void;
+}
+
+export const Step3: React.FC<Step3Props> = ({ onNext }) => {
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       <Header title="Email Verification " />
@@ -29,11 +33,13 @@ export const Step3 = () => {
             </div>
             <form className="w-full flex flex-col gap-[16px]">
               <div>
-                <Label htmlFor="name">Username *</Label>
-                <Input id="name" type="text" placeholder="Bob" />
+                <Label htmlFor="username">Username *</Label>
+                <Input id="username" type="text" placeholder="Bob" />
               </div>
-            </form>{' '}
-            <Button variant="default" className='mt-[16px]'>Verify</Button>
+            </form>
+            <Button variant="default" className="mt-[16px]" type="button" onClick={onNext}>
+              Verify
+            </Button>
           </div>
         </div>
       </div>

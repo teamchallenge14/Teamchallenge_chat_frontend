@@ -20,12 +20,16 @@ export const MainWindow = () => {
           </h2>
         </div>
         <div className="flex flex-col gap-3 mt-[8px] gap-[8px] w-full">
-          <NavLink to="/register" className='w-full flex'>
+          <NavLink to="/register" className="w-full flex">
             <Button variant="default">Sign Up</Button>
           </NavLink>
 
-          <Button variant="secondary">Log In</Button>
-          <Button variant="ghost">Guest Entry</Button>
+          <NavLink to="/login" className="w-full flex">
+            <Button variant="secondary">Log In</Button>
+          </NavLink>
+          <NavLink to="/guest" className="w-full flex">
+            <Button variant="ghost">Guest Entry</Button>
+          </NavLink>
         </div>
 
         <p className="text-[12px] font-medium leading-[100%] text-[#A3A3A3] mt-[14px] text-center">
