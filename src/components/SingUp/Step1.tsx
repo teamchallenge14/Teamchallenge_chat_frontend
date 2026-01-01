@@ -6,10 +6,20 @@ import { Label } from '../ui/Label';
 import { NavLink } from 'react-router-dom';
 
 interface Step1Props {
+  email: string;
+  password: string;
+  onEmailChange: (v: string) => void;
+  onPasswordChange: (v: string) => void;
   onNext: () => void;
 }
 
-export const Step1: React.FC<Step1Props> = ({ onNext }) => {
+export const Step1: React.FC<Step1Props> = ({
+  onNext,
+  email,
+  password,
+  onEmailChange,
+  onPasswordChange,
+}) => {
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       <Header title="Sing Up" />
@@ -28,11 +38,23 @@ export const Step1: React.FC<Step1Props> = ({ onNext }) => {
             <form className="w-full flex flex-col gap-[16px]">
               <div>
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="example@gmail.com" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="example@gmail.com"
+                  value={email}
+                  onChange={(e) => onEmailChange(e.target.value)}
+                />
               </div>
               <div>
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" placeholder="Enter your password" />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => onPasswordChange(e.target.value)}
+                />
               </div>
 
               <p className="font-medium text-[12px] text-[#A3A3A3]">At least 8 characters</p>

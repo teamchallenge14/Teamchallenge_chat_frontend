@@ -5,11 +5,12 @@ import { Label } from '../ui/Label';
 
 interface Step1Props {
   onNext: () => void;
+
 }
 
 export const Step2: React.FC<Step1Props> = ({ onNext }) => {
   return (
-    <div className='flex flex-col h-screen overflow-hidden'>
+    <div className="flex flex-col h-screen overflow-hidden">
       <Header title="Email Verification " />
       <div className="flex-1 flex flex-col justify-center overflow-hidden">
         <div className="flex-1 flex flex-col items-center justify-center">
@@ -28,7 +29,9 @@ export const Step2: React.FC<Step1Props> = ({ onNext }) => {
                 <Label htmlFor="code">Verification code</Label>
                 <Input id="code" type="email" placeholder="123456" />
               </div>
-              <Button variant="default" onClick={onNext}>Verify</Button>
+              <Button variant="default" onClick={onNext}>
+                Verify
+              </Button>
             </form>
           </div>
         </div>

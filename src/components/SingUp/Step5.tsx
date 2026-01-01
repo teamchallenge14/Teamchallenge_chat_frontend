@@ -55,7 +55,7 @@ export const Step5 = () => {
 
           <div className='flex flex-col gap-[16px]'>
             {Object.entries(grouperInterestByCategiry).map(([categoty, items]) => (
-              <div className="">
+              <div key={categoty}>
                 <h3 className="text-left text-[14px] font-bold leading-[20px] text-[#000000]">{categoty}</h3>
 
                 <div className='w-full gap-[6px] flex flex-wrap mt-[12px]'>

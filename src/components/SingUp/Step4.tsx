@@ -5,6 +5,7 @@ import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import React, { useState } from 'react';
 import { sexOptions } from '@/types/Gender';
+import { Dropdown } from '../ui/selectDemo';
 
 interface Step4Props {
   onNext: () => void;
@@ -67,8 +68,9 @@ export const Step4: React.FC<Step4Props> = ({ onNext }) => {
               <Input id="name" type="text" placeholder="Bob" />
             </div>
             <div>
-              <Label htmlFor="age">Age *</Label>
-              <Input id="age" type="text" placeholder="Select your age" />
+              <Dropdown />
+              {/* <Label htmlFor="age">Age *</Label>
+              <Input id="age" type="text" placeholder="Select your age" /> */}
             </div>
             <div>
               <Label htmlFor="gender">Gender *</Label>

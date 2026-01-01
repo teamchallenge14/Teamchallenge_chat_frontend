@@ -6,9 +6,12 @@ import { Label } from '../ui/Label';
 
 interface Step3Props {
   onNext: () => void;
+  onLoginChange: (v: string) => void;
+  handleCreateAcount: () => void;
+  login: string;
 }
 
-export const Step3: React.FC<Step3Props> = ({ onNext }) => {
+export const Step3: React.FC<Step3Props> = ({ onNext, login, onLoginChange, handleCreateAcount }) => {
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       <Header title="Email Verification " />
@@ -34,10 +37,16 @@ export const Step3: React.FC<Step3Props> = ({ onNext }) => {
             <form className="w-full flex flex-col gap-[16px]">
               <div>
                 <Label htmlFor="username">Username *</Label>
-                <Input id="username" type="text" placeholder="Bob" />
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="Bob"
+                  value={login}
+                  onChange={(e) => onLoginChange(e.target.value)}
+                />
               </div>
             </form>
-            <Button variant="default" className="mt-[16px]" type="button" onClick={onNext}>
+            <Button variant="default" className="mt-[16px]" type="button" onClick={handleCreateAcount}>
               Verify
             </Button>
           </div>

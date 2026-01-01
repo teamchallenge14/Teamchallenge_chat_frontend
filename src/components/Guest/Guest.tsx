@@ -8,7 +8,6 @@ export const Guest = () => {
   return (
     <div>
       {step === 1 && <Step1 />}
-      {/* {step === 1 && <Step1 onNext={() => setStep(step + 1)} />} */}
 
       {/* {step === 3 && <Step3 data={formData} setData={setFormData} />} */}
       {/* <div className="flex gap-2 mt-4">
