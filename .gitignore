@@ -1,4 +1,4 @@
-# Logs
+# --- Logs ---
 logs
 *.log
 npm-debug.log*
@@ -12,18 +12,31 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# --- Editor directories and files ---
+
+# VS Code
 .vscode/*
+!.vscode/settings.json
 !.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# JetBrains IDEs (WebStorm, IntelliJ IDEA)
 .idea
+
+# macOS System Files
 .DS_Store
+
+# Visual Studio
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
+
+# Vim / Nano
 *.sw?
 
-# Environment Variables
+# --- Environment Variables ---
 .env
 .env.*
 !.env.example
