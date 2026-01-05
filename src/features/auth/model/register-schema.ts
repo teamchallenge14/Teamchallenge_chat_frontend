@@ -7,6 +7,7 @@ import { z } from 'zod';
  * - Required fields match the UI Design (even if Swagger allows nulls).
  */
 export const GENDERS = ['MALE', 'FEMALE', 'OTHER'] as const;
+export const AGE_OPTIONS = Array.from({ length: 89 }, (_, i) => i + 12);
 
 /**
  * Type for gender values (re-usable in UI and other code).
