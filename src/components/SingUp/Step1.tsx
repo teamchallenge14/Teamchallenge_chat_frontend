@@ -14,7 +14,7 @@ export const Step1: React.FC = () => {
     trigger,
     setValue,
   } = useFormContext<FormData>();
-  console.log()
+  console.log();
   const handleNext = async () => {
     const isValid = await trigger(['email', 'password']);
     if (isValid) {
@@ -22,7 +22,7 @@ export const Step1: React.FC = () => {
     }
   };
 
-  console.log(errors)
+  console.log(errors.email);
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
