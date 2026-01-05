@@ -54,7 +54,7 @@ export const Step4: React.FC<Step4Props> = ({ onNext }) => {
             </h2>
           </div> */}
 
-          <form className="w-full flex flex-col gap-4">
+          <div className="w-full flex flex-col gap-4">
             <div>
               <Label htmlFor="name">Name *</Label>
               <Input id="name" type="text" placeholder="John" />
@@ -97,7 +97,7 @@ export const Step4: React.FC<Step4Props> = ({ onNext }) => {
                 placeholder="Your feedback helps us improve..."
               ></textarea>
             </div>
-          </form>
+          </div>
           <p className="text-[12px] font-medium leading-[100%] mt-[12px] text-left text-[#A3A3A3]">
             0/150 characters
           </p>

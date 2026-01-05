@@ -3,20 +3,33 @@ import { Button } from '../ui/button';
 import { Header } from '../ui/Header';
 import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
+import { useFormContext } from 'react-hook-form';
+import type { SingUp } from '@/types/SingUp';
+import type { FormData } from '@/types/formData';
 
-interface Step3Props {
-  onNext: () => void;
-  onLoginChange: (v: string) => void;
-  handleCreateAcount: () => void;
-  login: string;
-}
+// interface Step3Props {
 
-export const Step3: React.FC<Step3Props> = ({ onNext, login, onLoginChange, handleCreateAcount }) => {
+// }
+
+export const Step3: React.FC = () => {
+  const {
+    register,
+    formState: { errors },
+    trigger,
+    setValue,
+  } = useFormContext<FormData>();
+
+  const handleNext = async () => {
+    const isValid = await trigger(['login']);
+    if (isValid) {
+      setValue('step', 4); 
+    }
+  };
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex h-screen flex-col overflow-hidden">
       <Header title="Email Verification " />
       <Progress.Root
-        className="relative h-[8px] w-full overflow-hidden bg-gray-200 rounded-full"
+        className="relative h-[8px] w-full overflow-hidden rounded-full bg-gray-200"
         value={66}
       >
         <Progress.Indicator
@@ -24,29 +37,29 @@ export const Step3: React.FC<Step3Props> = ({ onNext, login, onLoginChange, hand
           style={{ transform: 'translateX(-85%)' }}
         />
       </Progress.Root>
-      <div className="flex-1 flex flex-col justify-center overflow-hidden">
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="flex flex-col items-center w-full max-w-md">
+      <div className="flex flex-1 flex-col justify-center overflow-hidden">
+        <div className="flex flex-1 flex-col items-center justify-center">
+          <div className="flex w-full max-w-md flex-col items-center">
             <img src="img/user.svg" alt="icon" className="icon mb-5" />
-            <div className="text-center mb-8">
-              <h1 className="text-[30px] font-bold leading-[40px] mb-2">Choose a Username</h1>
-              <h2 className="font-normal text-[14px] text-gray-600">
+            <div className="mb-8 text-center">
+              <h1 className="mb-2 text-[30px] font-bold leading-[40px]">Choose a Username</h1>
+              <h2 className="text-[14px] font-normal text-gray-600">
                 This name will be visible to others in chats
               </h2>
             </div>
-            <form className="w-full flex flex-col gap-[16px]">
+            <div className="flex w-full flex-col gap-[16px]">
               <div>
                 <Label htmlFor="username">Username *</Label>
                 <Input
                   id="username"
                   type="text"
                   placeholder="Bob"
-                  value={login}
-                  onChange={(e) => onLoginChange(e.target.value)}
+                  {...register('login', { required: 'Login is required' })}
                 />
+                {errors.login && <p className="">{errors.login.message}</p>}
               </div>
-            </form>
-            <Button variant="default" className="mt-[16px]" type="button" onClick={handleCreateAcount}>
+            </div>
+            <Button variant="default" className="mt-[16px]" type="submit" onClick={handleNext}>
               Verify
             </Button>
           </div>
