@@ -2,12 +2,11 @@ import * as Progress from '@radix-ui/react-progress';
 import { Button } from '../ui/button';
 import { Header } from '../ui/Header';
 import { getInterest } from '@/app/api/api';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { Interest } from '@/types/Interest';
 
-export const Step5 = () => {
+export const Interes: React.FC = () => {
   const [interest, setInterest] = useState<Interest[]>([]);
-
   const grouperInterestByCategiry = interest.reduce<Record<string, Interest[]>>((acc, item) => {
     if (!acc[item.category]) {
       acc[item.category] = [];
@@ -34,7 +33,7 @@ export const Step5 = () => {
       <Header title="Complete Profile" />
 
       <Progress.Root
-        className="relative h-[8px] w-full overflow-hidden bg-gray-200 rounded-full mb-[22px]"
+        className="relative mb-[22px] h-[8px] w-full overflow-hidden rounded-full bg-gray-200"
         value={66}
       >
         <Progress.Indicator
@@ -46,19 +45,21 @@ export const Step5 = () => {
       <div className="flex flex-col items-center justify-center">
         {/*flex-1 */}
         <div className="w-full max-w-md text-center">
-          <div className="text-center mb-8">
-            <h1 className="text-[20px] font-semibold leading-[40px] mb-2">Select your Interest</h1>
-            <h2 className="font-normal text-[14px] text-gray-600">
+          <div className="mb-8 text-center">
+            <h1 className="mb-2 text-[20px] font-semibold leading-[40px]">Select your Interest</h1>
+            <h2 className="text-[14px] font-normal text-gray-600">
               Choose topics you're interested in to find relevant chats
             </h2>
           </div>
 
-          <div className='flex flex-col gap-[16px]'>
+          <div className="flex flex-col gap-[16px]">
             {Object.entries(grouperInterestByCategiry).map(([categoty, items]) => (
               <div key={categoty}>
-                <h3 className="text-left text-[14px] font-bold leading-[20px] text-[#000000]">{categoty}</h3>
+                <h3 className="text-left text-[14px] font-bold leading-[20px] text-[#000000]">
+                  {categoty}
+                </h3>
 
-                <div className='w-full gap-[6px] flex flex-wrap mt-[12px]'>
+                <div className="mt-[12px] flex w-full flex-wrap gap-[6px]">
                   {items.map((item) => (
                     <Button variant="outline" key={item.id}>
                       {item.name}
@@ -69,7 +70,7 @@ export const Step5 = () => {
             ))}
           </div>
 
-          <Button variant="default" className="mt-[16px] w-full">
+          <Button type="submit" variant="default" className="mt-[16px] w-full">
             Continue
           </Button>
         </div>

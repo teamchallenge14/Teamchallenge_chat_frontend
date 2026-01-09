@@ -33,7 +33,7 @@ export const useRegisterForm = () => {
       gender: 'MALE',
       bio: '',
     },
-
+    shouldUnregister: false,
     // Validation is triggered when an input loses focus,
     // providing a balanced user experience without excessive feedback
     mode: 'onBlur',

@@ -1,4 +1,4 @@
-import type { SingUp } from '@/types/SingUp';
+import type { RegisterValues } from '@/features/auth';
 import axios from 'axios';
 
 const BASE__URL = 'https://teamchallenge-chat-backend.onrender.com/';
@@ -33,7 +33,7 @@ export const getInterest = async () => {
   }
 };
 
-export const singUp = async (formData: SingUp) => {
+export const singUp = async (formData: RegisterValues) => {
   try {
     console.log('Sending sign-up data:', formData);
     const response = await apiClient.post('v1/auth', formData);

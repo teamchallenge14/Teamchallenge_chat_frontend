@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 export const LogIn = () => {
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex h-screen flex-col overflow-hidden">
       <Header title="Log In" />
       <div className="flex flex-col h-screen">
         <div className="flex-1 flex flex-col items-center justify-center">

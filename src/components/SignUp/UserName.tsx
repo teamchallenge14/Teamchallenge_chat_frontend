@@ -4,25 +4,25 @@ import { Header } from '../ui/Header';
 import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import { useFormContext } from 'react-hook-form';
-import type { SingUp } from '@/types/SingUp';
-import type { FormData } from '@/types/formData';
+import type { RegisterValues } from '@/features/auth';
 
-// interface Step3Props {
+interface StepPorps {
+  setStep: (step: number) => void;
+}
 
-// }
-
-export const Step3: React.FC = () => {
+export const UserName: React.FC<StepPorps> = ({ setStep }) => {
   const {
     register,
     formState: { errors },
     trigger,
-    setValue,
-  } = useFormContext<FormData>();
+    getValues,
+  } = useFormContext<RegisterValues>();
 
   const handleNext = async () => {
     const isValid = await trigger(['login']);
+    console.log('Step 4 values after validation:', getValues());
     if (isValid) {
-      setValue('step', 4); 
+      setStep(4);
     }
   };
   return (
@@ -50,12 +50,7 @@ export const Step3: React.FC = () => {
             <div className="flex w-full flex-col gap-[16px]">
               <div>
                 <Label htmlFor="username">Username *</Label>
-                <Input
-                  id="username"
-                  type="text"
-                  placeholder="Bob"
-                  {...register('login', { required: 'Login is required' })}
-                />
+                <Input id="username" type="text" placeholder="Bob" {...register('login')} />
                 {errors.login && <p className="">{errors.login.message}</p>}
               </div>
             </div>

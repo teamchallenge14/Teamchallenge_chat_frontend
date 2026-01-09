@@ -4,25 +4,26 @@ import { Header } from '../ui/Header';
 import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import { NavLink } from 'react-router-dom';
-import { useFormContext } from 'react-hook-form';
-import type { FormData } from '@/types/formData';
+import { useRegisterForm } from '@/features/auth';
 
-export const Step1: React.FC = () => {
+interface StepPorps {
+  setStep: (step: number) => void;
+}
+
+export const Step1: React.FC<StepPorps> = ({ setStep }) => {
   const {
     register,
     formState: { errors },
     trigger,
-    setValue,
-  } = useFormContext<FormData>();
-  console.log();
+  } = useRegisterForm();
   const handleNext = async () => {
     const isValid = await trigger(['email', 'password']);
     if (isValid) {
-      setValue('step', 2);
+      setStep(2);
+    } else {
+      console.log(errors);
     }
   };
-
-  console.log(errors.email);
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
@@ -46,7 +47,7 @@ export const Step1: React.FC = () => {
                   id="email"
                   type="email"
                   placeholder="example@gmail.com"
-                  {...register('email', { required: 'Email is required' })}
+                  {...register('email')}
                 />
                 {errors.email && <p className="text-red-500">{errors.email.message}</p>}
               </div>
@@ -57,10 +58,7 @@ export const Step1: React.FC = () => {
                   id="password"
                   type="password"
                   placeholder="Enter your password"
-                  {...register('password', {
-                    required: 'Password is required',
-                    minLength: { value: 8, message: 'Password must be at least 8 characters' },
-                  })}
+                  {...register('password')}
                 />
                 {errors.password && <p className="text-red-500">{errors.password.message}</p>}
               </div>

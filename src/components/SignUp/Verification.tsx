@@ -1,26 +1,25 @@
-import { useFormContext } from 'react-hook-form';
+// import { useFormContext } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Header } from '../ui/Header';
 import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
-import type { FormData } from '@/types/formData';
+// import type { FormData } from '@/types/formData';
 
-// interface Step1Props {
-//   onNext: () => void;
-// }
+interface StepPorps {
+  setStep: (step: number) => void;
+}
 
-export const Step2: React.FC = () => {
-  const {
-    register,
-    formState: { errors },
-    trigger,
-    setValue,
-  } = useFormContext<FormData>();
+export const Verification: React.FC<StepPorps> = ({ setStep }) => {
+  // const {
+  //   register,
+  //   formState: { errors },
+  //   trigger,
+  // } = useFormContext<FormData>();
 
   const handleNext = async () => {
     // const isValid = await trigger(['email', 'password']);
     // if (isValid) {
-      setValue('step', 3); // перехід на наступний крок без setState!
+    setStep(3);
     // }
   };
   return (

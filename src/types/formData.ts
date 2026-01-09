@@ -1,3 +1,3 @@
-import type { SingUp } from "./SingUp";
+// import type { SingUp } from './SignUp';
 
-export type FormData = SingUp & { step: number };
+// export type FormData = SingUp & { step: number };

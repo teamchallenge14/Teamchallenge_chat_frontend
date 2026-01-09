@@ -1,7 +1,7 @@
 import App from '@/app/App'; // main app component
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainWindow } from './components/MainWindow/MainWindow';
-import { Register } from './components/SingUp/Register';
+import { Register } from './components/SignUp/Register';
 import { LogIn } from './components/LogIn/LogIn';
 import { Guest } from './components/Guest/Guest';
 
