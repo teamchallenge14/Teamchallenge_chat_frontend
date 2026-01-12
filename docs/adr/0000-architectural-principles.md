@@ -31,7 +31,7 @@ The project favors **explicit architectural rules** over implicit conventions.
 
 - Clear module boundaries
 - Predictable folder structure
-- One-directional dependencies
+- One-directional dependencies (aligned with Feature-Sliced principles)
 
 This reduces cognitive load and improves onboarding for new contributors.
 
@@ -42,7 +42,7 @@ This reduces cognitive load and improves onboarding for new contributors.
 TypeScript is used in **strict mode** to ensure compile-time safety.
 
 However, since TypeScript does not validate data at runtime,
-additional runtime validation is applied where data enters the system
+additional runtime validation is applied at system boundaries
 (e.g. user input, API responses, real-time messages).
 
 ---
@@ -91,4 +91,6 @@ Documentation is expected to evolve together with the code.
 
 - **Negative:**
   - Additional effort to maintain documentation
-  - Slower initial development due to stricter rules and reviews
+  - Slower initial development due to stricter rules and required documentation,
+  compensated by higher long-term maintainability.
+
