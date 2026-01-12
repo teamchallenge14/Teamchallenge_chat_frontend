@@ -19,8 +19,8 @@ The goal is to provide a responsive, real-time messaging experience powered by a
 
 This project highlights skills that are directly applicable in modern frontend and full-stack roles:
 
-- **Feature-Sliced Architecture (FSD):** Uses a domain-driven code structure (`app`, `features`, `entities`) — a signal of long-term thinking and maintainable design.
-- **Real-Time Functionality:** Demonstrates ability to work with WebSockets and event-driven UI updates.
+- **FSD-inspired Architecture:** Uses Feature-Sliced principles (`app`, `features`, `entities`) where applicable — demonstrating a scalable, domain-oriented approach to frontend architecture.
+- **Real-Time Functionality:** Demonstrates ability to design and implement WebSocket-based, event-driven UI updates.
 - **TypeScript-Driven:** Shows comfort with strict typing, interfaces, and safe API contracts.
 - **Modern UI/UX:** Implementation of **Shadcn/UI**, Tailwind CSS, and accessible design patterns.
 - **Engineering Culture:** Configuring environment variables, proxies, aliases, and clean Git flow.
@@ -102,7 +102,8 @@ src/
 
 ## Architectural Decision Records (ADR)
 
-Documentation of architectural decisions is coming soon.
+Architectural principles and key technical decisions are documented
+in the `/docs/adr` directory using Architecture Decision Records (ADR).
 
 ---
 
@@ -118,7 +119,7 @@ Documentation of architectural decisions is coming soon.
 1. **Clone the repository:**
 
 ```bash
-git clone [https://github.com/teamchallenge14/Teamchallenge_chat_frontend.git](https://github.com/teamchallenge14/Teamchallenge_chat_frontend.git) teamchallenge-chat-frontend
+git clone https://github.com/teamchallenge14/Teamchallenge_chat_frontend.git teamchallenge-chat-frontend
 cd teamchallenge-chat-frontend
 ```
 
