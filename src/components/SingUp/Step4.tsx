@@ -20,7 +20,7 @@ export const Step4: React.FC<Step4Props> = ({ onNext }) => {
 
       {/* Прогрес бар */}
       <Progress.Root
-        className="relative h-[8px] w-full overflow-hidden bg-gray-200 rounded-full mb-[22px]"
+        className="relative mb-[22px] h-[8px] w-full overflow-hidden rounded-full bg-gray-200"
         value={66}
       >
         <Progress.Indicator
@@ -32,18 +32,18 @@ export const Step4: React.FC<Step4Props> = ({ onNext }) => {
       <div className="flex flex-col items-center justify-center">
         {/*flex-1 */}
         <div className="w-full max-w-md text-center">
-          <p className="text-[14px] font-medium leading-[20px] mb-6 text-left">Profile Photo</p>
+          <p className="mb-6 text-left text-[14px] font-medium leading-[20px]">Profile Photo</p>
 
-          <div className="relative inline-block mb-[16px]">
-            <div className="w-[100px] h-[100px] rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
-              <img src="img/user.svg" alt="Profile" className="w-[42px] h-[42px]" />
+          <div className="relative mb-[16px] inline-block">
+            <div className="flex h-[100px] w-[100px] items-center justify-center overflow-hidden rounded-full bg-gray-100">
+              <img src="img/user.svg" alt="Profile" className="h-[42px] w-[42px]" />
             </div>
 
             <Button
               variant="upload"
-              className="absolute bottom-0 right-0 w-[36px] h-[36px] min-h-0 p-0 rounded-full bg-[#0A0A0A] text-white hover:bg-[#333333] flex items-center justify-center border-2 border-white"
+              className="absolute bottom-0 right-0 flex h-[36px] min-h-0 w-[36px] items-center justify-center rounded-full border-2 border-white bg-[#0A0A0A] p-0 text-white hover:bg-[#333333]"
             >
-              <img src="img/camera.svg" alt="Upload photo" className="w-4 h-4" />
+              <img src="img/camera.svg" alt="Upload photo" className="h-4 w-4" />
             </Button>
           </div>
 
@@ -54,7 +54,7 @@ export const Step4: React.FC<Step4Props> = ({ onNext }) => {
             </h2>
           </div> */}
 
-          <form className="w-full flex flex-col gap-4">
+          <form className="flex w-full flex-col gap-4">
             <div>
               <Label htmlFor="name">Name *</Label>
               <Input id="name" type="text" placeholder="John" />
@@ -74,7 +74,7 @@ export const Step4: React.FC<Step4Props> = ({ onNext }) => {
             </div>
             <div>
               <Label htmlFor="gender">Gender *</Label>
-              <div className="flex gap-[14px] mt-[12px]" id="gender">
+              <div className="mt-[12px] flex gap-[14px]" id="gender">
                 {sexOptions.map((option) => (
                   <Button
                     variant={selectedSex === option.id ? 'destructive' : 'default'}
@@ -93,12 +93,12 @@ export const Step4: React.FC<Step4Props> = ({ onNext }) => {
               <Label htmlFor="bio">Bio</Label>
               <textarea
                 id="bio"
-                className="w-full h-[80px] resize-none pt-[8px] pt-[12px] pl-[12px]"
+                className="h-[80px] w-full resize-none pl-[12px] pt-[12px] pt-[8px]"
                 placeholder="Your feedback helps us improve..."
               ></textarea>
             </div>
           </form>
-          <p className="text-[12px] font-medium leading-[100%] mt-[12px] text-left text-[#A3A3A3]">
+          <p className="mt-[12px] text-left text-[12px] font-medium leading-[100%] text-[#A3A3A3]">
             0/150 characters
           </p>
           <Button variant="default" className="mt-[16px] w-full" onClick={onNext}>

@@ -24,7 +24,7 @@ export const Input: React.FC<InputProps> = ({
       placeholder={placeholder}
       onChange={handleChange}
       type={type}
-      className="w-full box-border h-[36px] border border-[#E5E5E5] rounded-[6px] bg-transparent font-normal text-lg pl-2.5 text-[#615b52]"
+      className="box-border h-[36px] w-full rounded-[6px] border border-[#E5E5E5] bg-transparent pl-2.5 text-lg font-normal text-[#615b52]"
     />
   );
 };

@@ -7,41 +7,41 @@ import { Button } from '../ui/button';
 
 export const MainWindow = () => {
   return (
-    <section className="flex flex-col item-center justify-center h-screen">
-      <div className="flex flex-col items-center justify-center flex-1">
+    <section className="item-center flex h-screen flex-col justify-center">
+      <div className="flex flex-1 flex-col items-center justify-center">
         <img src="img/icon.svg" alt="icon" className="icon" />
 
         <div>
-          <h1 className="text-[30px] font-bold leading-[40px] mt-[20px] mb-[8px] ml-0 text-center">
+          <h1 className="mb-[8px] ml-0 mt-[20px] text-center text-[30px] font-bold leading-[40px]">
             ChatApp
           </h1>
-          <h2 className="mt-0 mb-0 ml-0 font-normal text-[14px]">
+          <h2 className="mb-0 ml-0 mt-0 text-[14px] font-normal">
             Connect, chat, and discover new friends
           </h2>
         </div>
-        <div className="flex flex-col gap-3 mt-[8px] gap-[8px] w-full">
-          <NavLink to="/register" className="w-full flex">
+        <div className="mt-[8px] flex w-full flex-col gap-3 gap-[8px]">
+          <NavLink to="/register" className="flex w-full">
             <Button variant="default">Sign Up</Button>
           </NavLink>
 
-          <NavLink to="/login" className="w-full flex">
+          <NavLink to="/login" className="flex w-full">
             <Button variant="secondary">Log In</Button>
           </NavLink>
-          <NavLink to="/guest" className="w-full flex">
+          <NavLink to="/guest" className="flex w-full">
             <Button variant="ghost">Guest Entry</Button>
           </NavLink>
         </div>
 
-        <p className="text-[12px] font-medium leading-[100%] text-[#A3A3A3] mt-[14px] text-center">
+        <p className="mt-[14px] text-center text-[12px] font-medium leading-[100%] text-[#A3A3A3]">
           By continuing, you agree to our Terms of Service and Privacy Policy
         </p>
       </div>
 
       <div className="mb-[22px]">
-        <div className='before:content-[""] before:block before:flex-1 before:h-[1px] before:bg-[#E5E5E5] after:content-[""] after:block after:flex-1 after:h-[1px] after:bg-[#E5E5E5] flex items-center gap-3 mb-[32px]'>
+        <div className='mb-[32px] flex items-center gap-3 before:block before:h-[1px] before:flex-1 before:bg-[#E5E5E5] before:content-[""] after:block after:h-[1px] after:flex-1 after:bg-[#E5E5E5] after:content-[""]'>
           <span className="whitespace-nowrap text-sm text-gray-500">OR CONTINUE WITH</span>
         </div>
-        <div className="flex gap-14px justify-between">
+        <div className="gap-14px flex justify-between">
           <Button variant="media">
             <img src="/img/google.svg" alt="Google" />
           </Button>

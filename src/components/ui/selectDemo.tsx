@@ -63,11 +63,16 @@ export const Dropdown = () => {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 h-[36px] text-left bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="h-[36px] w-full rounded-lg border border-gray-300 bg-white px-4 text-left shadow-sm hover:border-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         {selected || 'Select an option'}
         <span className="absolute right-3 top-3">
-          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="h-5 w-5 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </span>
@@ -75,7 +80,7 @@ export const Dropdown = () => {
 
       {/* Випадаючий список */}
       {isOpen && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
+        <div className="absolute z-10 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg">
           {/* Скрол контейнер */}
           <div className="max-h-64 overflow-y-auto">
             {/* Кастомний скролбар */}
@@ -87,7 +92,7 @@ export const Dropdown = () => {
                     setSelected(option);
                     setIsOpen(false);
                   }}
-                  className={`px-4 py-3 cursor-pointer hover:bg-gray-100 transition-colors ${
+                  className={`cursor-pointer px-4 py-3 transition-colors hover:bg-gray-100 ${
                     selected === option ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
                   }`}
                 >
