@@ -1,7 +1,7 @@
 import { Button } from '../ui/button';
 import { MainTitle } from '../ui/MainTitle';
 
-export const FinalyWindow = () => {
+export const Success = () => {
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <div className="flex h-screen flex-col">
@@ -9,10 +9,10 @@ export const FinalyWindow = () => {
           <div className="flex w-full max-w-md flex-col items-center">
             <MainTitle
               image="img/done.svg"
-              title="Your Profile is Ready!"
-              description="Your profile is set up. You can start chatting now."
+              title="Password Reset!"
+              description="Your password has been successfully reset, click below to continue your access"
             />
-            <Button>Go to home</Button>
+            <Button>Continue</Button>
           </div>
         </div>
       </div>

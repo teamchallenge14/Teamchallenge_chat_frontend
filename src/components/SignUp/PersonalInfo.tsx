@@ -17,7 +17,7 @@ export const PersonalInfo: React.FC = () => {
   } = useFormContext<RegisterValues>();
   const currentGender = watch('gender');
   const currentAge = watch('age');
-  const currentBio = watch('bio');
+  const currentBio = watch('description');
 
   return (
     <div className="flex flex-col">
@@ -61,11 +61,11 @@ export const PersonalInfo: React.FC = () => {
           <div className="flex w-full flex-col gap-4">
             <div>
               <Label htmlFor="name">Name *</Label>
-              <Input id="name" type="text" placeholder="John" {...register('name')} />
+              <Input id="name" type="text" placeholder="John" {...register('firstName')} />
             </div>
             <div>
               <Label htmlFor="surname">Surname *</Label>
-              <Input id="surname" type="text" placeholder="Doe" {...register('surname')} />
+              <Input id="surname" type="text" placeholder="Doe" {...register('lastName')} />
             </div>
             <div>
               <Label htmlFor="age">Age *</Label>
@@ -98,7 +98,7 @@ export const PersonalInfo: React.FC = () => {
                 id="bio"
                 className="h-[80px] w-full resize-none pl-[12px] pt-[12px]"
                 placeholder="Your feedback helps us improve..."
-                {...register('bio')}
+                {...register('description')}
                 maxLength={150}
               ></textarea>
             </div>
@@ -106,7 +106,7 @@ export const PersonalInfo: React.FC = () => {
           <p className="mt-[12px] text-left text-[12px] font-medium leading-[100%] text-[#A3A3A3]">
             {(currentBio as string)?.length || 0}/150 characters
           </p>
-          <Button variant="default" className="mt-[16px] w-full" type="submit">
+          <Button variant="default" className="mt-[16px] w-full">
             Continue
           </Button>
         </div>

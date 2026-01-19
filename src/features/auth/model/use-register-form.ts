@@ -2,8 +2,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   registerSchema,
+  registerInitialSchema,
   type RegisterValues,
-  type RegisterInput, // import input type
+  type RegisterInput,
+  type RegisterInitialValues,
+  type RegisterInitialInput, // import input type
 } from './register-schema';
 
 /**
@@ -17,6 +20,25 @@ import {
  * This hook is part of the Auth feature's "model" layer
  * and should remain free of any UI-related logic.
  */
+export const useRegisterInitialForm = () => {
+  const form = useForm<RegisterInitialInput, unknown, RegisterInitialValues>({
+    resolver: zodResolver(registerInitialSchema),
+
+    // Explicit default values ensure predictable controlled inputs
+    defaultValues: {
+      email: '',
+      password: '',
+      login: '',
+    },
+    shouldUnregister: false,
+    // Validation is triggered when an input loses focus,
+    // providing a balanced user experience without excessive feedback
+    mode: 'onBlur',
+  });
+
+  return form;
+};
+
 export const useRegisterForm = () => {
   const form = useForm<RegisterInput, unknown, RegisterValues>({
     // Integrates Zod schema validation into react-hook-form
@@ -24,14 +46,14 @@ export const useRegisterForm = () => {
 
     // Explicit default values ensure predictable controlled inputs
     defaultValues: {
-      email: '',
-      password: '',
-      login: '',
-      name: '',
-      surname: '',
+      // email: '',
+      // password: '',
+      // login: '',
+      firstName: '',
+      lastName: '',
       age: '',
       gender: 'MALE',
-      bio: '',
+      description: '',
     },
     shouldUnregister: false,
     // Validation is triggered when an input loses focus,

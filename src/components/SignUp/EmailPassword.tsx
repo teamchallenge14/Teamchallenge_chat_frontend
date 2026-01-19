@@ -6,6 +6,8 @@ import { Label } from '../ui/Label';
 import { NavLink } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
 import type { RegisterValues } from '@/features/auth';
+import { MainTitle } from '../ui/MainTitle';
+import { InputPassword } from '../ui/InputPassword';
 interface StepPorps {
   setStep: (step: number) => void;
 }
@@ -33,14 +35,11 @@ export const EmailPassword: React.FC<StepPorps> = ({ setStep }) => {
       <div className="flex h-screen flex-col">
         <div className="flex flex-1 flex-col items-center justify-center">
           <div className="flex w-full max-w-md flex-col items-center">
-            <img src="img/user.svg" alt="icon" className="icon mb-5" />
-
-            <div className="mb-8 text-center">
-              <h1 className="mb-2 text-[30px] font-bold leading-[40px]">Join ChatApp</h1>
-              <h2 className="text-[14px] font-normal text-gray-600">
-                Sign up with your email and password to get started
-              </h2>
-            </div>
+            <MainTitle
+              image="img/user.svg"
+              title="Join ChatApp"
+              description="Sign up with your email and password to get started"
+            />
 
             <div className="flex w-full flex-col gap-[16px]">
               <div>
@@ -56,7 +55,7 @@ export const EmailPassword: React.FC<StepPorps> = ({ setStep }) => {
 
               <div>
                 <Label htmlFor="password">Password</Label>
-                <Input
+                <InputPassword
                   id="password"
                   type="password"
                   placeholder="Enter your password"
@@ -66,6 +65,16 @@ export const EmailPassword: React.FC<StepPorps> = ({ setStep }) => {
               </div>
 
               <p className="text-[12px] font-medium text-[#A3A3A3]">At least 8 characters</p>
+
+              <div>
+                <Label htmlFor="newPassword">Confirm new password</Label>
+                <InputPassword
+                  id="newPassword"
+                  type="password"
+                  // {...register('email')}
+                />
+                {/* {errors.email && <p className="text-red-500">{errors.email.message}</p>} */}
+              </div>
 
               <Button variant="default" onClick={handleNext}>
                 Next

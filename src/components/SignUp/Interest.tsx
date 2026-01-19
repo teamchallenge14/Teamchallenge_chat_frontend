@@ -1,12 +1,19 @@
 import * as Progress from '@radix-ui/react-progress';
 import { Button } from '../ui/button';
 import { Header } from '../ui/Header';
-import { getInterest } from '@/app/api/api';
+import { getInterest, getUserById, setUserInterests } from '@/app/api/api';
 import React, { useEffect, useState } from 'react';
 import type { Interest } from '@/types/Interest';
+import { useNavigate } from 'react-router-dom';
 
-export const Interes: React.FC = () => {
+interface InteresProps {
+  userId: string | null;
+}
+
+export const Interes: React.FC<InteresProps> = ({ userId }) => {
   const [interest, setInterest] = useState<Interest[]>([]);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const navigate = useNavigate();
   const grouperInterestByCategiry = interest.reduce<Record<string, Interest[]>>((acc, item) => {
     if (!acc[item.category]) {
       acc[item.category] = [];
@@ -14,6 +21,27 @@ export const Interes: React.FC = () => {
     acc[item.category].push(item);
     return acc;
   }, {});
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!userId) {
+        console.error('User ID is missing in URL params');
+        return;
+      }
+
+      try {
+        const data = await getUserById(userId);
+        console.log('Fetched user:', data);
+        // якщо у користувача вже є інтереси встановлюю їх як вибрані
+        // if (data.interests && data.interests.length > 0) {
+        //   setSelectedInterests(data.interests.map((int: Interest) => int.id));
+        // }
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    };
+    fetchUser();
+  }, [userId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +56,39 @@ export const Interes: React.FC = () => {
     fetchData();
   }, []);
 
+  const toggleInterest = (interestId: string) => {
+    setSelectedInterests((prev) => {
+      if (prev.includes(interestId)) {
+        return prev.filter((id) => id !== interestId);
+      } else {
+        return [...prev, interestId];
+      }
+    });
+  };
+
+  const handleSubmit = async () => {
+    if (!userId) {
+      console.error('User ID is missing');
+      alert('User ID is missing. Please login again.');
+      return;
+    }
+
+    console.log('Selected interests:', selectedInterests);
+
+    if (selectedInterests.length === 0) {
+      alert('Please select at least one interest');
+      return;
+    }
+
+    try {
+      const result = await setUserInterests(userId, selectedInterests);
+      console.log('Interests saved successfully:', result);
+      // dashboard або іншу сторінку !!!!!
+      navigate('/successResiter');
+    } catch (error) {
+      console.error('Error saving interests:', error);
+    }
+  };
   return (
     <div className="flex flex-col">
       <Header title="Complete Profile" />
@@ -61,7 +122,12 @@ export const Interes: React.FC = () => {
 
                 <div className="mt-[12px] flex w-full flex-wrap gap-[6px]">
                   {items.map((item) => (
-                    <Button variant="outline" key={item.id}>
+                    <Button
+                      variant={selectedInterests.includes(item.id) ? 'default' : 'outline'}
+                      key={item.id}
+                      onClick={() => toggleInterest(item.id)}
+                      type="button"
+                    >
                       {item.name}
                     </Button>
                   ))}
@@ -70,7 +136,12 @@ export const Interes: React.FC = () => {
             ))}
           </div>
 
-          <Button type="submit" variant="default" className="mt-[16px] w-full">
+          <Button
+            type="submit"
+            variant="default"
+            className="mt-[16px] w-full"
+            onClick={handleSubmit}
+          >
             Continue
           </Button>
         </div>
