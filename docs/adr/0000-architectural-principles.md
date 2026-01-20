@@ -92,5 +92,4 @@ Documentation is expected to evolve together with the code.
 - **Negative:**
   - Additional effort to maintain documentation
   - Slower initial development due to stricter rules and required documentation,
-  compensated by higher long-term maintainability.
-
+    compensated by higher long-term maintainability.

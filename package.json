@@ -1,5 +1,5 @@
 {
-  "name": "QTalk",
+  "name": "q-talk",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -17,6 +17,7 @@
     "@radix-ui/react-progress": "^1.1.8",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.4",
+    "@react-oauth/google": "^0.13.4",
     "axios": "^1.13.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -26,13 +27,15 @@
     "react-hook-form": "^7.69.0",
     "react-router-dom": "^7.11.0",
     "tailwind-merge": "^3.4.0",
-    "zod": "^4.3.4"
+    "zod": "^4.3.4",
+    "zustand": "^5.0.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-basic-ssl": "^2.1.3",
     "@vitejs/plugin-react": "^5.1.1",
     "autoprefixer": "^10.4.23",
     "eslint": "^9.39.1",
