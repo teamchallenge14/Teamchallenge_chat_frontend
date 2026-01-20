@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { Button } from '../ui/button';
+import { SocialAuth } from '@/modules/auth/components/SocialAuth';
 
 // interface MainWindowProps {
 //   setOpenSingUp: (open: boolean) => void;
@@ -37,24 +38,7 @@ export const MainWindow = () => {
         </p>
       </div>
 
-      <div className="mb-[22px]">
-        <div className='mb-[32px] flex items-center gap-3 before:block before:h-[1px] before:flex-1 before:bg-[#E5E5E5] before:content-[""] after:block after:h-[1px] after:flex-1 after:bg-[#E5E5E5] after:content-[""]'>
-          <span className="whitespace-nowrap text-sm text-gray-500">OR CONTINUE WITH</span>
-        </div>
-        <div className="gap-14px flex justify-between">
-          <Button variant="media">
-            <img src="/img/google.svg" alt="Google" />
-          </Button>
-
-          <Button variant="media">
-            <img src="/img/fec.svg" alt="Facebook" />
-          </Button>
-
-          <Button variant="media">
-            <img src="/img/github.svg" alt="GitHub" />
-          </Button>
-        </div>
-      </div>
+      <SocialAuth />
     </section>
   );
 };

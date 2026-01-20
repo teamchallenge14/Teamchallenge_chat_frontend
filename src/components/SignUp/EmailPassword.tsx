@@ -8,6 +8,8 @@ import { useFormContext } from 'react-hook-form';
 import type { RegisterValues } from '@/features/auth';
 import { MainTitle } from '../ui/MainTitle';
 import { InputPassword } from '../ui/InputPassword';
+import { SocialAuth } from '@/modules/auth/components/SocialAuth';
+
 interface StepPorps {
   setStep: (step: number) => void;
 }
@@ -30,9 +32,10 @@ export const EmailPassword: React.FC<StepPorps> = ({ setStep }) => {
   };
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
+    <div className="flex min-h-screen flex-col overflow-hidden">
       <Header title="Sing Up" />
-      <div className="flex h-screen flex-col">
+
+      <div className="flex flex-1 flex-col">
         <div className="flex flex-1 flex-col items-center justify-center">
           <div className="flex w-full max-w-md flex-col items-center">
             <MainTitle
@@ -90,6 +93,9 @@ export const EmailPassword: React.FC<StepPorps> = ({ setStep }) => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="pb-6">
+          <SocialAuth />
         </div>
       </div>
     </div>

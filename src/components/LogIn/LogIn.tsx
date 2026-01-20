@@ -8,6 +8,7 @@ import { FormProvider } from 'react-hook-form';
 import { logIn } from '@/app/api/api';
 import { MainTitle } from '../ui/MainTitle';
 import { InputPassword } from '../ui/InputPassword';
+import { SocialAuth } from '@/modules/auth/components/SocialAuth';
 
 export const LogIn = () => {
   const methods = useLoginForm();
@@ -32,9 +33,9 @@ export const LogIn = () => {
   };
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
+    <div className="flex min-h-screen flex-col overflow-hidden">
       <Header title="Log In" />
-      <div className="flex h-screen flex-col">
+      <div className="flex flex-1 flex-col">
         <div className="flex flex-1 flex-col items-center justify-center">
           <div className="flex w-full max-w-md flex-col items-center">
             <MainTitle
@@ -91,23 +92,8 @@ export const LogIn = () => {
           </div>
         </div>
 
-        <div className="mx-auto w-full max-w-md px-4 pb-8">
-          <div className='mb-[32px] flex items-center gap-3 before:block before:h-[1px] before:flex-1 before:bg-[#E5E5E5] before:content-[""] after:block after:h-[1px] after:flex-1 after:bg-[#E5E5E5] after:content-[""]'>
-            <span className="whitespace-nowrap text-sm text-gray-500">OR CONTINUE WITH</span>
-          </div>
-          <div className="flex justify-between gap-3">
-            <Button variant="media" className="flex-1">
-              <img src="/img/google.svg" alt="Google" />
-            </Button>
-
-            <Button variant="media" className="flex-1">
-              <img src="/img/fec.svg" alt="Facebook" />
-            </Button>
-
-            <Button variant="media" className="flex-1">
-              <img src="/img/github.svg" alt="GitHub" />
-            </Button>
-          </div>
+        <div className="pb-6">
+          <SocialAuth />
         </div>
       </div>
     </div>
