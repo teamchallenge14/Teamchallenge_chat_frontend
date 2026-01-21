@@ -79,7 +79,7 @@ export const EmailPassword: React.FC<StepPorps> = ({ setStep }) => {
                 {/* {errors.email && <p className="text-red-500">{errors.email.message}</p>} */}
               </div>
 
-              <Button variant="default" onClick={handleNext}>
+              <Button type="button" variant="default" onClick={handleNext}>
                 Next
               </Button>
 
