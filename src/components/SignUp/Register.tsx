@@ -9,7 +9,6 @@ import { Verification } from './Verification';
 import { singUp, updateUser } from '@/app/api/api';
 import { useRegisterInitialForm } from '@/features/auth/model/use-register-form';
 import type { RegisterInitialValues } from '@/features/auth/model/register-schema';
-
 // import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {

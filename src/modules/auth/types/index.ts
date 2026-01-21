@@ -1,10 +1,7 @@
 export type OAuthProvider = 'google' | 'github' | 'facebook';
 
-export interface AuthResponse {
-  accessToken: string;
-  user: {
-    id: string;
-    email: string;
-    name: string;
-  };
+export interface User {
+  id: string;
+  email: string;
+  login: string;
 }
