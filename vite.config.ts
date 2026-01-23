@@ -29,11 +29,11 @@ export default defineConfig({
           });
         },
       },
-      // '/interests': {
-      //   target: 'https://dev-api.alicesocial.pp.ua',
-      //   changeOrigin: true,
-      //   secure: false,
-      // },
+      '/interests': {
+        target: 'https://dev-api.alicesocial.pp.ua',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 });

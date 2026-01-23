@@ -61,6 +61,16 @@ export const verifyEmail = async (email: string) => {
   }
 };
 
+export const confirmVerify = async (email: string, code: string) => {
+  try {
+    const response = await apiClient.post('/v1/mail/confirm', { email, code });
+    return response.data;
+  } catch (erorr) {
+    console.log('Confirm verification error', erorr);
+    throw erorr;
+  }
+};
+
 export const logIn = async (formData: LoginValues) => {
   try {
     console.log('Sending log-in data', formData);
@@ -111,7 +121,7 @@ export const updateUser = async (id: string, userData: RegisterValues) => {
 
 export const setUserInterests = async (id: string, interestIds: string[]) => {
   try {
-    const response = await apiClient.put(`/v1/${id}/interests`, {
+    const response = await apiClient.put(`/v1/users/${id}/interests`, {
       interestIds: interestIds,
     });
     return response.data;
