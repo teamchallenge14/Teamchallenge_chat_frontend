@@ -8,6 +8,7 @@ import { MainTitle } from '../ui/MainTitle';
 import { useFormContext } from 'react-hook-form';
 import { useEffect } from 'react';
 import type { RegisterInitialInput } from '@/features/auth/model/register-schema';
+import { verifyEmail } from '@/app/api/api';
 interface StepPorps {
   setStep: (step: number) => void;
 }
@@ -24,9 +25,9 @@ export const Verification: React.FC<StepPorps> = ({ setStep }) => {
   useEffect(() => {
     const fetchVerefication = async () => {
       try {
-        // const email = getValues('email');
-        // await verifyEmail(email);
-        setStep(4);
+        const email = getValues('email');
+        await verifyEmail(email);
+        // setStep(4);
       } catch (error) {
         console.log('Email verification error', error);
         throw error;

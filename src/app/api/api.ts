@@ -53,7 +53,7 @@ export const singUp = async (formData: RegisterInitialValues) => {
 
 export const verifyEmail = async (email: string) => {
   try {
-    const response = await apiClient.post('/v1/mail/sendConfirm', { email });
+    const response = await apiClient.post('/v1/mail/confirm/send', { email });
     return response.data;
   } catch (error) {
     console.log('Email verification error', error);
@@ -74,7 +74,7 @@ export const logIn = async (formData: LoginValues) => {
 
 export const getInterest = async () => {
   try {
-    const response = await apiClient.get('/v1/interests');
+    const response = await apiClient.get('/interests');
     return response.data;
   } catch (error) {
     console.log('Error fetching interests:', error);
@@ -87,7 +87,11 @@ export const getUserById = async (userId: string) => {
     throw new Error('User ID is required');
   }
   try {
-    const response = await apiClient.get(`/v1/users/${userId}`);
+    const response = await apiClient.get('/v1/users/{id}', {
+      params: {
+        id: userId,
+      },
+    });
     return response.data;
   } catch (error) {
     console.log('Error fetching user by ID:', error);

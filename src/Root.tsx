@@ -6,7 +6,7 @@ import { LogIn } from './components/LogIn/LogIn';
 import { Guest } from './components/Guest/Guest';
 import { Reset } from './components/PasswordRecovery/Reset';
 import { FinalyWindow } from './components/SignUp/FinalyWindow';
-import { MainPage } from '@/modules/auth/pages/MainPage';
+// import { MainPage } from '@/modules/auth/pages/MainPage';
 
 export const Root = () => {
   return (
@@ -19,7 +19,7 @@ export const Root = () => {
           <Route path="/login" element={<LogIn />} />
           <Route path="/resetPassword" element={<Reset />} />
           <Route path="/guest" element={<Guest />} />
-          <Route path="/chat" element={<MainPage />} />
+          {/* <Route path="/chat" element={<MainPage />} /> */}
         </Route>
       </Routes>
     </Router>
