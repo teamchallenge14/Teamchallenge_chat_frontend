@@ -5,10 +5,10 @@ import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import { NavLink } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
-import type { RegisterValues } from '@/features/auth';
 import { MainTitle } from '../ui/MainTitle';
 import { InputPassword } from '../ui/InputPassword';
 import { SocialAuth } from '@/modules/auth/components/SocialAuth';
+import type { RegisterInitialValues } from '@/features/auth/model/register-schema';
 
 interface StepPorps {
   setStep: (step: number) => void;
@@ -20,7 +20,7 @@ export const EmailPassword: React.FC<StepPorps> = ({ setStep }) => {
     formState: { errors },
     trigger,
     getValues,
-  } = useFormContext<RegisterValues>();
+  } = useFormContext<RegisterInitialValues>();
   const handleNext = async () => {
     const isValid = await trigger(['email', 'password']);
     console.log('Step 1 values after validation:', getValues());
