@@ -82,6 +82,30 @@ export const logIn = async (formData: LoginValues) => {
   }
 };
 
+export const sendResetCode = async (email: string) => {
+  try {
+    const response = await apiClient.post('/v1/mail/reset-password/send', { email });
+    return response.data;
+  } catch (error) {
+    console.log('Error sending reset code:', error);
+    throw error;
+  }
+};
+
+export const sendResetCodeConfirm = async (email: string, code: string, newPassword: string) => {
+  try {
+    const response = await apiClient.post('/v1/mail/reset-password/confirm', {
+      email,
+      code,
+      newPassword,
+    });
+    return response.data;
+  } catch (error) {
+    console.log('Error sending reset code:', error);
+    throw error;
+  }
+};
+
 export const getInterest = async () => {
   try {
     const response = await apiClient.get('/interests');

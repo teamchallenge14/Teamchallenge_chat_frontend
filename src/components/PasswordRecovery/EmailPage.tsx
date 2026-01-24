@@ -5,14 +5,36 @@ import { Label } from '../ui/Label';
 import { Header } from '../ui/Header';
 import { MainTitle } from '../ui/MainTitle';
 import type React from 'react';
+import { sendResetCode } from '@/app/api/api';
 
 interface EmailPageProps {
   setStep: (step: number) => void;
+  email: string;
+  setEmail: (email: string) => void;
 }
 
-export const EmailPage: React.FC<EmailPageProps> = ({ setStep }) => {
-  const handleSend = () => {
-    setStep(2);
+export const EmailPage: React.FC<EmailPageProps> = ({ setStep, email, setEmail }) => {
+  const valideEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  const handleSend = async () => {
+    if (!email) {
+      console.log('Please enter your email'); // ERROR
+      return;
+    }
+    if (!valideEmail(email)) {
+      console.log('Please enter a valid email'); // ERROR
+      return;
+    }
+
+    try {
+      await sendResetCode(email);
+      setStep(2);
+    } catch (error) {
+      console.log('Send reset code error', error);
+      throw error;
+    }
   };
   return (
     <div className="flex h-screen flex-col overflow-hidden">
@@ -32,12 +54,14 @@ export const EmailPage: React.FC<EmailPageProps> = ({ setStep }) => {
                   id="email"
                   type="email"
                   placeholder="example@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   // {...register('email')}
                 />
                 {/* {errors.email && <p className="text-red-500">{errors.email.message}</p>} */}
               </div>
 
-              <Button variant="default" onClick={handleSend}>
+              <Button variant="default" type="button" onClick={handleSend}>
                 Send Verification Code
               </Button>
 

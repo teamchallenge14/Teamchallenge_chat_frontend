@@ -8,12 +8,22 @@ import { InputPassword } from '../ui/InputPassword';
 
 interface PasswordProps {
   setStep: (step: number) => void;
+  code: string;
+  setCode: (code: string) => void;
+  newPassword: string;
+  setNewPassword: (password: string) => void;
 }
 
-export const PasswordPage: React.FC<PasswordProps> = ({ setStep }) => {
-  const handleSend = () => {
-    setStep(3);
-  };
+export const PasswordPage: React.FC<PasswordProps> = ({
+  // setStep,
+  code,
+  setCode,
+  newPassword,
+  setNewPassword,
+}) => {
+  // const handleSend = () => {
+  //   setStep(3);
+  // };
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <Header title="Reset Password" />
@@ -30,8 +40,10 @@ export const PasswordPage: React.FC<PasswordProps> = ({ setStep }) => {
                 <Label htmlFor="code">Verification code</Label>
                 <Input
                   id="code"
-                  type="number"
+                  type="string"
                   placeholder="123456"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
                   // {...register('email')}
                 />
                 {/* {errors.email && <p className="text-red-500">{errors.email.message}</p>} */}
@@ -43,6 +55,8 @@ export const PasswordPage: React.FC<PasswordProps> = ({ setStep }) => {
                   id="newPassword"
                   type="password"
                   placeholder="123456"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
                   // {...register('email')}
                 />
                 {/* {errors.email && <p className="text-red-500">{errors.email.message}</p>} */}
@@ -60,7 +74,7 @@ export const PasswordPage: React.FC<PasswordProps> = ({ setStep }) => {
                 {/* {errors.email && <p className="text-red-500">{errors.email.message}</p>} */}
               </div>
 
-              <Button variant="default" onClick={handleSend}>
+              <Button variant="default" type="submit">
                 Reset Password
               </Button>
             </div>
