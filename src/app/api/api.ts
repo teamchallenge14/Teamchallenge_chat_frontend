@@ -53,11 +53,21 @@ export const singUp = async (formData: RegisterInitialValues) => {
 
 export const verifyEmail = async (email: string) => {
   try {
-    const response = await apiClient.post('/v1/mail/sendConfirm', { email });
+    const response = await apiClient.post('/v1/mail/confirm/send', { email });
     return response.data;
   } catch (error) {
     console.log('Email verification error', error);
     throw error;
+  }
+};
+
+export const confirmVerify = async (email: string, code: string) => {
+  try {
+    const response = await apiClient.post('/v1/mail/confirm', { email, code });
+    return response.data;
+  } catch (erorr) {
+    console.log('Confirm verification error', erorr);
+    throw erorr;
   }
 };
 
@@ -72,9 +82,33 @@ export const logIn = async (formData: LoginValues) => {
   }
 };
 
+export const sendResetCode = async (email: string) => {
+  try {
+    const response = await apiClient.post('/v1/mail/reset-password/send', { email });
+    return response.data;
+  } catch (error) {
+    console.log('Error sending reset code:', error);
+    throw error;
+  }
+};
+
+export const sendResetCodeConfirm = async (email: string, code: string, newPassword: string) => {
+  try {
+    const response = await apiClient.post('/v1/mail/reset-password/confirm', {
+      email,
+      code,
+      newPassword,
+    });
+    return response.data;
+  } catch (error) {
+    console.log('Error sending reset code:', error);
+    throw error;
+  }
+};
+
 export const getInterest = async () => {
   try {
-    const response = await apiClient.get('/v1/interests');
+    const response = await apiClient.get('/interests');
     return response.data;
   } catch (error) {
     console.log('Error fetching interests:', error);
@@ -87,7 +121,11 @@ export const getUserById = async (userId: string) => {
     throw new Error('User ID is required');
   }
   try {
-    const response = await apiClient.get(`/v1/users/${userId}`);
+    const response = await apiClient.get('/v1/users/{id}', {
+      params: {
+        id: userId,
+      },
+    });
     return response.data;
   } catch (error) {
     console.log('Error fetching user by ID:', error);
@@ -107,7 +145,7 @@ export const updateUser = async (id: string, userData: RegisterValues) => {
 
 export const setUserInterests = async (id: string, interestIds: string[]) => {
   try {
-    const response = await apiClient.put(`/v1/${id}/interests`, {
+    const response = await apiClient.put(`/v1/users/${id}/interests`, {
       interestIds: interestIds,
     });
     return response.data;

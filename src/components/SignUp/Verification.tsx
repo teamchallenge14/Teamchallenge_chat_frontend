@@ -6,8 +6,9 @@ import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import { MainTitle } from '../ui/MainTitle';
 import { useFormContext } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { RegisterInitialInput } from '@/features/auth/model/register-schema';
+import { confirmVerify, verifyEmail } from '@/app/api/api';
 interface StepPorps {
   setStep: (step: number) => void;
 }
@@ -19,14 +20,14 @@ export const Verification: React.FC<StepPorps> = ({ setStep }) => {
     // trigger,
     getValues,
   } = useFormContext<RegisterInitialInput>();
-  // const [code, setCode] = useState('');
+  const [code, setCode] = useState('');
 
   useEffect(() => {
     const fetchVerefication = async () => {
       try {
-        // const email = getValues('email');
-        // await verifyEmail(email);
-        setStep(4);
+        const email = getValues('email');
+        await verifyEmail(email);
+        // setStep(4);
       } catch (error) {
         console.log('Email verification error', error);
         throw error;
@@ -35,12 +36,27 @@ export const Verification: React.FC<StepPorps> = ({ setStep }) => {
     fetchVerefication();
   }, [getValues]);
 
-  const handleNext = async () => {
-    // const isValid = await trigger(['email', 'password']);
-    // if (isValid) {
-    setStep(4);
-    // }
+  const handleConfirmCode = async () => {
+    if (!code || code.length !== 6) {
+      console.log('Please enter a valid 6-digit code'); //Тут показувати помилку
+      return;
+    }
+    try {
+      const email = getValues('email');
+      const response = await confirmVerify(email, code);
+      console.log('Code confirmation response', response);
+      setStep(4);
+    } catch (error) {
+      console.log('Code confirmation error', error);
+      throw error;
+    }
   };
+
+  // const handleNext = async () => {
+  //   // const isValid = await trigger(['email', 'password']);
+  //   // if (isValid) {
+  //   // }
+  // };
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <Header title="Email Verification " />
@@ -55,9 +71,15 @@ export const Verification: React.FC<StepPorps> = ({ setStep }) => {
             <div className="flex w-full flex-col gap-[16px]">
               <div>
                 <Label htmlFor="code">Verification code</Label>
-                <Input id="code" type="email" placeholder="123456" />
+                <Input
+                  id="code"
+                  type="email"
+                  placeholder="123456"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                />
               </div>
-              <Button variant="default" onClick={handleNext}>
+              <Button variant="default" onClick={handleConfirmCode}>
                 Verify
               </Button>
             </div>

@@ -15,7 +15,7 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       '/v1': {
-        target: 'https://teamchallenge-chat-backend.onrender.com',
+        target: 'https://dev-api.alicesocial.pp.ua',
         changeOrigin: true,
         secure: false,
         // rewrite: (path) => path.replace(/^\/v1/, ''),
@@ -28,6 +28,11 @@ export default defineConfig({
             console.log('Ответ от бэкенда:', proxyRes.statusCode, req.url);
           });
         },
+      },
+      '/interests': {
+        target: 'https://dev-api.alicesocial.pp.ua',
+        changeOrigin: true,
+        secure: false,
       },
     },
   },
