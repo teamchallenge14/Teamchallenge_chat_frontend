@@ -18,14 +18,16 @@ export const Header: React.FC<HeaderProps> = ({ title, onBack }) => {
   };
 
   return (
-    <div className="flex item-center h-[65px] text-center">
+    <div className="item-center flex h-[65px] text-center">
       <img
         src="img/back.svg"
         alt="Back"
-        className="h-[24px] w-[24px] my-[auto]"
+        className="my-[auto] h-[24px] w-[24px]"
         onClick={handleGoBack}
       />
-      <p className="text-center flex-1 my-[auto] font-semibold text-[16px] leading-[28px]">{title}</p>
+      <p className="my-[auto] flex-1 text-center text-[16px] font-semibold leading-[28px]">
+        {title}
+      </p>
     </div>
   );
 };

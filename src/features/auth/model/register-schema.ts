@@ -14,9 +14,7 @@ export const AGE_OPTIONS = Array.from({ length: 89 }, (_, i) => i + 12);
  */
 export type Gender = (typeof GENDERS)[number];
 
-export const registerSchema = z.object({
-  // --- 1. Basic information ---
-
+export const registerInitialSchema = z.object({
   email: z
     .string()
     .trim()
@@ -38,16 +36,42 @@ export const registerSchema = z.object({
       message:
         'Login cannot contain spaces or special characters. Only letters, numbers, and underscores are allowed.',
     }),
+});
+
+export const registerSchema = z.object({
+  // --- 1. Basic information ---
+
+  // email: z
+  //   .string()
+  //   .trim()
+  //   .nonempty({ message: 'Email is required.' })
+  //   .email({ message: 'Invalid email address.' }),
+
+  // password: z
+  //   .string()
+  //   .min(8, { message: 'Password must be at least 8 characters.' })
+  //   .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter.' })
+  //   .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter.' })
+  //   .regex(/[0-9]/, { message: 'Password must contain at least one number.' }),
+
+  // login: z
+  //   .string()
+  //   .trim()
+  //   .min(3, { message: 'Login must be at least 3 characters.' })
+  //   .regex(/^[a-zA-Z0-9_]+$/, {
+  //     message:
+  //       'Login cannot contain spaces or special characters. Only letters, numbers, and underscores are allowed.',
+  //   }),
 
   // --- 2. Profile details ---
 
-  name: z
+  firstName: z
     .string()
     .trim()
     .min(3, { message: 'Name must be at least 3 characters.' })
     .max(20, { message: 'Name must be at most 20 characters.' }),
 
-  surname: z
+  lastName: z
     .string()
     .trim()
     .min(1, { message: 'Surname is required.' })
@@ -67,7 +91,7 @@ export const registerSchema = z.object({
   // Preprocess bio so empty or whitespace-only strings are treated as undefined.
   // This ensures an empty bio is not sent to the backend as an empty string
   // and remains an absent field if the user left it blank.
-  bio: z.preprocess(
+  description: z.preprocess(
     (val) => (typeof val === 'string' && val.trim() === '' ? undefined : val),
     z.string().trim().max(200, { message: 'Bio must be at most 200 characters.' }).optional(),
   ),
@@ -80,11 +104,13 @@ export const registerSchema = z.object({
  * divergence between validation rules and TypeScript definitions.
  */
 export type RegisterValues = z.infer<typeof registerSchema>;
+export type RegisterInitialValues = z.infer<typeof registerInitialSchema>;
 
 /** Type representing raw input values before Zod coercion.
  * Useful for form libraries that handle all inputs as strings.
  */
 export type RegisterInput = z.input<typeof registerSchema>;
+export type RegisterInitialInput = z.input<typeof registerInitialSchema>;
 /**
  * All error messages are localized and user-friendly.
  * No additional client-side validation is needed.

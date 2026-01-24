@@ -20,7 +20,7 @@ export const useLoginForm = () => {
 
     // Explicit default values ensure predictable controlled inputs
     defaultValues: {
-      email: '',
+      identifier: '',
       password: '',
     },
 

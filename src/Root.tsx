@@ -1,9 +1,12 @@
 import App from '@/app/App'; // main app component
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainWindow } from './components/MainWindow/MainWindow';
-import { Register } from './components/SingUp/Register';
+import { Register } from './components/SignUp/Register';
 import { LogIn } from './components/LogIn/LogIn';
 import { Guest } from './components/Guest/Guest';
+import { Reset } from './components/PasswordRecovery/Reset';
+import { FinalyWindow } from './components/SignUp/FinalyWindow';
+// import { MainPage } from '@/modules/auth/pages/MainPage';
 
 export const Root = () => {
   return (
@@ -12,8 +15,11 @@ export const Root = () => {
         <Route path="/" element={<App />}>
           <Route index element={<MainWindow />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/successResiter" element={<FinalyWindow />} />
           <Route path="/login" element={<LogIn />} />
+          <Route path="/resetPassword" element={<Reset />} />
           <Route path="/guest" element={<Guest />} />
+          {/* <Route path="/chat" element={<MainPage />} /> */}
         </Route>
       </Routes>
     </Router>

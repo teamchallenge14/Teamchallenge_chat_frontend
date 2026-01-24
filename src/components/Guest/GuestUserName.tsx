@@ -3,23 +3,33 @@ import { Button } from '../ui/button';
 import { Header } from '../ui/Header';
 import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
+import { MainTitle } from '../ui/MainTitle';
+import type React from 'react';
 
-export const Step1 = () => {
+interface GuestUserNameProps {
+  setStep: (step: number) => void;
+}
+
+const list = [
+  { text: 'Random chat only access' },
+  { text: 'No chat history saved' },
+  { text: 'Cannot access rooms' },
+  { text: 'Cannot save contacts' },
+];
+
+export const GuestUserName: React.FC<GuestUserNameProps> = ({ setStep }) => {
+  void setStep;
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <Header title="Guest Entry" />
       <div className="flex h-screen flex-col">
         <div className="flex flex-1 flex-col items-center justify-center">
           <div className="flex w-full max-w-md flex-col items-center">
-            <img src="img/user.svg" alt="icon" className="icon mb-5" />
-
-            <div className="mb-8 text-center">
-              <h1 className="mb-2 text-[30px] font-bold leading-[40px]">Choose Your Username</h1>
-              <h2 className="text-[14px] font-normal text-gray-600">
-                Enter a username to continue as guest
-              </h2>
-            </div>
-
+            <MainTitle
+              image="img/user.svg"
+              title="Choose Your Username"
+              description="Enter a username to continue as guest"
+            />
             <form className="flex w-full flex-col gap-[16px]">
               <div>
                 <Label htmlFor="email">Email</Label>
@@ -32,14 +42,24 @@ export const Step1 = () => {
 
               <Button variant="default">Continue as a Guest</Button>
 
-              {/* <div className="flex justify-between">
-                <p className="font-[400] text-[14px] leading-[20px] text-[#525252]">
-                  Already have an account?
-                </p>
-                <NavLink to="/login">
-                  <p className="font-medium text-[14px] leading-[100%] text-[#171717]">Log In</p>
-                </NavLink>
-              </div> */}
+              <div className="mt-[80px]">
+                <div className="flex gap-[12px]">
+                  <img alt="warning" src="/img/warning.svg" className="h-[20px] w-[20px]" />
+                  <p className="text-[14px] font-semibold leading-[20px] text-[#525252]">
+                    Guest Limitations
+                  </p>
+                </div>{' '}
+                <ul className="mt-[16px] flex flex-col gap-[6px]">
+                  {list.map((item, index) => (
+                    <li
+                      key={index}
+                      className="relative pl-4 text-[14px] font-normal leading-[16px] text-[#525252]"
+                    >
+                      {item.text}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </form>
           </div>
         </div>
