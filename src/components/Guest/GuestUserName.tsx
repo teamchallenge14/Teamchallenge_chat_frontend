@@ -18,6 +18,9 @@ const list = [
 ];
 
 export const GuestUserName: React.FC<GuestUserNameProps> = ({ setStep }) => {
+  const handleNext = () => {
+    setStep(2);
+  };
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <Header title="Guest Entry" />
@@ -39,7 +42,9 @@ export const GuestUserName: React.FC<GuestUserNameProps> = ({ setStep }) => {
                 This will be your temporary username
               </p>
 
-              <Button variant="default">Continue as a Guest</Button>
+              <Button variant="default" type="button" onClick={handleNext}>
+                Continue as a Guest
+              </Button>
 
               <div className="mt-[80px]">
                 <div className="flex gap-[12px]">
