@@ -7,6 +7,8 @@ import { GuestInteres } from './GuestInterest';
 
 export const Guest = () => {
   const [step, setStep] = useState(1);
+  const [userId, setUserId] = useState<string | null>(null);
+  console.log(setUserId);
   const profileMethods = useRegisterForm();
 
   const hondleSubmit = (e: React.FormEvent) => {
@@ -24,7 +26,7 @@ export const Guest = () => {
         <FormProvider {...profileMethods}>
           <form onSubmit={profileMethods.handleSubmit(handleUpdateAcount)}>
             {step === 2 && <GuestInfo setStep={setStep} />}
-            {step === 3 && <GuestInteres />}
+            {step === 3 && <GuestInteres userId={userId} />}
           </form>
         </FormProvider>
       )}
