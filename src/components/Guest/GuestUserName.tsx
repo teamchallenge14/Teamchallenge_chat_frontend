@@ -18,6 +18,7 @@ const list = [
 ];
 
 export const GuestUserName: React.FC<GuestUserNameProps> = ({ setStep }) => {
+  console.log(setStep);
   const handleNext = () => {
     setStep(2);
   };
