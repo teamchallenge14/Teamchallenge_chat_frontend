@@ -5,55 +5,22 @@ import { getInterest, getUserById, setUserInterests } from '@/app/api/api';
 import React, { useEffect, useState } from 'react';
 import type { Interest } from '@/types/Interest';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 
 interface InteresProps {
   userId: string | null;
 }
 
-export const Interes: React.FC<InteresProps> = ({ userId }) => {
-  const {
-    data: interests = [],
-    isLoading,
-    isError,
-  } = useQuery<Interest[]>({
-    queryKey: ['interests'],
-    queryFn: getInterest,
-  });
-
-  // const { data: user } = useQuery({
-  //   queryKey: ['user', userId],
-  //   queryFn: () => getUserById(userId!),
-  //   enabled: !!userId,
-  // });
-
-  // const [interest, setInterest] = useState<Interest[]>([]);
+export const GuestInteres: React.FC<InteresProps> = ({ userId }) => {
+  const [interest, setInterest] = useState<Interest[]>([]);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  // const hasInitialized = useRef(false);
   const navigate = useNavigate();
-  const formatCategory = (category: string): string => {
-    return category
-      .split('_')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  };
-  const grouperInterestByCategiry = interests.reduce<Record<string, Interest[]>>((acc, item) => {
+  const grouperInterestByCategiry = interest.reduce<Record<string, Interest[]>>((acc, item) => {
     if (!acc[item.category]) {
       acc[item.category] = [];
     }
     acc[item.category].push(item);
     return acc;
   }, {});
-
-  // useEffect(() => {
-  //   if (!user || hasInitialized.current) return;
-
-  //   const userInterestIds = user.interests?.map((i: Interest) => i.id) ?? [];
-  //   if (userInterestIds.length > 0) {
-  //     setSelectedInterests(userInterestIds);
-  //     hasInitialized.current = true;
-  //   }
-  // }, [user]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -76,18 +43,18 @@ export const Interes: React.FC<InteresProps> = ({ userId }) => {
     fetchUser();
   }, [userId]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await getInterest();
-  //       setInterest(data);
-  //       console.log('Fetched data:', data);
-  //     } catch (error) {
-  //       console.log('Error:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getInterest();
+        setInterest(data);
+        console.log('Fetched data:', data);
+      } catch (error) {
+        console.log('Error:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const toggleInterest = (interestId: string) => {
     setSelectedInterests((prev) => {
@@ -122,14 +89,6 @@ export const Interes: React.FC<InteresProps> = ({ userId }) => {
       console.error('Error saving interests:', error);
     }
   };
-
-  if (isLoading) {
-    return <div>Loading interests...</div>;
-  }
-
-  if (isError) {
-    return <div>Error loading interests. Please try again later.</div>;
-  }
   return (
     <div className="flex flex-col">
       <Header title="Complete Profile" />
@@ -158,7 +117,7 @@ export const Interes: React.FC<InteresProps> = ({ userId }) => {
             {Object.entries(grouperInterestByCategiry).map(([categoty, items]) => (
               <div key={categoty}>
                 <h3 className="text-left text-[14px] font-bold leading-[20px] text-[#000000]">
-                  {formatCategory(categoty)}
+                  {categoty}
                 </h3>
 
                 <div className="mt-[12px] flex w-full flex-wrap gap-[6px]">
