@@ -22,7 +22,7 @@ We decided to use the following UI stack:
 - **Positive:**
   - Rapid development speed (copy-paste components strategy).
   - Full control over component code (unlike MUI or AntD, Shadcn lives in our repo).
-  - Consistent design system enforced via `tailwind.config.js`.
+  - Consistent design system enforced via `tailwind.config.cts`.
 - **Negative:**
   - "Markup pollution" due to long utility class strings
     (mitigated by component extraction and composition).
