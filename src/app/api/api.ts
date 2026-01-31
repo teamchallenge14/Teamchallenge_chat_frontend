@@ -1,8 +1,10 @@
 import type { LoginValues, RegisterValues } from '@/features/auth';
 import type { RegisterInitialValues } from '@/features/auth/model/register-schema';
+import { API_URL } from '@/shared/constants/env';
 import axios from 'axios';
 
 export const apiClient = axios.create({
+  baseURL: API_URL || '/',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

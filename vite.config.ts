@@ -13,27 +13,27 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
-    proxy: {
-      '/v1': {
-        target: 'https://dev-api.alicesocial.pp.ua',
-        changeOrigin: true,
-        secure: false,
-        // rewrite: (path) => path.replace(/^\/v1/, ''),
-        // rewrite: (path) => path.replace(/^\/v1/, '/api'),
-        configure: (proxy) => {
-          proxy.on('proxyReq', (_proxyReq, req) => {
-            console.log('🚀 ПРОКСИ ПЕРЕХВАТИЛ:', req.method, req.url);
-          });
-          proxy.on('proxyRes', (proxyRes, req) => {
-            console.log('Ответ от бэкенда:', proxyRes.statusCode, req.url);
-          });
-        },
-      },
-      '/interests': {
-        target: 'https://dev-api.alicesocial.pp.ua',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
+    // proxy: {
+    //   '/v1': {
+    //     target: 'https://dev-api.alicesocial.pp.ua',
+    //     changeOrigin: true,
+    //     secure: false,
+    //     // rewrite: (path) => path.replace(/^\/v1/, ''),
+    //     // rewrite: (path) => path.replace(/^\/v1/, '/api'),
+    //     configure: (proxy) => {
+    //       proxy.on('proxyReq', (_proxyReq, req) => {
+    //         console.log('🚀 ПРОКСИ ПЕРЕХВАТИЛ:', req.method, req.url);
+    //       });
+    //       proxy.on('proxyRes', (proxyRes, req) => {
+    //         console.log('Ответ от бэкенда:', proxyRes.statusCode, req.url);
+    //       });
+    //     },
+    //   },
+    //   '/interests': {
+    //     target: 'https://dev-api.alicesocial.pp.ua',
+    //     changeOrigin: true,
+    //     secure: false,
+    //   },
+    // },
   },
 });
