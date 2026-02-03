@@ -46,6 +46,7 @@ export const singUp = async (formData: RegisterInitialValues) => {
   try {
     console.log('Sending sign-up data:', formData);
     const response = await apiClient.post('/v1/auth', formData);
+    console.log('singUp response:', response);
     return response.data;
   } catch (erorr) {
     console.log('singUp erorr', erorr);
@@ -110,7 +111,7 @@ export const sendResetCodeConfirm = async (email: string, code: string, newPassw
 
 export const getInterest = async () => {
   try {
-    const response = await apiClient.get('/interests');
+    const response = await apiClient.get('/v1/interests');
     return response.data;
   } catch (error) {
     console.log('Error fetching interests:', error);
@@ -145,11 +146,12 @@ export const updateUser = async (id: string, userData: RegisterValues) => {
   }
 };
 
-export const setUserInterests = async (id: string, interestIds: string[]) => {
+export const setUserInterests = async (
+  id: string,
+  payload: { add?: string[]; remove?: string[] },
+) => {
   try {
-    const response = await apiClient.put(`/v1/users/${id}/interests`, {
-      interestIds: interestIds,
-    });
+    const response = await apiClient.patch(`/v1/users/${id}/interests`, payload);
     return response.data;
   } catch (error) {
     console.log('Error fetching user interests:', error);
