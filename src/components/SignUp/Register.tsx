@@ -26,10 +26,9 @@ export const Register = () => {
 
     try {
       const response = await singUp(data);
-      setUserId(response.id);
-      console.log(userId);
+      console.log('ID from backend:', response.user.id);
+      setUserId(response.user.id);
       console.log('Sign up success:', response);
-      setUserId(response.id);
       setStep(3);
     } catch (error) {
       console.error('Sign up error:', error);
