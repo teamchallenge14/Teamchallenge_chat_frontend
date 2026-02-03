@@ -191,12 +191,6 @@ pnpm format
 
 Please read our [Contributing Guide](CONTRIBUTING.md) for development standards and workflow.
 
-**Quick Rules:**
-
-- **Language:** English only.
-- **UI Components:** Use `pnpm dlx shadcn@latest add [component-name]`.
-- **Imports:** Use absolute paths (e.g., `@/shared/lib/utils`).
-
 ---
 
 ## Localization

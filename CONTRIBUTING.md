@@ -2,6 +2,16 @@
 
 Welcome to the team! Here are the guidelines to help you get started and ensure consistent code quality across the project.
 
+## Quick Rules
+
+- **Package manager:** Use `pnpm` only (no npm / yarn).
+- **Language:** English only (code, comments, commits, docs).
+- **Imports:** Use absolute imports via `@/` (avoid deep relative paths).
+- **Architecture:** Follow the FSD-inspired folder structure and boundaries.
+- **Commit conventions:** Follow Conventional Commits and add `QTAL-XXX` when applicable.
+- **Safety:** Do not use non-null assertions (`!`).
+- **UI components:** Add shadcn/ui components via `pnpm dlx shadcn@latest add ...`.
+
 ## Project Setup
 
 ### Package Manager
@@ -70,21 +80,22 @@ import type { User } from '@/entities/user';
 
 ### Before Committing
 
-Always ensure your code is clean before committing:
+Before committing, make sure your code is clean.
+
+Formatting and linting are usually handled automatically via editor settings,
+but you can always verify manually:
 
 ```bash
-pnpm lint   # Check for errors
-pnpm format # Fix formatting
+pnpm lint
+pnpm format
 ```
 
 ### Git Conventions
 
-We follow **Conventional Commits**.
+Commit messages follow the **Conventional Commits** specification.
 
-- `feat:` for new features
-- `fix:` for bug fixes
-- `chore:` for maintenance/config changes
-- `docs:` for documentation updates
+For detailed rules, examples, and task reference guidelines,
+see [COMMITS.md](./COMMITS.md).
 
 ### Language Standards
 
