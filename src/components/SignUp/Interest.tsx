@@ -114,7 +114,7 @@ export const Interes: React.FC<InteresProps> = ({ userId }) => {
     }
 
     try {
-      const result = await setUserInterests(userId, selectedInterests);
+      const result = await setUserInterests(userId, { add: selectedInterests });
       console.log('Interests saved successfully:', result);
       // dashboard або іншу сторінку !!!!!
       navigate('/successResiter');
@@ -164,7 +164,7 @@ export const Interes: React.FC<InteresProps> = ({ userId }) => {
                 <div className="mt-[12px] flex w-full flex-wrap gap-[6px]">
                   {items.map((item) => (
                     <Button
-                      variant={selectedInterests.includes(item.id) ? 'default' : 'outline'}
+                      variant={selectedInterests.includes(item.id) ? 'active' : 'outline'}
                       key={item.id}
                       onClick={() => toggleInterest(item.id)}
                       type="button"
