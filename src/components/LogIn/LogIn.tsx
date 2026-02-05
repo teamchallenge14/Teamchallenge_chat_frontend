@@ -9,27 +9,29 @@ import { logIn } from '@/app/api/api';
 import { MainTitle } from '../ui/MainTitle';
 import { InputPassword } from '../ui/InputPassword';
 import { SocialAuth } from '@/modules/auth/components/SocialAuth';
+import { useMutation } from '@tanstack/react-query';
 
 export const LogIn = () => {
   const methods = useLoginForm();
   const {
     handleSubmit,
-    getValues,
     register,
     formState: { errors },
-    // trigger,
   } = methods;
+
+  const logInMutation = useMutation({
+    mutationFn: (data: LoginValues) => logIn(data),
+    onSuccess: (response) => {
+      console.log('logIn up success:', response);
+    },
+    onError: (error) => {
+      console.error('logIn up error:', error);
+    },
+  });
 
   const handleCreateAcount = async (data: LoginValues) => {
     console.log('Форма валідна, дані:', data);
-    const allData = getValues();
-    try {
-      const response = await logIn(allData);
-      console.log('logIn up success:', response);
-    } catch (error) {
-      console.error('logIn up error:', error);
-      alert('Помилка логінації. Перевірте дані та спробуйте ще раз.');
-    }
+    logInMutation.mutate(data);
   };
 
   return (
@@ -54,7 +56,7 @@ export const LogIn = () => {
                   </Label>
                   <Input
                     id="email"
-                    type="email"
+                    type="text"
                     placeholder="example@gmail.com"
                     {...register('identifier')}
                   />
