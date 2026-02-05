@@ -9,6 +9,7 @@ import { Verification } from './Verification';
 import { singUp, updateUser } from '@/app/api/api';
 import { useRegisterInitialForm } from '@/features/auth/model/use-register-form';
 import type { RegisterInitialValues } from '@/features/auth/model/register-schema';
+import { useMutation } from '@tanstack/react-query';
 // import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {
@@ -16,48 +17,48 @@ export const Register = () => {
 
   // Форма для кроків 4-5 (firstName, lastName, age, gender, description)
   const profileMethods = useRegisterForm();
-  // const { handleSubmit, getValues } = methods;
   const [step, setStep] = useState(1);
-  const [userId, setUserId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null); // Треба в zustand або контекст
   // const navigate = useNavigate();
 
-  const handleCreateAcount = async (data: RegisterInitialValues) => {
-    console.log('Форма валідна, дані:', data);
-
-    try {
-      const response = await singUp(data);
-      console.log('ID from backend:', response.user.id);
+  const singUpMutation = useMutation({
+    mutationFn: singUp,
+    onSuccess: (response) => {
       setUserId(response.user.id);
       console.log('Sign up success:', response);
       setStep(3);
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error('Sign up error:', error);
-    }
+    },
+  });
+
+  const updateUserMutation = useMutation({
+    mutationFn: ({ userId, data }: { userId: string; data: RegisterValues }) =>
+      updateUser(userId, data),
+    onSuccess: (response) => {
+      console.log('update success:', response);
+      setStep(5);
+    },
+    onError: (error) => {
+      console.error('update error:', error);
+    },
+  });
+
+  const handleCreateAcount = async (data: RegisterInitialValues) => {
+    console.log('Форма валідна, дані:', data);
+    singUpMutation.mutate(data);
   };
 
   const handleUpdateAcount = async (data: RegisterValues) => {
     console.log('Форма валідна, дані:', data);
-    // const data = getValues() as RegisterInitialValues;
 
     if (!userId) {
       console.error('User ID is missing');
       return;
     }
 
-    try {
-      const response = await updateUser(userId, data);
-      console.log('Sign up success:', response);
-      setStep(5);
-      // const userid = response.id;
-      // if (userid) {
-      //   navigate(`/interests/${userid}`);
-      // } else {
-      //   console.error('User ID is missing in the response');
-      // }
-      // setStep(5);
-    } catch (error) {
-      console.error('Sign up error:', error);
-    }
+    updateUserMutation.mutate({ userId, data });
   };
 
   return (
@@ -87,15 +88,6 @@ export const Register = () => {
           </form>
         </FormProvider>
       )}
-      {/* <FormProvider {...initialMethods}>
-        <form onSubmit={handleSubmit(handleCreateAcount)}>
-          {step === 1 && <EmailPassword setStep={setStep} />}
-          {step === 2 && <UserName setStep={setStep} onVerify={handleCreateAcount} />}
-          {step === 3 && <Verification setStep={setStep} />}
-          {step === 4 && <PersonalInfo />}
-          {step === 5 && <Interes />}
-        </form>
-      </FormProvider> */}
     </>
   );
 };

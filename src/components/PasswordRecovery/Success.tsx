@@ -12,7 +12,7 @@ export const Success = () => {
               title="Password Reset!"
               description="Your password has been successfully reset, click below to continue your access"
             />
-            <Button>Continue</Button>
+            <Button type="button">Continue</Button>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { Header } from '../ui/Header';
 import { MainTitle } from '../ui/MainTitle';
 import type React from 'react';
 import { sendResetCode } from '@/app/api/api';
+import { useMutation } from '@tanstack/react-query';
 
 interface EmailPageProps {
   setStep: (step: number) => void;
@@ -18,7 +19,17 @@ export const EmailPage: React.FC<EmailPageProps> = ({ setStep, email, setEmail }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-  const handleSend = async () => {
+  const sendPasswordMutation = useMutation({
+    mutationFn: ({ email }: { email: string }) => sendResetCode(email),
+    onSuccess: () => {
+      setStep(2);
+    },
+    onError(error) {
+      console.log('Send reset code error', error);
+    },
+  });
+
+  const handleSend = () => {
     if (!email) {
       console.log('Please enter your email'); // ERROR
       return;
@@ -28,13 +39,7 @@ export const EmailPage: React.FC<EmailPageProps> = ({ setStep, email, setEmail }
       return;
     }
 
-    try {
-      await sendResetCode(email);
-      setStep(2);
-    } catch (error) {
-      console.log('Send reset code error', error);
-      throw error;
-    }
+    sendPasswordMutation.mutate({ email });
   };
   return (
     <div className="flex h-screen flex-col overflow-hidden">

@@ -9,24 +9,14 @@ import type { RegisterInitialValues } from '@/features/auth/model/register-schem
 
 interface StepPorps {
   setStep: (step: number) => void;
-  // onVerify: () => Promise<void>;
 }
 
 export const UserName: React.FC<StepPorps> = () => {
   const {
     register,
-    // trigger,
     formState: { errors },
   } = useFormContext<RegisterInitialValues>();
 
-  // const handleVerify = async () => {
-  //   const isValid = await trigger('login'); // перевіряємо login
-  //   if (isValid) {
-  //     await onVerify();
-  //   } else {
-  //     console.log(errors);
-  //   }
-  // };
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <Header title="Email Verification " />

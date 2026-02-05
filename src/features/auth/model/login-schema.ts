@@ -10,11 +10,8 @@ import { z } from 'zod';
  * NOTE: Error messages are intended for direct UI display.
  */
 export const loginSchema = z.object({
-  identifier: z
-    .string()
-    .trim()
-    .min(1, { message: 'Email is required.' })
-    .email({ message: 'Invalid email address.' }),
+  identifier: z.string().trim().min(1, { message: 'Email is required.' }),
+  // .email({ message: 'Invalid email address.' }),
 
   password: z
     .string()
