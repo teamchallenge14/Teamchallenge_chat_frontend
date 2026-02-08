@@ -32,7 +32,6 @@ export const MainWindow = () => {
             <Button variant="ghost">Guest Entry</Button>
           </NavLink>
         </div>
-
         <p className="mt-[14px] text-center text-[12px] font-medium leading-[100%] text-[#A3A3A3]">
           By continuing, you agree to our Terms of Service and Privacy Policy
         </p>
