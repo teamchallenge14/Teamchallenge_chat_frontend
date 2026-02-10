@@ -91,7 +91,6 @@ export const EmailPassword: React.FC<StepProps> = ({ setStep }) => {
                     />
                   )}
                 />
-                {/* <p className="text-[12px] font-medium text-[#A3A3A3]">At least 8 characters</p> */}
                 <Controller
                   name="confirmPassword"
                   control={control}

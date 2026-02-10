@@ -7,6 +7,7 @@ import { LogIn } from './components/LogIn/LogIn';
 import { Guest } from './components/Guest/Guest';
 import { Reset } from './components/PasswordRecovery/Reset';
 import { FinalyWindow } from './components/SignUp/FinalyWindow';
+import { EmailEdit } from './components/SignUp/EditEmail';
 // import { MainPage } from '@/modules/auth/pages/MainPage';
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ export const Root = () => {
             <Route path="/successResiter" element={<FinalyWindow />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/resetPassword" element={<Reset />} />
+            <Route path="/emailEdit" element={<EmailEdit />} />
             <Route path="/guest" element={<Guest />} />
             {/* <Route path="/chat" element={<MainPage />} /> */}
           </Route>

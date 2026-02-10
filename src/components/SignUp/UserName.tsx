@@ -1,21 +1,34 @@
 import * as Progress from '@radix-ui/react-progress';
 import { Button } from '../ui/button';
 import { Header } from '../ui/Header';
-import { Input } from '../ui/Input';
-import { Label } from '../ui/Label';
-import { useFormContext } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
 import { MainTitle } from '../ui/MainTitle';
-import type { RegisterInitialValues } from '@/features/auth/model/register-schema';
+import { loginSchema } from '@/features/auth/model/register-schema';
+import { InputField } from '../ui';
 
 interface StepPorps {
   setStep: (step: number) => void;
 }
 
-export const UserName: React.FC<StepPorps> = () => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<RegisterInitialValues>();
+export const UserName: React.FC<StepPorps> = ({ setStep }) => {
+  const { control, handleSubmit } = useForm({
+    resolver: zodResolver(loginSchema),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    defaultValues: {
+      username: '',
+    },
+  });
+
+  const onNext = () => {
+    setStep(3);
+  };
+
+  // const {
+  //   register,
+  //   formState: { errors },
+  // } = useFormContext<RegisterInitialValues>();
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
@@ -38,13 +51,28 @@ export const UserName: React.FC<StepPorps> = () => {
               description="This name will be visible to others in chats"
             />
             <div className="flex w-full flex-col gap-[16px]">
-              <div>
+              {/* <div>
                 <Label htmlFor="username">Username *</Label>
                 <Input id="username" type="text" placeholder="Bob" {...register('login')} />
                 {errors.login && <p className="">{errors.login.message}</p>}
-              </div>
+              </div> */}
+              <Controller
+                name="username"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <InputField
+                    {...field}
+                    id="username"
+                    label="Username *"
+                    fieldType="text"
+                    placeholder="Bob"
+                    errorMessage={fieldState.error?.message}
+                    isError={!!fieldState.error}
+                  />
+                )}
+              />
             </div>
-            <Button variant="default" className="mt-[16px]" type="submit">
+            <Button variant="default" className="mt-[16px]" onClick={handleSubmit(onNext)}>
               Verify
             </Button>
           </div>

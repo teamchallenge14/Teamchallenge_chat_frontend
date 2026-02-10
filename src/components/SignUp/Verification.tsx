@@ -10,11 +10,14 @@ import { useEffect, useRef, useState } from 'react';
 import type { RegisterInitialInput } from '@/features/auth/model/register-schema';
 import { confirmVerify, verifyEmail } from '@/app/api/api';
 import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 interface StepPorps {
   setStep: (step: number) => void;
 }
 
 export const Verification: React.FC<StepPorps> = ({ setStep }) => {
+  const navigate = useNavigate();
+
   const { getValues } = useFormContext<RegisterInitialInput>();
   const email = getValues('email');
   const [code, setCode] = useState('');
@@ -60,6 +63,11 @@ export const Verification: React.FC<StepPorps> = ({ setStep }) => {
     verifyEmailMutation.mutate(email);
   };
 
+  const navToEmailEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate('/emailEdit');
+  };
+
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <Header title="Email Verification" />
@@ -98,7 +106,7 @@ export const Verification: React.FC<StepPorps> = ({ setStep }) => {
                 {confirmMutation.isPending ? 'Verifying...' : 'Verify'}
               </Button>
 
-              <div className="text-center text-sm text-gray-600">
+              <div className="flex justify-between text-center text-sm text-gray-600">
                 Didn't receive the code?
                 <button
                   onClick={handleResendCode}
@@ -106,6 +114,17 @@ export const Verification: React.FC<StepPorps> = ({ setStep }) => {
                   className="font-semibold text-black underline hover:no-underline disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {verifyEmailMutation.isPending ? 'Sending...' : 'Resend'}
+                </button>
+              </div>
+
+              <div className="flex justify-between text-center text-sm text-gray-600">
+                Entered the wrong email?
+                <button
+                  onClick={(e) => navToEmailEdit(e)}
+                  type="button"
+                  className="font-semibold text-black underline hover:no-underline disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Edit Email
                 </button>
               </div>
 
