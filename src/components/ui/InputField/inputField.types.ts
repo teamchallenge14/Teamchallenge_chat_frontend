@@ -8,8 +8,6 @@ interface IBaseFieldProps {
   className?: string;
   isError?: boolean;
   errorMessage?: string;
-  isInfo?: boolean;
-  infoText?: string;
 }
 
 type LabelProps =

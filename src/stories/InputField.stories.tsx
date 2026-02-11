@@ -69,8 +69,6 @@ export const Password: Story = {
     fieldType: 'password',
     label: 'Password',
     placeholder: 'Enter password',
-    isInfo: true,
-    infoText: 'Some password info',
   },
 };
 

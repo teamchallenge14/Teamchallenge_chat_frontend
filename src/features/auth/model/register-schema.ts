@@ -18,8 +18,8 @@ export const registerInitialSchema = z.object({
   email: z
     .string()
     .trim()
-    .nonempty({ message: 'Email is required' })
-    .email({ message: 'Invalid email address' }),
+    .nonempty({ message: 'Email is required.' })
+    .email({ message: 'Invalid email address.' }),
 
   password: z
     .string()
@@ -37,36 +37,6 @@ export const registerInitialSchema = z.object({
         'Login cannot contain spaces or special characters. Only letters, numbers, and underscores are allowed.',
     }),
 });
-
-const passwordSchema = z
-  .string()
-  .min(8, { message: 'Password must be at least 8 characters' })
-  .regex(/[A-Z]/, {
-    message: 'Password must contain at least one uppercase letter',
-  })
-  .regex(/[a-z]/, {
-    message: 'Password must contain at least one lowercase letter',
-  })
-  .regex(/[0-9]/, {
-    message: 'Password must contain at least one number',
-  });
-
-export const emailPasswordSchema = z
-  .object({
-    email: z
-      .string()
-      .trim()
-      .nonempty({ message: 'Email is required' })
-      .email({ message: 'Invalid email address' }),
-
-    password: passwordSchema,
-
-    confirmPassword: z.string().min(1, { message: 'Please confirm your password' }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: 'Passwords do not match',
-  });
 
 export const registerSchema = z.object({
   // --- 1. Basic information ---
@@ -135,7 +105,6 @@ export const registerSchema = z.object({
  */
 export type RegisterValues = z.infer<typeof registerSchema>;
 export type RegisterInitialValues = z.infer<typeof registerInitialSchema>;
-export type EmailPasswordValues = z.infer<typeof emailPasswordSchema>;
 
 /** Type representing raw input values before Zod coercion.
  * Useful for form libraries that handle all inputs as strings.

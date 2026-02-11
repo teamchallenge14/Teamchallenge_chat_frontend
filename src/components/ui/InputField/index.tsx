@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  EyeOpenIcon,
-  EyeClosedIcon,
-  MagnifyingGlassIcon,
-  InfoCircledIcon,
-} from '@radix-ui/react-icons';
-import * as Tooltip from '@radix-ui/react-tooltip';
+import { EyeOpenIcon, EyeClosedIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { useDebouncedValue, useShowPassword } from './inputField.hooks';
 import { cn } from '@/shared/lib/utils';
 import type { InputFieldType } from './inputField.types';
@@ -22,8 +16,6 @@ export const InputField: React.FC<InputFieldType> = ({
   isError,
   errorMessage,
   rows = 4,
-  isInfo,
-  infoText,
   ...props
 }) => {
   const [localValue, setLocalValue] = React.useState<string>(value);
@@ -51,40 +43,8 @@ export const InputField: React.FC<InputFieldType> = ({
   return (
     <div className={cn('mb-5 w-full transition-all', className)}>
       {label && (
-        <label
-          className={cn(
-            'mb-[12px] flex items-center gap-1 text-left text-sm font-medium',
-            labelClassName,
-          )}
-          htmlFor={id}
-        >
-          <span className="block">{label}</span>
-          {isInfo && (
-            <Tooltip.Provider delayDuration={200}>
-              <Tooltip.Root>
-                <Tooltip.Trigger asChild>
-                  <button
-                    type="button"
-                    aria-label={`Info about ${label}`}
-                    className="cursor-help text-sky-300 hover:text-sky-500"
-                  >
-                    <InfoCircledIcon />
-                  </button>
-                </Tooltip.Trigger>
-
-                <Tooltip.Portal>
-                  <Tooltip.Content
-                    side="top"
-                    align="center"
-                    className="max-w-[220px] rounded-md bg-black px-3 py-1.5 text-xs text-white shadow-lg"
-                  >
-                    {infoText}
-                    <Tooltip.Arrow className="fill-black" />
-                  </Tooltip.Content>
-                </Tooltip.Portal>
-              </Tooltip.Root>
-            </Tooltip.Provider>
-          )}
+        <label className={cn('flex text-left text-sm font-medium', labelClassName)} htmlFor={id}>
+          <span className="mb-[12px] block">{label}</span>
         </label>
       )}
       <div className="relative">
@@ -92,7 +52,7 @@ export const InputField: React.FC<InputFieldType> = ({
           <textarea
             {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
             id={id}
-            aria-invalid={!!isError}
+            aria-invalid={isError || undefined}
             aria-describedby={isError ? `${id}-error` : undefined}
             value={localValue}
             onChange={handleChange}
@@ -113,7 +73,7 @@ export const InputField: React.FC<InputFieldType> = ({
               {...(props as React.InputHTMLAttributes<HTMLInputElement>)}
               id={id}
               value={localValue}
-              aria-invalid={!!isError}
+              aria-invalid={isError || undefined}
               aria-describedby={isError ? `${id}-error` : undefined}
               onChange={handleChange}
               placeholder={placeholder}
@@ -145,14 +105,14 @@ export const InputField: React.FC<InputFieldType> = ({
             )}
           </>
         )}
-        {isError && errorMessage && (
-          <span
+        {isError && (
+          <div
             id={`${id}-error`}
             role="alert"
             className="text-error absolute -bottom-4 left-0 pl-1 text-left text-xs font-bold"
           >
             {errorMessage}
-          </span>
+          </div>
         )}
       </div>
     </div>

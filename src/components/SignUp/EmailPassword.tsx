@@ -1,41 +1,35 @@
 import type React from 'react';
 import { Button } from '../ui/button';
 import { Header } from '../ui/Header';
+import { Input } from '../ui/Input';
+import { Label } from '../ui/Label';
 import { NavLink } from 'react-router-dom';
-import { Controller, useForm, useFormState } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useFormContext } from 'react-hook-form';
 import { MainTitle } from '../ui/MainTitle';
+import { InputPassword } from '../ui/InputPassword';
 import { SocialAuth } from '@/modules/auth/components/SocialAuth';
-import {
-  emailPasswordSchema,
-  type EmailPasswordValues,
-} from '@/features/auth/model/register-schema';
-import { InputField } from '../ui';
+import type { RegisterInitialValues } from '@/features/auth/model/register-schema';
 
-interface StepProps {
+interface StepPorps {
   setStep: (step: number) => void;
 }
 
-export const EmailPassword: React.FC<StepProps> = ({ setStep }) => {
-  const { control, handleSubmit } = useForm<EmailPasswordValues>({
-    resolver: zodResolver(emailPasswordSchema),
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    defaultValues: {
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
-  });
-
-  const { touchedFields, submitCount } = useFormState({ control });
-
-  const onNext = () => {
-    setStep(2);
+export const EmailPassword: React.FC<StepPorps> = ({ setStep }) => {
+  const {
+    register,
+    formState: { errors },
+    trigger,
+    getValues,
+  } = useFormContext<RegisterInitialValues>();
+  const handleNext = async () => {
+    const isValid = await trigger(['email', 'password']);
+    console.log('Step 1 values after validation:', getValues());
+    if (isValid) {
+      setStep(2);
+    } else {
+      console.log(errors);
+    }
   };
-
-  const shouldShowError = (fieldName: keyof EmailPasswordValues) =>
-    touchedFields[fieldName] || submitCount > 0;
 
   return (
     <div className="flex min-h-screen flex-col overflow-hidden">
@@ -51,67 +45,41 @@ export const EmailPassword: React.FC<StepProps> = ({ setStep }) => {
             />
 
             <div className="flex w-full flex-col gap-[16px]">
-              <fieldset>
-                <Controller
-                  name="email"
-                  control={control}
-                  render={({ field, fieldState }) => (
-                    <InputField
-                      {...field}
-                      id="email"
-                      label="Email"
-                      type="email"
-                      fieldType="email"
-                      placeholder="example@gmail.com"
-                      isError={!!fieldState.error && shouldShowError('email')}
-                      errorMessage={
-                        shouldShowError('email') ? fieldState.error?.message : undefined
-                      }
-                    />
-                  )}
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="example@gmail.com"
+                  {...register('email')}
                 />
+                {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+              </div>
 
-                <Controller
-                  name="password"
-                  control={control}
-                  render={({ field, fieldState }) => (
-                    <InputField
-                      {...field}
-                      id="password"
-                      label="Password"
-                      type="password"
-                      fieldType="password"
-                      placeholder="Enter your password"
-                      isInfo
-                      infoText="At least 8 characters"
-                      isError={!!fieldState.error && shouldShowError('password')}
-                      errorMessage={
-                        shouldShowError('password') ? fieldState.error?.message : undefined
-                      }
-                    />
-                  )}
+              <div>
+                <Label htmlFor="password">Password</Label>
+                <InputPassword
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  {...register('password')}
                 />
-                {/* <p className="text-[12px] font-medium text-[#A3A3A3]">At least 8 characters</p> */}
-                <Controller
-                  name="confirmPassword"
-                  control={control}
-                  render={({ field, fieldState }) => (
-                    <InputField
-                      {...field}
-                      id="confirmPassword"
-                      label="Confirm password"
-                      fieldType="password"
-                      placeholder="Confirm your password"
-                      isError={!!fieldState.error && shouldShowError('confirmPassword')}
-                      errorMessage={
-                        shouldShowError('confirmPassword') ? fieldState.error?.message : undefined
-                      }
-                    />
-                  )}
-                />
-              </fieldset>
+                {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+              </div>
 
-              <Button type="button" variant="default" onClick={handleSubmit(onNext)}>
+              <p className="text-[12px] font-medium text-[#A3A3A3]">At least 8 characters</p>
+
+              <div>
+                <Label htmlFor="newPassword">Confirm new password</Label>
+                <InputPassword
+                  id="newPassword"
+                  type="password"
+                  // {...register('email')}
+                />
+                {/* {errors.email && <p className="text-red-500">{errors.email.message}</p>} */}
+              </div>
+
+              <Button type="button" variant="default" onClick={handleNext}>
                 Next
               </Button>
 
@@ -126,7 +94,6 @@ export const EmailPassword: React.FC<StepProps> = ({ setStep }) => {
             </div>
           </div>
         </div>
-
         <div className="pb-6">
           <SocialAuth />
         </div>
