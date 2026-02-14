@@ -2,14 +2,10 @@ import type React from 'react';
 import { Button } from '../ui/button';
 import { Header } from '../ui/Header';
 import { NavLink } from 'react-router-dom';
-import { Controller, useForm, useFormState } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useFormContext, useFormState } from 'react-hook-form';
 import { MainTitle } from '../ui/MainTitle';
 import { SocialAuth } from '@/modules/auth/components/SocialAuth';
-import {
-  emailPasswordSchema,
-  type EmailPasswordValues,
-} from '@/features/auth/model/register-schema';
+import { type RegisterInitialValues } from '@/features/auth/model/register-schema';
 import { InputField } from '../ui';
 
 interface StepProps {
@@ -17,24 +13,18 @@ interface StepProps {
 }
 
 export const EmailPassword: React.FC<StepProps> = ({ setStep }) => {
-  const { control, handleSubmit } = useForm<EmailPasswordValues>({
-    resolver: zodResolver(emailPasswordSchema),
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    defaultValues: {
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
-  });
+  const { control, trigger } = useFormContext<RegisterInitialValues>();
 
   const { touchedFields, submitCount } = useFormState({ control });
 
-  const onNext = () => {
-    setStep(2);
+  const onNext = async () => {
+    const isValid = await trigger(['email', 'password', 'confirmPassword']);
+    if (isValid) {
+      setStep(2);
+    }
   };
 
-  const shouldShowError = (fieldName: keyof EmailPasswordValues) =>
+  const shouldShowError = (fieldName: keyof RegisterInitialValues) =>
     touchedFields[fieldName] || submitCount > 0;
 
   return (
@@ -111,7 +101,7 @@ export const EmailPassword: React.FC<StepProps> = ({ setStep }) => {
                 />
               </fieldset>
 
-              <Button type="button" variant="default" onClick={handleSubmit(onNext)}>
+              <Button type="button" variant="default" onClick={onNext}>
                 Next
               </Button>
 
