@@ -14,30 +14,6 @@ export const AGE_OPTIONS = Array.from({ length: 89 }, (_, i) => i + 12);
  */
 export type Gender = (typeof GENDERS)[number];
 
-export const registerInitialSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .nonempty({ message: 'Email is required' })
-    .email({ message: 'Invalid email address' }),
-
-  password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters.' })
-    .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter.' })
-    .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter.' })
-    .regex(/[0-9]/, { message: 'Password must contain at least one number.' }),
-
-  login: z
-    .string()
-    .trim()
-    .min(3, { message: 'Login must be at least 3 characters.' })
-    .regex(/^[a-zA-Z0-9_]+$/, {
-      message:
-        'Login cannot contain spaces or special characters. Only letters, numbers, and underscores are allowed.',
-    }),
-});
-
 const passwordSchema = z
   .string()
   .min(8, { message: 'Password must be at least 8 characters' })
@@ -49,6 +25,32 @@ const passwordSchema = z
   })
   .regex(/[0-9]/, {
     message: 'Password must contain at least one number',
+  });
+
+export const registerInitialSchema = z
+  .object({
+    email: z
+      .string()
+      .trim()
+      .nonempty({ message: 'Email is required' })
+      .email({ message: 'Invalid email address' }),
+
+    password: passwordSchema,
+
+    confirmPassword: z.string().min(1, { message: 'Please confirm your password' }),
+
+    login: z
+      .string()
+      .trim()
+      .min(3, { message: 'Login must be at least 3 characters.' })
+      .regex(/^[a-zA-Z0-9_]+$/, {
+        message:
+          'Login cannot contain spaces or special characters. Only letters, numbers, and underscores are allowed.',
+      }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Passwords do not match',
   });
 
 export const emailPasswordSchema = z
@@ -142,7 +144,7 @@ export type EmailPasswordValues = z.infer<typeof emailPasswordSchema>;
  */
 export type RegisterInput = z.input<typeof registerSchema>;
 export type RegisterInitialInput = z.input<typeof registerInitialSchema>;
-/**
+export type SignUpRequest = Omit<RegisterInitialValues, 'confirmPassword'>; /**
  * All error messages are localized and user-friendly.
  * No additional client-side validation is needed.
  */

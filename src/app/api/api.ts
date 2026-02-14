@@ -44,8 +44,11 @@ export const getAuthMe = async () => {
 
 export const singUp = async (formData: RegisterInitialValues) => {
   try {
-    console.log('Sending sign-up data:', formData);
-    const response = await apiClient.post('/v1/auth', formData);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { confirmPassword, ...dataToSend } = formData;
+
+    console.log('Sending sign-up data:', dataToSend);
+    const response = await apiClient.post('/v1/auth', dataToSend);
     console.log('singUp response:', response);
     return response.data;
   } catch (erorr) {
