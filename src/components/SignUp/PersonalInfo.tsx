@@ -4,19 +4,13 @@ import { Header } from '../ui/Header';
 import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import React from 'react';
-import { Dropdown } from '../ui/selectDemo';
 import { GENDERS, type RegisterValues } from '@/features/auth/model/register-schema';
 import { useFormContext } from 'react-hook-form';
+import { DateOfBirthField } from '@/features/auth/ui/DateOfBirthField';
 
 export const PersonalInfo: React.FC = () => {
-  const {
-    register,
-    formState: { errors },
-    watch,
-    setValue,
-  } = useFormContext<RegisterValues>();
+  const { register, watch, setValue } = useFormContext<RegisterValues>();
   const currentGender = watch('gender');
-  const currentAge = watch('age');
   const currentBio = watch('description');
 
   return (
@@ -51,13 +45,6 @@ export const PersonalInfo: React.FC = () => {
             </Button>
           </div>
 
-          {/* <div className="text-center mb-8">
-            <h1 className="text-[30px] font-bold leading-[40px] mb-2">Choose a Username</h1>
-            <h2 className="font-normal text-[14px] text-gray-600">
-              This name will be visible to others in chats
-            </h2>
-          </div> */}
-
           <div className="flex w-full flex-col gap-4">
             <div>
               <Label htmlFor="name">Name *</Label>
@@ -68,12 +55,7 @@ export const PersonalInfo: React.FC = () => {
               <Input id="surname" type="text" placeholder="Doe" {...register('lastName')} />
             </div>
             <div>
-              <Label htmlFor="age">Age *</Label>
-              <Dropdown
-                value={currentAge ? Number(currentAge) : undefined}
-                onChange={(value) => setValue('age', value, { shouldValidate: true })}
-                error={errors.age?.message}
-              />
+              <DateOfBirthField />
             </div>
             <div>
               <Label htmlFor="gender">Gender *</Label>
