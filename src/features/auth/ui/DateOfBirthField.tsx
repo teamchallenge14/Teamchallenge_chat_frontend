@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { uk } from 'date-fns/locale';
+import { enUS } from 'date-fns/locale';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { cn } from '@/shared/lib/utils';
 import { Label } from '@/components/ui/Label';
@@ -32,7 +32,7 @@ export const DateOfBirthField = () => {
             )}
           >
             {currentDateOfBirth ? (
-              format(new Date(currentDateOfBirth), 'PPP', { locale: uk })
+              format(new Date(currentDateOfBirth), 'PPP', { locale: enUS })
             ) : (
               <span>Pick a date</span>
             )}
@@ -54,6 +54,7 @@ export const DateOfBirthField = () => {
             fromYear={1900}
             toYear={new Date().getFullYear()}
             initialFocus
+            locale={enUS}
           />
         </PopoverContent>
       </Popover>
