@@ -7,14 +7,14 @@ import { z } from 'zod';
  * - Required fields match the UI Design (even if Swagger allows nulls).
  */
 export const GENDERS = ['MALE', 'FEMALE', 'OTHER'] as const;
-export const AGE_OPTIONS = Array.from({ length: 89 }, (_, i) => i + 12);
+export const AGE_OPTIONS = Array.from({ length: 89 }, (_, i) => i + 13);
 
 /**
  * Type for gender values (re-usable in UI and other code).
  */
 export type Gender = (typeof GENDERS)[number];
 
-const passwordField = z
+const passwordSchema = z
   .string()
   .min(8, { message: 'Password must be at least 8 characters' })
   .regex(/[A-Z]/, {
@@ -27,38 +27,41 @@ const passwordField = z
     message: 'Password must contain at least one number',
   });
 
-const loginField = z
-  .string()
-  .trim()
-  .min(3, { message: 'Login must be at least 3 characters.' })
-  .regex(/^[a-zA-Z0-9_]+$/, {
-    message:
-      'Login cannot contain spaces or special characters. Only letters, numbers, and underscores are allowed.',
+export const registerInitialSchema = z
+  .object({
+    email: z
+      .string()
+      .trim()
+      .nonempty({ message: 'Email is required' })
+      .email({ message: 'Invalid email address' }),
+
+    password: passwordSchema,
+
+    confirmPassword: z.string().min(1, { message: 'Please confirm your password' }),
+
+    login: z
+      .string()
+      .trim()
+      .min(3, { message: 'Login must be at least 3 characters.' })
+      .regex(/^[a-zA-Z0-9_]+$/, {
+        message:
+          'Login cannot contain spaces or special characters. Only letters, numbers, and underscores are allowed.',
+      }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Passwords do not match',
   });
-
-const emailField = z
-  .string()
-  .trim()
-  .nonempty({ message: 'Email is required' })
-  .email({ message: 'Invalid email address' });
-
-export const registerInitialSchema = z.object({
-  email: emailField,
-
-  password: passwordField,
-
-  login: loginField,
-});
-
-export const emailEditSchema = z.object({
-  email: emailField,
-});
 
 export const emailPasswordSchema = z
   .object({
-    email: emailField,
+    email: z
+      .string()
+      .trim()
+      .nonempty({ message: 'Email is required' })
+      .email({ message: 'Invalid email address' }),
 
-    password: passwordField,
+    password: passwordSchema,
 
     confirmPassword: z.string().min(1, { message: 'Please confirm your password' }),
   })
@@ -72,31 +75,7 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  // --- 1. Basic information ---
-
-  // email: z
-  //   .string()
-  //   .trim()
-  //   .nonempty({ message: 'Email is required.' })
-  //   .email({ message: 'Invalid email address.' }),
-
-  // password: z
-  //   .string()
-  //   .min(8, { message: 'Password must be at least 8 characters.' })
-  //   .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter.' })
-  //   .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter.' })
-  //   .regex(/[0-9]/, { message: 'Password must contain at least one number.' }),
-
-  // login: z
-  //   .string()
-  //   .trim()
-  //   .min(3, { message: 'Login must be at least 3 characters.' })
-  //   .regex(/^[a-zA-Z0-9_]+$/, {
-  //     message:
-  //       'Login cannot contain spaces or special characters. Only letters, numbers, and underscores are allowed.',
-  //   }),
-
-  // --- 2. Profile details ---
+  // --- Profile details ---
 
   firstName: z
     .string()
@@ -112,11 +91,18 @@ export const registerSchema = z.object({
       message: 'Surname can only contain letters, spaces, and hyphens.',
     }),
 
-  age: z.coerce
-    .number({ message: 'Age must be a number.' })
-    .int({ message: 'Age must be a whole number.' })
-    .min(12, { message: 'Age must be at least 12.' })
-    .max(120, { message: 'Age must be at most 120.' }),
+  birthDate: z
+    .date({
+      message: 'Date of birth is required',
+    })
+    .refine(
+      (date) => {
+        const today = new Date();
+        const minDate = new Date(today.getFullYear() - 13, today.getMonth(), today.getDate());
+        return date <= minDate;
+      },
+      { message: 'You must be at least 13 years old.' },
+    ),
 
   gender: z.enum(GENDERS, { message: 'Please select a gender.' }).default('MALE'),
 
@@ -147,7 +133,7 @@ export type EmailEditSchemaType = z.infer<typeof emailEditSchema>;
  */
 export type RegisterInput = z.input<typeof registerSchema>;
 export type RegisterInitialInput = z.input<typeof registerInitialSchema>;
-/**
+export type SignUpRequest = Omit<RegisterInitialValues, 'confirmPassword'>; /**
  * All error messages are localized and user-friendly.
  * No additional client-side validation is needed.
  */
