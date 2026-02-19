@@ -6,12 +6,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { Interest } from '@/types/Interest';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useRegisterUserID } from '@/store/register-store';
 
-interface InteresProps {
-  userId: string | null;
-}
+export const Interes: React.FC = () => {
+  const userId = useRegisterUserID();
 
-export const Interes: React.FC<InteresProps> = ({ userId }) => {
   const {
     data: interests = [],
     isLoading,

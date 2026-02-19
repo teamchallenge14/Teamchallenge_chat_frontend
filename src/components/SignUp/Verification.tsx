@@ -10,13 +10,11 @@ import { useEffect, useRef, useState } from 'react';
 import type { RegisterInitialInput } from '@/features/auth/model/register-schema';
 import { confirmVerify, verifyEmail } from '@/app/api/api';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-interface StepPorps {
-  setStep: (step: number) => void;
-}
+import { useRegisterSetStep } from '@/store/register-store';
+import { RegisterStepsEnum } from '@/store/@types';
 
-export const Verification: React.FC<StepPorps> = ({ setStep }) => {
-  const navigate = useNavigate();
+export const Verification: React.FC = () => {
+  const setRegisterStep = useRegisterSetStep();
 
   const { getValues } = useFormContext<RegisterInitialInput>();
   const email = getValues('email');
@@ -44,7 +42,7 @@ export const Verification: React.FC<StepPorps> = ({ setStep }) => {
   const confirmMutation = useMutation({
     mutationFn: ({ email, code }: { email: string; code: string }) => confirmVerify(email, code),
     onSuccess: () => {
-      setStep(4);
+      setRegisterStep(RegisterStepsEnum.ENTER_PERSONAL_INFO);
     },
     onError: (error) => {
       console.log('Code confirmation error', error);
@@ -65,7 +63,7 @@ export const Verification: React.FC<StepPorps> = ({ setStep }) => {
 
   const navToEmailEdit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/emailEdit');
+    setRegisterStep(RegisterStepsEnum.EMAIL_EDIT);
   };
 
   return (

@@ -6,6 +6,8 @@ import { Controller, useForm, useFormState } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { emailEditSchema, type EmailEditSchemaType } from '@/features/auth/model/register-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRegisterSetStep } from '@/store/register-store';
+import { RegisterStepsEnum } from '@/store/@types';
 
 export const EmailEdit: React.FC = () => {
   const { control, handleSubmit } = useForm({
@@ -17,6 +19,8 @@ export const EmailEdit: React.FC = () => {
     },
   });
 
+  const setRegisterStep = useRegisterSetStep();
+
   const { touchedFields, submitCount } = useFormState({ control });
 
   const shouldShowError = (fieldName: keyof EmailEditSchemaType) =>
@@ -24,6 +28,8 @@ export const EmailEdit: React.FC = () => {
 
   const onSubmit = async (data: { email: string }) => {
     console.log(data);
+    // ToDo if email edit success - change step
+    setRegisterStep(RegisterStepsEnum.EMAIL_VERIFICATION);
   };
 
   return (
@@ -37,7 +43,7 @@ export const EmailEdit: React.FC = () => {
               title="Email Verification"
               description="Enter the correct email and we’ll resend the verification"
             />
-            <form className="flex w-full flex-col gap-[16px]" onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex w-full flex-col gap-[16px]">
               <fieldset>
                 <Controller
                   control={control}
@@ -55,11 +61,11 @@ export const EmailEdit: React.FC = () => {
                     />
                   )}
                 />
-                <Button type="submit" variant="default">
+                <Button type="submit" variant="default" onClick={handleSubmit(onSubmit)}>
                   Confirm
                 </Button>
               </fieldset>
-            </form>
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,8 @@
+export enum RegisterStepsEnum {
+  ENTER_EMAIL = 1,
+  ENTER_USERNAME = 2,
+  EMAIL_VERIFICATION = 3,
+  ENTER_PERSONAL_INFO = 4,
+  ENTER_INTERESTS = 5,
+  EMAIL_EDIT = 6,
+}

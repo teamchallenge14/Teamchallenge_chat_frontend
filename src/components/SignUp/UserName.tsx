@@ -6,12 +6,12 @@ import { Controller, useForm } from 'react-hook-form';
 import { MainTitle } from '../ui/MainTitle';
 import { loginSchema } from '@/features/auth/model/register-schema';
 import { InputField } from '../ui';
+import { useRegisterSetStep } from '@/store/register-store';
+import { RegisterStepsEnum } from '@/store/@types';
 
-interface StepPorps {
-  setStep: (step: number) => void;
-}
+export const UserName: React.FC = () => {
+  const setRegisterStep = useRegisterSetStep();
 
-export const UserName: React.FC<StepPorps> = ({ setStep }) => {
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
@@ -22,7 +22,7 @@ export const UserName: React.FC<StepPorps> = ({ setStep }) => {
   });
 
   const onNext = () => {
-    setStep(3);
+    setRegisterStep(RegisterStepsEnum.EMAIL_VERIFICATION);
   };
 
   // const {

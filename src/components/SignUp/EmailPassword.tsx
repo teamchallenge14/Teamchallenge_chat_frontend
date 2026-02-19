@@ -7,20 +7,20 @@ import { MainTitle } from '../ui/MainTitle';
 import { SocialAuth } from '@/modules/auth/components/SocialAuth';
 import { type RegisterInitialValues } from '@/features/auth/model/register-schema';
 import { InputField } from '../ui';
+import { useRegisterSetStep } from '@/store/register-store';
+import { RegisterStepsEnum } from '@/store/@types';
 
-interface StepProps {
-  setStep: (step: number) => void;
-}
-
-export const EmailPassword: React.FC<StepProps> = ({ setStep }) => {
+export const EmailPassword: React.FC = () => {
   const { control, trigger } = useFormContext<RegisterInitialValues>();
 
   const { touchedFields, submitCount } = useFormState({ control });
 
+  const setRegisterStep = useRegisterSetStep();
+
   const onNext = async () => {
     const isValid = await trigger(['email', 'password', 'confirmPassword']);
     if (isValid) {
-      setStep(2);
+      setRegisterStep(RegisterStepsEnum.ENTER_USERNAME);
     }
   };
 
