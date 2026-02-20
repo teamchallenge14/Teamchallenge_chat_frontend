@@ -5,4 +5,5 @@ export enum RegisterStepsEnum {
   ENTER_PERSONAL_INFO = 4,
   ENTER_INTERESTS = 5,
   EMAIL_EDIT = 6,
+  FINALY_STEP = 7,
 }

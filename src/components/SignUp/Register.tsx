@@ -18,6 +18,7 @@ import {
 } from '@/store/register-store';
 import { RegisterStepsEnum } from '@/store/@types';
 import { EmailEdit } from './EmailEdit';
+import { FinalyWindow } from './FinalyWindow';
 
 export const Register: React.FC = () => {
   const initialMethods = useRegisterInitialForm();
@@ -96,6 +97,9 @@ export const Register: React.FC = () => {
         return <Interes />;
       case RegisterStepsEnum.EMAIL_EDIT:
         return <EmailEdit />;
+
+      case RegisterStepsEnum.FINALY_STEP:
+        return <FinalyWindow />;
       default:
         return null;
     }
