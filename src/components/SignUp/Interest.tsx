@@ -1,17 +1,16 @@
-import * as Progress from '@radix-ui/react-progress';
 import { Button } from '../ui/button';
-import { Header } from '../ui/Header';
 import { getInterest, getUserById, setUserInterests } from '@/app/api/api';
 import React, { useEffect, useRef, useState } from 'react';
 import type { Interest } from '@/types/Interest';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useRegisterUserID } from '@/store/register-store';
+import { RegisterLayout } from '../ui/layouts';
+import { RegisterStepsEnum } from '@/store/@types';
 
-interface InteresProps {
-  userId: string | null;
-}
+export const Interes: React.FC = () => {
+  const userId = useRegisterUserID();
 
-export const Interes: React.FC<InteresProps> = ({ userId }) => {
   const {
     data: interests = [],
     isLoading,
@@ -111,20 +110,8 @@ export const Interes: React.FC<InteresProps> = ({ userId }) => {
   }
 
   return (
-    <div className="flex flex-col">
-      <Header title="Complete Profile" />
-
-      <Progress.Root
-        className="relative mb-[22px] h-[8px] w-full overflow-hidden rounded-full bg-gray-200"
-        value={66}
-      >
-        <Progress.Indicator
-          className="h-full w-full bg-black transition-transform duration-300 ease-in-out"
-          style={{ transform: `translateX(-${100 - 100}%)` }}
-        />
-      </Progress.Root>
-
-      <div className="flex flex-col items-center justify-center">
+    <RegisterLayout step={RegisterStepsEnum.ENTER_INTERESTS}>
+      <div className="mt-[22px] flex flex-col items-center justify-center">
         <div className="w-full max-w-md text-center">
           <div className="mb-8 text-center">
             <h1 className="mb-2 text-[20px] font-semibold leading-[40px]">Select your Interest</h1>
@@ -167,6 +154,6 @@ export const Interes: React.FC<InteresProps> = ({ userId }) => {
           </Button>
         </div>
       </div>
-    </div>
+    </RegisterLayout>
   );
 };
