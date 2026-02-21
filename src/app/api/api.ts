@@ -1,4 +1,5 @@
 import type { LoginValues, RegisterValues } from '@/features/auth';
+import type { QuestValues } from '@/features/auth/model/quest-schema';
 import type { RegisterInitialValues } from '@/features/auth/model/register-schema';
 import { API_URL } from '@/shared/constants/env';
 import axios from 'axios';
@@ -158,6 +159,29 @@ export const setUserInterests = async (
     return response.data;
   } catch (error) {
     console.log('Error fetching user interests:', error);
+    throw error;
+  }
+};
+
+export const guestAuth = async (login: string) => {
+  try {
+    const responce = await apiClient.post(`/v1/auth/guest`, {
+      login,
+      firstName: 'Guest',
+      lastName: 'User',
+    });
+    return responce.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateQuest = async (id: string, userData: QuestValues) => {
+  try {
+    const response = await apiClient.patch(`/v1/users/${id}`, userData);
+    return response.data;
+  } catch (error) {
+    console.log('Error updating user:', error);
     throw error;
   }
 };

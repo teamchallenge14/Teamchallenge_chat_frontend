@@ -5,9 +5,11 @@ import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import { MainTitle } from '../ui/MainTitle';
 import type React from 'react';
+import { useState } from 'react';
 
 interface GuestUserNameProps {
-  setStep: (step: number) => void;
+  // setStep: (step: number) => void;
+  onSubmit: (login: string) => void;
 }
 
 const list = [
@@ -17,11 +19,12 @@ const list = [
   { text: 'Cannot save contacts' },
 ];
 
-export const GuestUserName: React.FC<GuestUserNameProps> = ({ setStep }) => {
-  console.log(setStep);
-  const handleNext = () => {
-    setStep(2);
-  };
+export const GuestUserName: React.FC<GuestUserNameProps> = ({ onSubmit }) => {
+  const [login, setLogin] = useState('');
+  // console.log(setStep);
+  // const handleNext = () => {
+  //   setStep(2);
+  // };
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <Header title="Guest Entry" />
@@ -35,15 +38,21 @@ export const GuestUserName: React.FC<GuestUserNameProps> = ({ setStep }) => {
             />
             <form className="flex w-full flex-col gap-[16px]">
               <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="example@gmail.com" />
+                <Label htmlFor="login">Username </Label>
+                <Input
+                  id="login"
+                  type="email"
+                  placeholder="example"
+                  value={login}
+                  onChange={(e) => setLogin(e.target.value)}
+                />
               </div>
 
               <p className="text-[12px] font-medium text-[#A3A3A3]">
                 This will be your temporary username
               </p>
 
-              <Button variant="default" type="button" onClick={handleNext}>
+              <Button variant="default" type="button" onClick={() => onSubmit(login)}>
                 Continue as a Guest
               </Button>
 

@@ -2,19 +2,36 @@ import * as Progress from '@radix-ui/react-progress';
 import { Button } from '../ui/button';
 import { Header } from '../ui/Header';
 import { getInterest, getUserById, setUserInterests } from '@/app/api/api';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { Interest } from '@/types/Interest';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useRegisterUserID } from '@/store/register-store';
 
-interface InteresProps {
-  userId: string | null;
-}
+export const GuestInteres: React.FC = () => {
+  const userId = useRegisterUserID();
 
-export const GuestInteres: React.FC<InteresProps> = ({ userId }) => {
-  const [interest, setInterest] = useState<Interest[]>([]);
+  const {
+    data: interests = [],
+    isLoading,
+    isError,
+  } = useQuery<Interest[]>({
+    queryKey: ['interests'],
+    queryFn: getInterest,
+  });
+
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const hasInitialized = useRef(false);
   const navigate = useNavigate();
-  const grouperInterestByCategiry = interest.reduce<Record<string, Interest[]>>((acc, item) => {
+
+  const formatCategory = (category: string): string => {
+    return category
+      .split('_')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+
+  const grouperInterestByCategiry = interests.reduce<Record<string, Interest[]>>((acc, item) => {
     if (!acc[item.category]) {
       acc[item.category] = [];
     }
@@ -22,39 +39,20 @@ export const GuestInteres: React.FC<InteresProps> = ({ userId }) => {
     return acc;
   }, {});
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (!userId) {
-        console.error('User ID is missing in URL params');
-        return;
-      }
+  const { data: user } = useQuery({
+    queryKey: ['user', userId],
+    queryFn: () => getUserById(userId as string),
+    enabled: !!userId,
+  });
 
-      try {
-        const data = await getUserById(userId);
-        console.log('Fetched user:', data);
-        // якщо у користувача вже є інтереси встановлюю їх як вибрані
-        // if (data.interests && data.interests.length > 0) {
-        //   setSelectedInterests(data.interests.map((int: Interest) => int.id));
-        // }
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      }
-    };
-    fetchUser();
-  }, [userId]);
-
+  // ініціалізую вибрані інтереси тільки один раз
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getInterest();
-        setInterest(data);
-        console.log('Fetched data:', data);
-      } catch (error) {
-        console.log('Error:', error);
-      }
-    };
-    fetchData();
-  }, []);
+    if (user?.interests?.length && !hasInitialized.current) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSelectedInterests(user.interests.map((int: Interest) => int.id));
+      hasInitialized.current = true;
+    }
+  }, [user]);
 
   const toggleInterest = (interestId: string) => {
     setSelectedInterests((prev) => {
@@ -65,6 +63,23 @@ export const GuestInteres: React.FC<InteresProps> = ({ userId }) => {
       }
     });
   };
+
+  const submitInterestsMutation = useMutation({
+    mutationFn: ({
+      userId,
+      payload,
+    }: {
+      userId: string;
+      payload: { add?: string[]; remove?: string[] };
+    }) => setUserInterests(userId, payload),
+    onSuccess: (response) => {
+      console.log('Interests saved successfully:', response);
+      navigate('/successResiter');
+    },
+    onError: (error) => {
+      console.error('Error saving interests:', error);
+    },
+  });
 
   const handleSubmit = async () => {
     if (!userId) {
@@ -80,15 +95,19 @@ export const GuestInteres: React.FC<InteresProps> = ({ userId }) => {
       return;
     }
 
-    try {
-      const result = await setUserInterests(userId, { add: selectedInterests });
-      console.log('Interests saved successfully:', result);
-      // dashboard або іншу сторінку !!!!!
-      navigate('/successResiter');
-    } catch (error) {
-      console.error('Error saving interests:', error);
-    }
+    submitInterestsMutation.mutate({
+      userId,
+      payload: { add: selectedInterests },
+    });
   };
+
+  if (isLoading) {
+    return <div>Loading interests...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading interests. Please try again later.</div>;
+  }
   return (
     <div className="flex flex-col">
       <Header title="Complete Profile" />
@@ -117,7 +136,7 @@ export const GuestInteres: React.FC<InteresProps> = ({ userId }) => {
             {Object.entries(grouperInterestByCategiry).map(([categoty, items]) => (
               <div key={categoty}>
                 <h3 className="text-left text-[14px] font-bold leading-[20px] text-[#000000]">
-                  {categoty}
+                  {formatCategory(categoty)}
                 </h3>
 
                 <div className="mt-[12px] flex w-full flex-wrap gap-[6px]">
