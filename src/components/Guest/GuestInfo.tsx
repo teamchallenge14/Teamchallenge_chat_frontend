@@ -2,16 +2,12 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import { GENDERS } from '@/features/auth/model/register-schema';
-import type React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DateOfBirthField } from '@/features/auth/ui/DateOfBirthField';
 import type { QuestValues } from '@/features/auth/model/quest-schema';
+import { Header } from '../ui/Header';
 
-interface GuestInfoProps {
-  setStep: (step: number) => void;
-}
-
-export const GuestInfo: React.FC<GuestInfoProps> = () => {
+export const GuestInfo = () => {
   const {
     register,
     // formState: { errors },
@@ -25,7 +21,8 @@ export const GuestInfo: React.FC<GuestInfoProps> = () => {
     <div className="mt-[22px] flex flex-col items-center justify-center">
       {/*flex-1 */}
       <div className="w-full max-w-md text-center">
-        <p className="mb-6 text-left text-[14px] font-medium leading-[20px]">Profile Photo</p>
+        <Header title="Complete Profile"></Header>
+        {/* <p className="mb-6 text-left text-[14px] font-medium leading-[20px]">Complete Profile</p> */}
 
         <div className="relative mb-[16px] inline-block">
           <div className="flex h-[100px] w-[100px] items-center justify-center overflow-hidden rounded-full bg-gray-100">

@@ -1,27 +1,36 @@
-import { useState } from 'react';
 import { GuestUserName } from './GuestUserName';
 import { GuestInfo } from './GuestInfo';
 import { FormProvider } from 'react-hook-form';
 import { GuestInteres } from './GuestInterest';
 import { useMutation } from '@tanstack/react-query';
 import { guestAuth, updateQuest } from '@/app/api/api';
-import { useRegisterSetUserID, useRegisterUserID } from '@/store/register-store';
 import { useQuestForm } from '@/features/auth/model/use-guest-form';
 import type { QuestValues } from '@/features/auth/model/quest-schema';
+import { useSetUserID, useUserID } from '@/store/user-store';
+import { GuestStepEnum } from '@/store/@types';
+import { useGuestCurrentStep, useGuestSetStep } from '@/store/quest-store';
+import { useEffect } from 'react';
 
 export const Guest = () => {
-  const [step, setStep] = useState(1);
+  const setStep = useGuestSetStep();
+  const currentStep = useGuestCurrentStep();
+
   // const [userId, setUserId] = useState<string | null>(null);
-  const userId = useRegisterUserID();
-  const setUserId = useRegisterSetUserID();
+  const userId = useUserID();
+  const setUserId = useSetUserID();
   // console.log(setUserId);
   const profileMethods = useQuestForm();
+
+  useEffect(() => {
+    setStep(GuestStepEnum.ENTER_USERNAME);
+    setUserId(null);
+  }, []);
 
   const guestMutation = useMutation({
     mutationFn: guestAuth,
     onSuccess: (responce) => {
       setUserId(responce.user.id);
-      setStep(2);
+      setStep(GuestStepEnum.ENTER_INFO);
     },
   });
 
@@ -30,7 +39,7 @@ export const Guest = () => {
       updateQuest(userId, data),
     onSuccess: (response) => {
       console.log('update success:', response);
-      setStep(3);
+      setStep(GuestStepEnum.ENTER_INTERESS);
     },
     onError: (error) => {
       console.error('update error:', error);
@@ -49,15 +58,16 @@ export const Guest = () => {
 
     updateUserMutation.mutate({ userId, data });
   };
+
   return (
     <>
-      <form>{step === 1 && <GuestUserName onSubmit={hondleSubmit} />}</form>
+      {currentStep === GuestStepEnum.ENTER_USERNAME && <GuestUserName onSubmit={hondleSubmit} />}
 
-      {step >= 2 && (
+      {currentStep !== GuestStepEnum.ENTER_USERNAME && (
         <FormProvider {...profileMethods}>
           <form onSubmit={profileMethods.handleSubmit(handleUpdateAcount)}>
-            {step === 2 && <GuestInfo setStep={setStep} />}
-            {step === 3 && <GuestInteres />}
+            {currentStep === GuestStepEnum.ENTER_INFO && <GuestInfo />}
+            {currentStep === GuestStepEnum.ENTER_INTERESS && <GuestInteres />}
           </form>
         </FormProvider>
       )}
