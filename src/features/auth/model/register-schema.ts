@@ -74,32 +74,6 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  // --- 1. Basic information ---
-
-  // email: z
-  //   .string()
-  //   .trim()
-  //   .nonempty({ message: 'Email is required.' })
-  //   .email({ message: 'Invalid email address.' }),
-
-  // password: z
-  //   .string()
-  //   .min(8, { message: 'Password must be at least 8 characters.' })
-  //   .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter.' })
-  //   .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter.' })
-  //   .regex(/[0-9]/, { message: 'Password must contain at least one number.' }),
-
-  // login: z
-  //   .string()
-  //   .trim()
-  //   .min(3, { message: 'Login must be at least 3 characters.' })
-  //   .regex(/^[a-zA-Z0-9_]+$/, {
-  //     message:
-  //       'Login cannot contain spaces or special characters. Only letters, numbers, and underscores are allowed.',
-  //   }),
-
-  // --- 2. Profile details ---
-
   firstName: z
     .string()
     .trim()
@@ -114,11 +88,18 @@ export const registerSchema = z.object({
       message: 'Surname can only contain letters, spaces, and hyphens.',
     }),
 
-  age: z.coerce
-    .number({ message: 'Age must be a number.' })
-    .int({ message: 'Age must be a whole number.' })
-    .min(12, { message: 'Age must be at least 12.' })
-    .max(120, { message: 'Age must be at most 120.' }),
+  birthDate: z
+    .date({
+      message: 'Date of birth is required',
+    })
+    .refine(
+      (date) => {
+        const today = new Date();
+        const minDate = new Date(today.getFullYear() - 13, today.getMonth(), today.getDate());
+        return date <= minDate;
+      },
+      { message: 'You must be at least 13 years old.' },
+    ),
 
   gender: z.enum(GENDERS, { message: 'Please select a gender.' }).default('MALE'),
 
