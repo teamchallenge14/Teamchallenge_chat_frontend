@@ -10,15 +10,11 @@ import { singUp, updateUser } from '@/app/api/api';
 import { useRegisterInitialForm } from '@/features/auth/model/use-register-form';
 import type { RegisterInitialValues } from '@/features/auth/model/register-schema';
 import { useMutation } from '@tanstack/react-query';
-import {
-  useRegisterCurrentStep,
-  useRegisterSetStep,
-  useRegisterSetUserID,
-  useRegisterUserID,
-} from '@/store/register-store';
+import { useRegisterCurrentStep, useRegisterSetStep } from '@/store/register-store';
 import { RegisterStepsEnum } from '@/store/@types';
 import { EmailEdit } from './EmailEdit';
 import { FinalyWindow } from './FinalyWindow';
+import { useSetUserID, useUserID } from '@/store/user-store';
 
 export const Register: React.FC = () => {
   const initialMethods = useRegisterInitialForm();
@@ -29,8 +25,8 @@ export const Register: React.FC = () => {
   const currentStep = useRegisterCurrentStep();
   const setStep = useRegisterSetStep();
 
-  const userId = useRegisterUserID();
-  const setUserID = useRegisterSetUserID();
+  const userId = useUserID();
+  const setUserID = useSetUserID();
 
   // const navigate = useNavigate();
 
