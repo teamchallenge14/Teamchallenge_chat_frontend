@@ -7,73 +7,17 @@ import { z } from 'zod';
  * - Required fields match the UI Design (even if Swagger allows nulls).
  */
 export const GENDERS = ['MALE', 'FEMALE', 'OTHER'] as const;
-export const AGE_OPTIONS = Array.from({ length: 89 }, (_, i) => i + 12);
 
 /**
  * Type for gender values (re-usable in UI and other code).
  */
 export type Gender = (typeof GENDERS)[number];
 
-const passwordField = z
-  .string()
-  .min(8, { message: 'Password must be at least 8 characters' })
-  .regex(/[A-Z]/, {
-    message: 'Password must contain at least one uppercase letter',
-  })
-  .regex(/[a-z]/, {
-    message: 'Password must contain at least one lowercase letter',
-  })
-  .regex(/[0-9]/, {
-    message: 'Password must contain at least one number',
-  });
+// export const loginSchema = z.object({
+//   username: loginField,
+// });
 
-const loginField = z
-  .string()
-  .trim()
-  .min(3, { message: 'Login must be at least 3 characters.' })
-  .regex(/^[a-zA-Z0-9_]+$/, {
-    message:
-      'Login cannot contain spaces or special characters. Only letters, numbers, and underscores are allowed.',
-  });
-
-const emailField = z
-  .string()
-  .trim()
-  .nonempty({ message: 'Email is required' })
-  .email({ message: 'Invalid email address' });
-
-export const registerInitialSchema = z.object({
-  email: emailField,
-
-  password: passwordField,
-
-  confirmPassword: z.string().min(1, { message: 'Please confirm your password' }),
-
-  login: loginField,
-});
-
-export const emailEditSchema = z.object({
-  email: emailField,
-});
-
-export const emailPasswordSchema = z
-  .object({
-    email: emailField,
-
-    password: passwordField,
-
-    confirmPassword: z.string().min(1, { message: 'Please confirm your password' }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: 'Passwords do not match',
-  });
-
-export const loginSchema = z.object({
-  username: loginField,
-});
-
-export const registerSchema = z.object({
+export const questSchema = z.object({
   firstName: z
     .string()
     .trim()
@@ -119,19 +63,18 @@ export const registerSchema = z.object({
  * This type is inferred directly from the Zod schema to prevent
  * divergence between validation rules and TypeScript definitions.
  */
-export type RegisterValues = z.infer<typeof registerSchema>;
-export type RegisterInitialValues = z.infer<typeof registerInitialSchema>;
-export type EmailPasswordValues = z.infer<typeof emailPasswordSchema>;
+export type QuestValues = z.infer<typeof questSchema>;
+// export type RegisterInitialValues = z.infer<typeof registerInitialSchema>;
+// export type EmailPasswordValues = z.infer<typeof emailPasswordSchema>;
 
-export type EmailEditSchemaType = z.infer<typeof emailEditSchema>;
+// export type EmailEditSchemaType = z.infer<typeof emailEditSchema>;
 
 /** Type representing raw input values before Zod coercion.
  * Useful for form libraries that handle all inputs as strings.
  */
-export type RegisterInput = z.input<typeof registerSchema>;
-export type RegisterInitialInput = z.input<typeof registerInitialSchema>;
+export type QuestInput = z.input<typeof questSchema>;
 /**
  * All error messages are localized and user-friendly.
  * No additional client-side validation is needed.
  */
-export type RegisterErrors = z.ZodFormattedError<RegisterValues>;
+export type QuestErrors = z.ZodFormattedError<QuestValues>;

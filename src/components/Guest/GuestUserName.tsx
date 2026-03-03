@@ -5,9 +5,11 @@ import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import { MainTitle } from '../ui/MainTitle';
 import type React from 'react';
+import { useState } from 'react';
 
 interface GuestUserNameProps {
-  setStep: (step: number) => void;
+  // setStep: (step: number) => void;
+  onSubmit: (login: string) => void;
 }
 
 const list = [
@@ -17,10 +19,10 @@ const list = [
   { text: 'Cannot save contacts' },
 ];
 
-export const GuestUserName: React.FC<GuestUserNameProps> = ({ setStep }) => {
-  console.log(setStep);
+export const GuestUserName: React.FC<GuestUserNameProps> = ({ onSubmit }) => {
+  const [login, setLogin] = useState('');
   const handleNext = () => {
-    setStep(2);
+    onSubmit(login);
   };
   return (
     <div className="flex h-screen flex-col overflow-hidden">
@@ -35,8 +37,14 @@ export const GuestUserName: React.FC<GuestUserNameProps> = ({ setStep }) => {
             />
             <form className="flex w-full flex-col gap-[16px]">
               <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="example@gmail.com" />
+                <Label htmlFor="login">Username </Label>
+                <Input
+                  id="login"
+                  type="email"
+                  placeholder="example"
+                  value={login}
+                  onChange={(e) => setLogin(e.target.value)}
+                />
               </div>
 
               <p className="text-[12px] font-medium text-[#A3A3A3]">

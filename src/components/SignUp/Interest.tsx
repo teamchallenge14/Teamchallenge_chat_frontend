@@ -1,105 +1,21 @@
 import { Button } from '../ui/button';
-import { getInterest, getUserById, setUserInterests } from '@/app/api/api';
-import React, { useEffect, useRef, useState } from 'react';
-import type { Interest } from '@/types/Interest';
-import { useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useRegisterUserID } from '@/store/register-store';
+import React from 'react';
 import { RegisterLayout } from '../ui/layouts';
 import { RegisterStepsEnum } from '@/store/@types';
+import { useInterests } from '@/hooks/useInterests';
 
 export const Interes: React.FC = () => {
-  const userId = useRegisterUserID();
-
   const {
-    data: interests = [],
     isLoading,
     isError,
-  } = useQuery<Interest[]>({
-    queryKey: ['interests'],
-    queryFn: getInterest,
-  });
-
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  const hasInitialized = useRef(false);
-  const navigate = useNavigate();
-
-  const formatCategory = (category: string): string => {
-    return category
-      .split('_')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  };
-
-  const grouperInterestByCategiry = interests.reduce<Record<string, Interest[]>>((acc, item) => {
-    if (!acc[item.category]) {
-      acc[item.category] = [];
-    }
-    acc[item.category].push(item);
-    return acc;
-  }, {});
-
-  const { data: user } = useQuery({
-    queryKey: ['user', userId],
-    queryFn: () => getUserById(userId as string),
-    enabled: !!userId,
-  });
-
-  // ініціалізую вибрані інтереси тільки один раз
-  useEffect(() => {
-    if (user?.interests?.length && !hasInitialized.current) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setSelectedInterests(user.interests.map((int: Interest) => int.id));
-      hasInitialized.current = true;
-    }
-  }, [user]);
-
-  const toggleInterest = (interestId: string) => {
-    setSelectedInterests((prev) => {
-      if (prev.includes(interestId)) {
-        return prev.filter((id) => id !== interestId);
-      } else {
-        return [...prev, interestId];
-      }
-    });
-  };
-
-  const submitInterestsMutation = useMutation({
-    mutationFn: ({
-      userId,
-      payload,
-    }: {
-      userId: string;
-      payload: { add?: string[]; remove?: string[] };
-    }) => setUserInterests(userId, payload),
-    onSuccess: (response) => {
-      console.log('Interests saved successfully:', response);
-      navigate('/successResiter');
-    },
-    onError: (error) => {
-      console.error('Error saving interests:', error);
-    },
-  });
-
-  const handleSubmit = async () => {
-    if (!userId) {
-      console.error('User ID is missing');
-      alert('User ID is missing. Please login again.');
-      return;
-    }
-
-    console.log('Selected interests:', selectedInterests);
-
-    if (selectedInterests.length === 0) {
-      alert('Please select at least one interest');
-      return;
-    }
-
-    submitInterestsMutation.mutate({
-      userId,
-      payload: { add: selectedInterests },
-    });
-  };
+    selectedInterests,
+    toggleInterest,
+    grouperInterestByCategiry,
+    formatCategory,
+    handleSubmit,
+    // isPending,
+    submitInterestsMutation,
+  } = useInterests();
 
   if (isLoading) {
     return <div>Loading interests...</div>;

@@ -7,3 +7,9 @@ export enum RegisterStepsEnum {
   EMAIL_EDIT = 6,
   FINALY_STEP = 7,
 }
+
+export enum GuestStepEnum {
+  ENTER_USERNAME = 1,
+  ENTER_INFO = 2,
+  ENTER_INTERESS = 3,
+}
