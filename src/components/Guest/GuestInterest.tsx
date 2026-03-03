@@ -11,7 +11,7 @@ export const GuestInteres: React.FC = () => {
     isError,
     selectedInterests,
     toggleInterest,
-    grouperInterestByCategiry,
+    grouperInterestByCategory,
     formatCategory,
     handleSubmit,
     // isPending,
@@ -50,7 +50,7 @@ export const GuestInteres: React.FC = () => {
           </div>
 
           <div className="flex flex-col gap-[16px]">
-            {Object.entries(grouperInterestByCategiry).map(([categoty, items]) => (
+            {Object.entries(grouperInterestByCategory).map(([categoty, items]) => (
               <div key={categoty}>
                 <h3 className="text-left text-[14px] font-bold leading-[20px] text-[#000000]">
                   {formatCategory(categoty)}

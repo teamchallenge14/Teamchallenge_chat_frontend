@@ -28,7 +28,7 @@ export const useInterests = () => {
       .join(' ');
   };
 
-  const grouperInterestByCategiry = interests.reduce<Record<string, Interest[]>>((acc, item) => {
+  const grouperInterestByCategory = interests.reduce<Record<string, Interest[]>>((acc, item) => {
     if (!acc[item.category]) {
       acc[item.category] = [];
     }
@@ -104,7 +104,7 @@ export const useInterests = () => {
     isError,
     selectedInterests,
     toggleInterest,
-    grouperInterestByCategiry,
+    grouperInterestByCategory,
     formatCategory,
     handleSubmit,
     // isPending: submitInterestsMutation.isPending,

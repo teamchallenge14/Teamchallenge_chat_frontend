@@ -21,10 +21,9 @@ const list = [
 
 export const GuestUserName: React.FC<GuestUserNameProps> = ({ onSubmit }) => {
   const [login, setLogin] = useState('');
-  // console.log(setStep);
-  // const handleNext = () => {
-  //   setStep(2);
-  // };
+  const handleNext = () => {
+    onSubmit(login);
+  };
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       <Header title="Guest Entry" />
@@ -52,7 +51,7 @@ export const GuestUserName: React.FC<GuestUserNameProps> = ({ onSubmit }) => {
                 This will be your temporary username
               </p>
 
-              <Button variant="default" type="button" onClick={() => onSubmit(login)}>
+              <Button variant="default" type="button" onClick={handleNext}>
                 Continue as a Guest
               </Button>
 
