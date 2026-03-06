@@ -1,1 +1,0 @@
-export { RegisterLayout } from './RegisterLayout';
