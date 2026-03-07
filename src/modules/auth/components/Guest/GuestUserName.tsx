@@ -4,48 +4,33 @@ import { AuthLayout } from '../../layouts';
 import { AppRoutesEnum } from '@/shared/constants';
 import { GuestLimitations } from './GuestLimitations';
 import { GuestStepsEnum } from '../../types/@auth.types';
-import { Controller, useFormContext, useFormState } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import type { GuestSchemaValues } from '../../schemas';
-import { InputField, Button } from '@/shared/ui';
+import { Button, FormInput } from '@/shared/ui';
 import { useGuestSetStep } from '../../store/authStore';
 
 export const GuestUserName: React.FC = () => {
-  const { control } = useFormContext<GuestSchemaValues>();
-  const { touchedFields } = useFormState({ control });
+  const { trigger, getValues } = useFormContext<GuestSchemaValues>();
 
   const setStep = useGuestSetStep();
 
-  const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
+  const handleNext = async () => {
+    const isValid = await trigger('login', { shouldFocus: true });
 
-  console.log('technical log - setIsSubmitted', setIsSubmitted);
-
-  const shouldShowError = (field: keyof GuestSchemaValues, hasError: boolean) =>
-    hasError && (touchedFields[field] || isSubmitted);
-  const handleNext = () => {
-    setStep(GuestStepsEnum.GUEST_INFO);
+    if (isValid) {
+      const values = getValues();
+      console.log('Success:', values);
+      setStep(GuestStepsEnum.GUEST_INFO);
+    } else {
+      console.log('Field login is invalid');
+    }
   };
 
   return (
     <AuthLayout flow={'guest'} step={GuestStepsEnum.GUEST_USERNAME}>
       <div className="flex w-full flex-col gap-[16px]">
-        <Controller
-          name="login"
-          control={control}
-          render={({ field, fieldState }) => (
-            <InputField
-              {...field}
-              id="login"
-              label="Login *"
-              fieldType="text"
-              isError={
-                !!fieldState.error && (shouldShowError('login', fieldState.invalid) as boolean)
-              }
-              errorMessage={
-                shouldShowError('login', fieldState.invalid) ? fieldState.error?.message : undefined
-              }
-            />
-          )}
-        />
+        <FormInput name="login" label="Login *" fieldType="text" id="login" />
+
         <p className="text-[12px] font-medium text-[#A3A3A3]">
           This will be your temporary username
         </p>

@@ -1,78 +1,34 @@
-import { Button } from '../../../../shared/ui/Button/button';
-import { Input } from '../../../../shared/ui/Input';
-import { Label } from '../../../../shared/ui/Label';
 import React from 'react';
 import { type RegisterValues } from '@/modules/auth/schemas/registerSchema';
 import { useFormContext } from 'react-hook-form';
-import { DateOfBirthField } from '@/shared/ui/DateOfBirthField';
 import { SignUpStepsEnum } from '../../types/@auth.types';
 import { AuthLayout } from '../../layouts';
 import { GENDERS } from '@/shared/constants';
+import { DatePickerField, FormInput, SelectButtonsField, UploadAvatar, Button } from '@/shared/ui';
 
 export const PersonalInfo: React.FC = () => {
-  const { register, watch, setValue } = useFormContext<RegisterValues>();
-  const currentGender = watch('gender');
+  const { watch } = useFormContext<RegisterValues>();
+  // const currentGender = watch('gender');
   const currentBio = watch('description');
 
   return (
     <AuthLayout flow={'signup'} step={SignUpStepsEnum.ENTER_PERSONAL_INFO}>
       <div className="mt-[22px] flex flex-col items-center justify-center">
-        {/*flex-1 */}
         <div className="w-full max-w-md text-center">
-          <p className="mb-6 text-left text-[14px] font-medium leading-[20px]">Profile Photo</p>
-
-          <div className="relative mb-[16px] inline-block">
-            <div className="flex h-[100px] w-[100px] items-center justify-center overflow-hidden rounded-full bg-gray-100">
-              <img src="img/user.svg" alt="Profile" className="h-[42px] w-[42px]" />
-            </div>
-
-            <Button
-              variant="upload"
-              className="absolute bottom-0 right-0 flex h-[36px] min-h-0 w-[36px] items-center justify-center rounded-full border-2 border-white bg-[#0A0A0A] p-0 text-white hover:bg-[#333333]"
-            >
-              <img src="img/camera.svg" alt="Upload photo" className="h-4 w-4" />
-            </Button>
-          </div>
+          <UploadAvatar />
 
           <div className="flex w-full flex-col gap-4">
-            <div>
-              <Label htmlFor="name">Name *</Label>
-              <Input id="name" type="text" placeholder="John" {...register('firstName')} />
-            </div>
-            <div>
-              <Label htmlFor="surname">Surname *</Label>
-              <Input id="surname" type="text" placeholder="Doe" {...register('lastName')} />
-            </div>
-            <div>
-              <DateOfBirthField />
-            </div>
-            <div>
-              <Label htmlFor="gender">Gender *</Label>
-              <div className="mt-[12px] flex gap-[14px]" id="gender">
-                {GENDERS.map((gender) => (
-                  <Button
-                    variant={currentGender === gender ? 'destructive' : 'default'}
-                    key={gender}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setValue('gender', gender, { shouldValidate: true });
-                    }}
-                  >
-                    {gender.charAt(0) + gender.slice(1).toLowerCase()}
-                  </Button>
-                ))}
-              </div>
-            </div>
-            <div>
-              <Label htmlFor="bio">Bio</Label>
-              <textarea
-                id="bio"
-                className="h-[80px] w-full resize-none pl-[12px] pt-[12px]"
-                placeholder="Your feedback helps us improve..."
-                {...register('description')}
-                maxLength={150}
-              ></textarea>
-            </div>
+            <FormInput name="firstName" label="Name *" placeholder="John" fieldType={'text'} />
+            <FormInput name="lastName" label="Surname *" placeholder="Doe" fieldType={'text'} />
+            <DatePickerField name="birthDate" label="Date of birth *" />
+            <SelectButtonsField name="gender" label="Gender" options={GENDERS} required />
+            <FormInput
+              name="description"
+              label="Bio"
+              placeholder="Your feedback helps us improve..."
+              fieldType={'textarea'}
+              maxLength={150}
+            />
           </div>
           <p className="mt-[12px] text-left text-[12px] font-medium leading-[100%] text-[#A3A3A3]">
             {(currentBio as string)?.length || 0}/150 characters

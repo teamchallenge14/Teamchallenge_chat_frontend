@@ -9,14 +9,6 @@ export const GuestPage: React.FC = () => {
   const currentStep = useGuestCurrentStep();
   const profileMethods = useGuestForm();
 
-  // const hondleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  // };
-
-  // const handleUpdateAcount = async () => {
-  //   setStep(3);
-  // };
-
   const renderStep = () => {
     switch (currentStep) {
       case GuestStepsEnum.GUEST_USERNAME:

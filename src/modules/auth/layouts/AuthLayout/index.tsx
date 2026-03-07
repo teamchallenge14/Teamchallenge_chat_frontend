@@ -1,8 +1,9 @@
 import React from 'react';
 import { Header, MainTitle, ProgressBar } from '@/shared/ui';
-import { useSignUpSetStep } from '../../store/authStore';
+import { useGuestSetStep, useSignUpSetStep } from '../../store/authStore';
 import { useAuthLayoutConfig } from './useAuthLayoutConfig';
 import { type FlowType, type StepEnum } from './configs/layoutConfig';
+import type { GuestStepsEnum, SignUpStepsEnum } from '../../types/@auth.types';
 
 interface IAuthLayoutProps {
   flow?: FlowType;
@@ -13,12 +14,19 @@ interface IAuthLayoutProps {
 
 export const AuthLayout: React.FC<IAuthLayoutProps> = ({ flow, step, variant, children }) => {
   const setRegisterStep = useSignUpSetStep();
+  const setGuestStep = useGuestSetStep();
 
   const { config, progress } = useAuthLayoutConfig(flow, step, variant);
 
   const handleBack = () => {
     if (config.prevStep) {
-      setRegisterStep(config.prevStep);
+      if (flow === 'signup') {
+        setRegisterStep(config.prevStep as unknown as SignUpStepsEnum);
+      }
+
+      if (flow === 'guest') {
+        setGuestStep(config.prevStep as unknown as GuestStepsEnum);
+      }
     }
   };
 

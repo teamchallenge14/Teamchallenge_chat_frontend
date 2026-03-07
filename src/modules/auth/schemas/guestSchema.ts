@@ -14,6 +14,7 @@ export const guestSchema = z.object({
   interests: z.array(z.string()).min(1, { message: 'Please select at least one interest.' }),
   description: bioFieldSchema(150),
   gender: genderFieldSchema,
+  birthDay: z.date().optional(),
 });
 
 export type GuestInput = z.input<typeof guestSchema>;
