@@ -1,62 +1,34 @@
-import * as Progress from '@radix-ui/react-progress';
 import { Button } from '../../../../shared/ui/Button/button';
-import { Header } from '../../../../shared/ui/Header';
 import { Input } from '../../../../shared/ui/Input';
 import { Label } from '../../../../shared/ui/Label';
 import { Dropdown } from '../../../../shared/ui/selectDemo';
-import { GENDERS, type RegisterValues } from '@/modules/auth/schemas/registerSchema';
+import { type RegisterValues } from '@/modules/auth/schemas/registerSchema';
 import type React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { GENDERS } from '@/shared/constants';
+import { AuthLayout } from '../../layouts';
+import { GuestStepsEnum } from '../../types/@auth.types';
+import { UploadAvatar } from '@/shared/ui';
 
-interface GuestInfoProps {
-  setStep: (step: number) => void;
-}
+export const GuestInfo: React.FC = () => {
+  const { watch, setValue } = useFormContext<RegisterValues>();
 
-export const GuestInfo: React.FC<GuestInfoProps> = ({ setStep }) => {
-  const {
-    // register,
-    // formState: { errors },
-    watch,
-    setValue,
-  } = useFormContext<RegisterValues>();
   const currentGender = watch('gender');
   const currentAge = watch('age');
   const currentBio = watch('description');
+
   const handleNext = () => {
-    setStep(3);
+    // setStep(3);
   };
+
+  //ToDo need deep refactor
+
   return (
-    <div className="flex flex-col">
-      <Header title="Complete Profile" />
-
-      <Progress.Root
-        className="relative mb-[22px] h-[8px] w-full overflow-hidden rounded-full bg-gray-200"
-        value={50}
-      >
-        <Progress.Indicator
-          className="h-full w-full bg-black transition-transform duration-300 ease-in-out"
-          style={{ transform: `translateX(-${100 - 50}%)` }}
-        />
-      </Progress.Root>
-
-      <div className="flex flex-col items-center justify-center">
+    <AuthLayout flow={'guest'} step={GuestStepsEnum.GUEST_INFO}>
+      <div className="mt-[22px] flex flex-col items-center justify-center">
         {/*flex-1 */}
         <div className="w-full max-w-md text-center">
-          <p className="mb-6 text-left text-[14px] font-medium leading-[20px]">Profile Photo</p>
-
-          <div className="relative mb-[16px] inline-block">
-            <div className="flex h-[100px] w-[100px] items-center justify-center overflow-hidden rounded-full bg-gray-100">
-              <img src="img/user.svg" alt="Profile" className="h-[42px] w-[42px]" />
-            </div>
-
-            <Button
-              variant="upload"
-              className="absolute bottom-0 right-0 flex h-[36px] min-h-0 w-[36px] items-center justify-center rounded-full border-2 border-white bg-[#0A0A0A] p-0 text-white hover:bg-[#333333]"
-            >
-              <img src="img/camera.svg" alt="Upload photo" className="h-4 w-4" />
-            </Button>
-          </div>
-
+          <UploadAvatar />
           <div className="flex w-full flex-col gap-4">
             <div>
               <Label htmlFor="name">Name *</Label>
@@ -122,6 +94,6 @@ export const GuestInfo: React.FC<GuestInfoProps> = ({ setStep }) => {
           </Button>
         </div>
       </div>
-    </div>
+    </AuthLayout>
   );
 };

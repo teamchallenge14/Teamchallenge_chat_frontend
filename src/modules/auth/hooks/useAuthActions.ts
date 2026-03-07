@@ -1,19 +1,19 @@
 import { useMutation } from '@tanstack/react-query';
 import {
-  useRegisterCurrentStep,
-  useRegisterSetStep,
-  useRegisterSetUserID,
-  useRegisterUserID,
-} from '@/modules/auth/store/registerStore';
-import { RegisterStepsEnum } from '../types/@auth.types';
+  useSignUpCurrentStep,
+  useSignUpSetStep,
+  useAuthSetUserID,
+  useAuthUserID,
+} from '@/modules/auth/store/authStore';
+import { SignUpStepsEnum } from '../types/@auth.types';
 import type { RegisterValues } from '../schemas/registerSchema';
 import { confirmVerifyAsync, singUpAsync, updateUserAsync, verifyEmailAsync } from '../api/authApi';
 
 export const useAuthActions = () => {
-  const currentStep = useRegisterCurrentStep();
-  const setStep = useRegisterSetStep();
-  const userId = useRegisterUserID();
-  const setUserID = useRegisterSetUserID();
+  const currentStep = useSignUpCurrentStep();
+  const setStep = useSignUpSetStep();
+  const userId = useAuthUserID();
+  const setUserID = useAuthSetUserID();
 
   // Create user
   const signUpMutation = useMutation({
@@ -21,7 +21,7 @@ export const useAuthActions = () => {
     onSuccess: (response) => {
       setUserID(response.user.id);
       console.log('Sign up success:', response);
-      setStep(RegisterStepsEnum.EMAIL_VERIFICATION);
+      setStep(SignUpStepsEnum.EMAIL_VERIFICATION);
     },
     onError: (error) => {
       console.error('Sign up error:', error);
@@ -34,7 +34,7 @@ export const useAuthActions = () => {
       updateUserAsync(userId, data),
     onSuccess: (response) => {
       console.log('Update success:', response);
-      setStep(RegisterStepsEnum.ENTER_INTERESTS);
+      setStep(SignUpStepsEnum.ENTER_INTERESTS);
     },
     onError: (error) => {
       console.error('Update error:', error);
@@ -44,7 +44,7 @@ export const useAuthActions = () => {
   // Функція для обробки відправлення форми
   const handleStepSubmit = (data: Partial<RegisterValues>) => {
     console.log('Form submit in hook:', data);
-    if (currentStep === RegisterStepsEnum.ENTER_EMAIL) {
+    if (currentStep === SignUpStepsEnum.ENTER_EMAIL) {
       const { email, password, confirmPassword } = data;
       // Відправляємо тільки необхідні поля для першого кроку
       signUpMutation.mutate({
@@ -71,7 +71,7 @@ export const useAuthActions = () => {
   const confirmCodeMutation = useMutation({
     mutationFn: ({ email, code }: { email: string; code: string }) =>
       confirmVerifyAsync(email, code),
-    onSuccess: () => setStep(RegisterStepsEnum.ENTER_USERNAME), // Або ENTER_PERSONAL_INFO
+    onSuccess: () => setStep(SignUpStepsEnum.ENTER_USERNAME), // Або ENTER_PERSONAL_INFO
   });
 
   return {

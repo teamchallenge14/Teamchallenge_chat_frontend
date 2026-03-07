@@ -1,15 +1,15 @@
 import React from 'react';
 import { Button } from '../../../../shared/ui/Button/button';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { useRegisterSetStep } from '@/modules/auth/store/registerStore';
-import { RegisterStepsEnum } from '../../types/@auth.types';
+import { useSignUpSetStep } from '@/modules/auth/store/authStore';
+import { SignUpStepsEnum } from '../../types/@auth.types';
 import { AuthLayout } from '../../layouts';
 import { InputField } from '@/shared/ui/InputField';
 import type { RegisterValues } from '../../schemas';
 import { useAuthActions } from '../../hooks';
 
 export const Verification: React.FC = () => {
-  const setRegisterStep = useRegisterSetStep();
+  const setRegisterStep = useSignUpSetStep();
   const { control, getValues } = useFormContext<RegisterValues>();
 
   // Використовуємо useWatch, щоб кнопка Verify реагувала на введення коду миттєво
@@ -41,11 +41,11 @@ export const Verification: React.FC = () => {
 
   const navToEmailEdit = (e: React.FormEvent) => {
     e.preventDefault();
-    setRegisterStep(RegisterStepsEnum.EMAIL_EDIT);
+    setRegisterStep(SignUpStepsEnum.EMAIL_EDIT);
   };
 
   return (
-    <AuthLayout step={RegisterStepsEnum.EMAIL_VERIFICATION}>
+    <AuthLayout flow={'signup'} step={SignUpStepsEnum.EMAIL_VERIFICATION}>
       <div className="flex w-full flex-col gap-[16px]">
         <Controller
           name="code"

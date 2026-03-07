@@ -1,10 +1,11 @@
+import React from 'react';
 import { Button } from '@/shared/ui';
-import { RegisterStepsEnum } from '../../types/@auth.types';
+import { SignUpStepsEnum } from '../../types/@auth.types';
 import { AuthLayout } from '../../layouts';
 
-export const FinalyWindow = () => {
+export const FinalyWindow: React.FC = () => {
   return (
-    <AuthLayout step={RegisterStepsEnum.FINALY_STEP}>
+    <AuthLayout flow={'signup'} step={SignUpStepsEnum.FINALY_STEP}>
       <Button>Go to home</Button>
     </AuthLayout>
   );

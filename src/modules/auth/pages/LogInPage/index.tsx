@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useLoginForm } from '@/modules/auth/hooks/useLoginForm';
 import type { LoginValues } from '@/modules/auth/schemas/loginSchema';
 import { InputField, SocialAuth, Button } from '@/shared/ui';
-import { logIn } from '@/modules/auth/api/authApi';
+import { logInAsync } from '@/modules/auth/api/authApi';
 import { AuthLayout } from '@/modules/auth/layouts';
 import { AppRoutesEnum } from '@/shared/constants/routes';
 
@@ -16,7 +16,7 @@ export const LogInPage: React.FC = () => {
   const { handleSubmit, control } = methods;
 
   const logInMutation = useMutation({
-    mutationFn: (data: LoginValues) => logIn(data),
+    mutationFn: (data: LoginValues) => logInAsync(data),
     onSuccess: (response) => {
       console.log('logIn up success:', response);
     },

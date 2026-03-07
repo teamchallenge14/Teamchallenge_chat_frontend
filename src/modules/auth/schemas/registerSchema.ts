@@ -1,5 +1,13 @@
 import { z } from 'zod';
-import { emailFieldSchema, loginFieldSchema, passwordFieldSchema } from './fields';
+import {
+  bioFieldSchema,
+  emailFieldSchema,
+  firstNameFieldSchema,
+  genderFieldSchema,
+  lastNameFieldSchema,
+  loginFieldSchema,
+  passwordFieldSchema,
+} from './fields';
 
 /**
  * Zod schema describing validation rules for the registration form.
@@ -7,13 +15,8 @@ import { emailFieldSchema, loginFieldSchema, passwordFieldSchema } from './field
  * - Field names match Swagger (create-user-dto).
  * - Required fields match the UI Design (even if Swagger allows nulls).
  */
-export const GENDERS = ['MALE', 'FEMALE', 'OTHER'] as const;
-export const AGE_OPTIONS = Array.from({ length: 89 }, (_, i) => i + 12);
 
-/**
- * Type for gender values (re-usable in UI and other code).
- */
-export type Gender = (typeof GENDERS)[number];
+export const AGE_OPTIONS = Array.from({ length: 89 }, (_, i) => i + 12);
 
 // export const registerInitialSchema = z
 //   .object({
@@ -64,19 +67,9 @@ export const registerSchema = z
 
     // --- 2. Profile details ---
 
-    firstName: z
-      .string()
-      .trim()
-      .min(3, { message: 'Name must be at least 3 characters.' })
-      .max(20, { message: 'Name must be at most 20 characters.' }),
+    firstName: firstNameFieldSchema,
 
-    lastName: z
-      .string()
-      .trim()
-      .min(1, { message: 'Surname is required.' })
-      .regex(/^[a-zA-Z\s-]+$/, {
-        message: 'Surname can only contain letters, spaces, and hyphens.',
-      }),
+    lastName: lastNameFieldSchema,
 
     age: z.coerce
       .number({ message: 'Age must be a number.' })
@@ -84,16 +77,13 @@ export const registerSchema = z
       .min(12, { message: 'Age must be at least 12.' })
       .max(120, { message: 'Age must be at most 120.' }),
 
-    gender: z.enum(GENDERS, { message: 'Please select a gender.' }).default('MALE'),
+    gender: genderFieldSchema,
 
     // Optional fields
     // Preprocess bio so empty or whitespace-only strings are treated as undefined.
     // This ensures an empty bio is not sent to the backend as an empty string
     // and remains an absent field if the user left it blank.
-    description: z.preprocess(
-      (val) => (typeof val === 'string' && val.trim() === '' ? undefined : val),
-      z.string().trim().max(200, { message: 'Bio must be at most 200 characters.' }).optional(),
-    ),
+    description: bioFieldSchema(200),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],

@@ -1,44 +1,45 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
-import { useRegisterCurrentStep } from '@/modules/auth/store/registerStore';
-import { useRegisterForm } from '../../hooks/useRegisterForm';
-import { RegisterStepsEnum } from '../../types/@auth.types';
-import { EmailPassword } from '../../components/SignUp/EmailPassword';
-import { UserName } from '../../components/SignUp/UserName';
-import { Verification } from '../../components/SignUp/Verification';
-import { PersonalInfo } from '../../components/SignUp/PersonalInfo';
-import { Interes } from '../../components/SignUp/Interest';
-import { EmailEdit } from '../../components/SignUp/EmailEdit';
-import { FinalyWindow } from '../../components/SignUp/FinalyWindow';
+import { useSignUpCurrentStep } from '@/modules/auth/store/authStore';
+import { useRegisterForm } from '@/modules/auth/hooks/useRegisterForm';
+import { SignUpStepsEnum } from '@/modules/auth/types/@auth.types';
+import {
+  EmailEdit,
+  EmailPassword,
+  FinalyWindow,
+  Interes,
+  PersonalInfo,
+  UserName,
+  Verification,
+} from '@/modules/auth/components/SignUp';
 
 export const SignUpPage: React.FC = () => {
   const methods = useRegisterForm();
 
-  const currentStep = useRegisterCurrentStep();
+  const currentStep = useSignUpCurrentStep();
 
   // Step rendering
-
   const renderStep = () => {
     switch (currentStep) {
-      case RegisterStepsEnum.ENTER_EMAIL:
+      case SignUpStepsEnum.ENTER_EMAIL:
         return <EmailPassword />;
 
-      case RegisterStepsEnum.ENTER_USERNAME:
+      case SignUpStepsEnum.ENTER_USERNAME:
         return <UserName />;
 
-      case RegisterStepsEnum.EMAIL_VERIFICATION:
+      case SignUpStepsEnum.EMAIL_VERIFICATION:
         return <Verification />;
 
-      case RegisterStepsEnum.ENTER_PERSONAL_INFO:
+      case SignUpStepsEnum.ENTER_PERSONAL_INFO:
         return <PersonalInfo />;
 
-      case RegisterStepsEnum.ENTER_INTERESTS:
+      case SignUpStepsEnum.ENTER_INTERESTS:
         return <Interes />;
 
-      case RegisterStepsEnum.EMAIL_EDIT:
+      case SignUpStepsEnum.EMAIL_EDIT:
         return <EmailEdit />;
 
-      case RegisterStepsEnum.FINALY_STEP:
+      case SignUpStepsEnum.FINALY_STEP:
         return <FinalyWindow />;
 
       default:

@@ -1,19 +1,20 @@
 import * as Progress from '@radix-ui/react-progress';
 import { Button } from '../../../../shared/ui/Button/button';
 import { Header } from '../../../../shared/ui/Header';
-import { getInterest, getUserById, setUserInterests } from '@/app/api/api';
 import React, { useEffect, useState } from 'react';
 import type { Interest } from '@/types/Interest';
 import { useNavigate } from 'react-router-dom';
+import { getInterestAsync, getUserByIdAsync, setUserInterestsAsync } from '../../api/authApi';
+import { useAuthUserID } from '../../store/authStore';
 
-interface InteresProps {
-  userId: string | null;
-}
-
-export const GuestInteres: React.FC<InteresProps> = ({ userId }) => {
+export const GuestInterests: React.FC = () => {
   const [interest, setInterest] = useState<Interest[]>([]);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+
   const navigate = useNavigate();
+
+  const userId = useAuthUserID();
+
   const grouperInterestByCategiry = interest.reduce<Record<string, Interest[]>>((acc, item) => {
     if (!acc[item.category]) {
       acc[item.category] = [];
@@ -30,7 +31,7 @@ export const GuestInteres: React.FC<InteresProps> = ({ userId }) => {
       }
 
       try {
-        const data = await getUserById(userId);
+        const data = await getUserByIdAsync(userId);
         console.log('Fetched user:', data);
         // якщо у користувача вже є інтереси встановлюю їх як вибрані
         // if (data.interests && data.interests.length > 0) {
@@ -46,7 +47,7 @@ export const GuestInteres: React.FC<InteresProps> = ({ userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getInterest();
+        const data = await getInterestAsync();
         setInterest(data);
         console.log('Fetched data:', data);
       } catch (error) {
@@ -81,7 +82,7 @@ export const GuestInteres: React.FC<InteresProps> = ({ userId }) => {
     }
 
     try {
-      const result = await setUserInterests(userId, { add: selectedInterests });
+      const result = await setUserInterestsAsync(userId, { add: selectedInterests });
       console.log('Interests saved successfully:', result);
       // dashboard або іншу сторінку !!!!!
       navigate('/successResiter');

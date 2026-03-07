@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Controller, useFormContext, useFormState } from 'react-hook-form';
-import { RegisterStepsEnum } from '@/modules/auth/types/@auth.types';
+import { SignUpStepsEnum } from '@/modules/auth/types/@auth.types';
 import { AuthLayout } from '@/modules/auth/layouts';
 import { Button, InputField, SocialAuth } from '@/shared/ui';
 import { AppRoutesEnum } from '@/shared/constants';
@@ -31,7 +31,7 @@ export const EmailPassword: React.FC = () => {
     hasError && (touchedFields[field] || isSubmitted);
 
   return (
-    <AuthLayout step={RegisterStepsEnum.ENTER_EMAIL}>
+    <AuthLayout flow={'signup'} step={SignUpStepsEnum.ENTER_EMAIL}>
       <div className="flex w-full flex-col gap-[16px]">
         <fieldset className="flex flex-col gap-[16px]">
           <Controller

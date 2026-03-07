@@ -1,5 +1,5 @@
 import { type RouteObject } from 'react-router-dom';
-import { LogInPage, SignUpPage } from '../pages';
+import { GuestPage, LogInPage, SignUpPage } from '../pages';
 import { AppRoutesEnum } from '@/shared/constants';
 
 export const authRoutes: RouteObject[] = [
@@ -15,8 +15,8 @@ export const authRoutes: RouteObject[] = [
   //   path: 'reset-password',
   //   element: <ResetPasswordPage />,
   // },
-  // {
-  //   path: 'guest',
-  //   element: <GuestPage />,
-  // },
+  {
+    path: AppRoutesEnum.GUEST,
+    element: <GuestPage />,
+  },
 ];

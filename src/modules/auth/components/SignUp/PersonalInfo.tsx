@@ -2,11 +2,12 @@ import { Button } from '../../../../shared/ui/Button/button';
 import { Input } from '../../../../shared/ui/Input';
 import { Label } from '../../../../shared/ui/Label';
 import React from 'react';
-import { GENDERS, type RegisterValues } from '@/modules/auth/schemas/registerSchema';
+import { type RegisterValues } from '@/modules/auth/schemas/registerSchema';
 import { useFormContext } from 'react-hook-form';
 import { DateOfBirthField } from '@/shared/ui/DateOfBirthField';
-import { RegisterStepsEnum } from '../../types/@auth.types';
+import { SignUpStepsEnum } from '../../types/@auth.types';
 import { AuthLayout } from '../../layouts';
+import { GENDERS } from '@/shared/constants';
 
 export const PersonalInfo: React.FC = () => {
   const { register, watch, setValue } = useFormContext<RegisterValues>();
@@ -14,7 +15,7 @@ export const PersonalInfo: React.FC = () => {
   const currentBio = watch('description');
 
   return (
-    <AuthLayout step={RegisterStepsEnum.ENTER_PERSONAL_INFO}>
+    <AuthLayout flow={'signup'} step={SignUpStepsEnum.ENTER_PERSONAL_INFO}>
       <div className="mt-[22px] flex flex-col items-center justify-center">
         {/*flex-1 */}
         <div className="w-full max-w-md text-center">

@@ -42,7 +42,7 @@ export const confirmVerifyAsync = async (email: string, code: string) => {
   }
 };
 
-export const logIn = async (formData: LoginValues) => {
+export const logInAsync = async (formData: LoginValues) => {
   try {
     console.log('Sending log-in data', formData);
     const response = await apiClient.post('/v1/auth/login', formData);
@@ -53,7 +53,7 @@ export const logIn = async (formData: LoginValues) => {
   }
 };
 
-export const sendResetCode = async (email: string) => {
+export const sendResetCodeAsync = async (email: string) => {
   try {
     const response = await apiClient.post('/v1/mail/reset-password/send', { email });
     return response.data;
@@ -63,7 +63,11 @@ export const sendResetCode = async (email: string) => {
   }
 };
 
-export const sendResetCodeConfirm = async (email: string, code: string, newPassword: string) => {
+export const sendResetCodeConfirmAsync = async (
+  email: string,
+  code: string,
+  newPassword: string,
+) => {
   try {
     const response = await apiClient.post('/v1/mail/reset-password/confirm', {
       email,
@@ -77,7 +81,7 @@ export const sendResetCodeConfirm = async (email: string, code: string, newPassw
   }
 };
 
-export const getInterest = async () => {
+export const getInterestAsync = async () => {
   try {
     const response = await apiClient.get('/v1/interests');
     return response.data;
@@ -87,7 +91,7 @@ export const getInterest = async () => {
   }
 };
 
-export const getUserById = async (userId: string) => {
+export const getUserByIdAsync = async (userId: string) => {
   if (!userId) {
     throw new Error('User ID is required');
   }
@@ -114,7 +118,7 @@ export const updateUserAsync = async (id: string, userData: Partial<RegisterValu
   }
 };
 
-export const setUserInterests = async (
+export const setUserInterestsAsync = async (
   id: string,
   payload: { add?: string[]; remove?: string[] },
 ) => {

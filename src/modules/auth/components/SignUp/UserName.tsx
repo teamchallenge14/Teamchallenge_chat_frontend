@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller, useFormContext, useFormState } from 'react-hook-form';
 import type { RegisterValues } from '@/modules/auth/schemas/registerSchema';
-import { RegisterStepsEnum } from '../../types/@auth.types';
+import { SignUpStepsEnum } from '../../types/@auth.types';
 import { AuthLayout } from '../../layouts';
 import { Button, InputField } from '@/shared/ui';
 
@@ -20,7 +20,7 @@ export const UserName: React.FC = () => {
     hasError && (touchedFields[field] || isSubmitted);
 
   return (
-    <AuthLayout step={RegisterStepsEnum.ENTER_USERNAME}>
+    <AuthLayout flow={'signup'} step={SignUpStepsEnum.ENTER_USERNAME}>
       <div className="flex w-full flex-col gap-[16px]">
         <Controller
           name="login"

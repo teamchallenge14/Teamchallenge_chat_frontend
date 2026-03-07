@@ -3,13 +3,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { Interest } from '@/types/Interest';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useRegisterUserID } from '@/modules/auth/store/registerStore';
+import { useAuthUserID } from '@/modules/auth/store/authStore';
 import { AuthLayout } from '../../layouts';
-import { RegisterStepsEnum } from '../../types/@auth.types';
-import { getInterest, getUserById, setUserInterests } from '../../api/authApi';
+import { SignUpStepsEnum } from '../../types/@auth.types';
+import { getInterestAsync, getUserByIdAsync, setUserInterestsAsync } from '../../api/authApi';
 
 export const Interes: React.FC = () => {
-  const userId = useRegisterUserID();
+  const userId = useAuthUserID();
 
   const {
     data: interests = [],
@@ -17,7 +17,7 @@ export const Interes: React.FC = () => {
     isError,
   } = useQuery<Interest[]>({
     queryKey: ['interests'],
-    queryFn: getInterest,
+    queryFn: getInterestAsync,
   });
 
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
@@ -41,7 +41,7 @@ export const Interes: React.FC = () => {
 
   const { data: user } = useQuery({
     queryKey: ['user', userId],
-    queryFn: () => getUserById(userId as string),
+    queryFn: () => getUserByIdAsync(userId as string),
     enabled: !!userId,
   });
 
@@ -71,7 +71,7 @@ export const Interes: React.FC = () => {
     }: {
       userId: string;
       payload: { add?: string[]; remove?: string[] };
-    }) => setUserInterests(userId, payload),
+    }) => setUserInterestsAsync(userId, payload),
     onSuccess: (response) => {
       console.log('Interests saved successfully:', response);
       navigate('/successResiter');
@@ -110,7 +110,7 @@ export const Interes: React.FC = () => {
   }
 
   return (
-    <AuthLayout step={RegisterStepsEnum.ENTER_INTERESTS}>
+    <AuthLayout flow={'signup'} step={SignUpStepsEnum.ENTER_INTERESTS}>
       <div className="mt-[22px] flex flex-col items-center justify-center">
         <div className="w-full max-w-md text-center">
           <div className="mb-8 text-center">

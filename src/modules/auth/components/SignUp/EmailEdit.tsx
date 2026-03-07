@@ -3,8 +3,8 @@ import { Controller, useForm, useFormState } from 'react-hook-form';
 import { Button } from '../../../../shared/ui/Button/button';
 import { emailEditSchema, type EmailEditSchemaType } from '@/modules/auth/schemas/registerSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRegisterSetStep } from '@/modules/auth/store/registerStore';
-import { RegisterStepsEnum } from '../../types/@auth.types';
+import { useSignUpSetStep } from '@/modules/auth/store/authStore';
+import { SignUpStepsEnum } from '../../types/@auth.types';
 import { AuthLayout } from '../../layouts';
 import { InputField } from '@/shared/ui';
 
@@ -18,7 +18,7 @@ export const EmailEdit: React.FC = () => {
     },
   });
 
-  const setRegisterStep = useRegisterSetStep();
+  const setRegisterStep = useSignUpSetStep();
 
   const { touchedFields, submitCount } = useFormState({ control });
 
@@ -28,11 +28,11 @@ export const EmailEdit: React.FC = () => {
   const onSubmit = async (data: { email: string }) => {
     console.log(data);
     // ToDo if email edit success - change step
-    setRegisterStep(RegisterStepsEnum.EMAIL_VERIFICATION);
+    setRegisterStep(SignUpStepsEnum.EMAIL_VERIFICATION);
   };
 
   return (
-    <AuthLayout step={RegisterStepsEnum.EMAIL_EDIT}>
+    <AuthLayout flow={'signup'} step={SignUpStepsEnum.EMAIL_EDIT}>
       <div className="flex w-full flex-col gap-[16px]">
         <fieldset>
           <Controller
