@@ -2,6 +2,7 @@
 import path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
@@ -11,7 +12,28 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [
+    react(),
+    svgr({
+      svgrOptions: {
+        icon: true,
+        dimensions: false,
+        svgProps: {
+          role: 'img',
+          focusable: 'false',
+        },
+        svgoConfig: {
+          plugins: [
+            {
+              name: 'removeViewBox',
+              active: false,
+            },
+          ],
+        },
+      },
+    }),
+    tsconfigPaths(),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
