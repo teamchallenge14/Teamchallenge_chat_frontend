@@ -1,7 +1,11 @@
 # ADR-0002: Adopt Feature-Sliced Design (FSD) Architecture
 
 Date: 2026-01-03  
-Status: Accepted
+Status: Deprecated
+Deprecated: 2026-03-13
+
+This decision is currently not used in the project.
+The architecture was simplified, but FSD may be revisited later.
 
 ## Context
 
