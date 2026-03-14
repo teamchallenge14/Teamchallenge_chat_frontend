@@ -6,7 +6,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAuthUserID } from '@/modules/auth/store/authStore';
 import { AuthLayout } from '../../layouts';
 import { SignUpStepsEnum } from '../../types/@auth.types';
-import { getInterestAsync, getUserByIdAsync, setUserInterestsAsync } from '../../api/authApi';
+import { getInterestAsync } from '@/modules/interests/api/apiInterests';
+import { apiUsers } from '@/modules/users/api/apiUsers';
 
 export const Interes: React.FC = () => {
   const userId = useAuthUserID();
@@ -41,7 +42,7 @@ export const Interes: React.FC = () => {
 
   const { data: user } = useQuery({
     queryKey: ['user', userId],
-    queryFn: () => getUserByIdAsync(userId as string),
+    queryFn: () => apiUsers.getUserById(userId as string),
     enabled: !!userId,
   });
 
@@ -71,7 +72,7 @@ export const Interes: React.FC = () => {
     }: {
       userId: string;
       payload: { add?: string[]; remove?: string[] };
-    }) => setUserInterestsAsync(userId, payload),
+    }) => apiUsers.userInterests(userId, payload),
     onSuccess: (response) => {
       console.log('Interests saved successfully:', response);
       navigate('/successResiter');

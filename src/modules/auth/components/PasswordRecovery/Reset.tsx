@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { EmailPage } from './EmailPage';
 import { PasswordPage } from './PaswordPage';
 import { Success } from './Success';
-import { sendResetCodeConfirm } from '@/app/api/api';
 import { useMutation } from '@tanstack/react-query';
+import { apiResetPassword } from '../../api/apiRecovery';
 
 export const Reset = () => {
   const [step, setStep] = useState(1);
@@ -20,7 +20,7 @@ export const Reset = () => {
       email: string;
       code: string;
       newPassword: string;
-    }) => sendResetCodeConfirm(email, code, newPassword),
+    }) => apiResetPassword.confirm(email, code, newPassword),
     onSuccess: () => {
       setStep(3);
     },

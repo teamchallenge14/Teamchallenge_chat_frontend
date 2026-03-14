@@ -4,8 +4,9 @@ import { Header } from '../../../../shared/ui/Header';
 import React, { useEffect, useState } from 'react';
 import type { Interest } from '@/types/Interest';
 import { useNavigate } from 'react-router-dom';
-import { getInterestAsync, getUserByIdAsync, setUserInterestsAsync } from '../../api/authApi';
 import { useAuthUserID } from '../../store/authStore';
+import { apiUsers } from '@/modules/users/api/apiUsers';
+import { getInterestAsync } from '@/modules/interests/api/apiInterests';
 
 export const GuestInterests: React.FC = () => {
   const [interest, setInterest] = useState<Interest[]>([]);
@@ -31,7 +32,7 @@ export const GuestInterests: React.FC = () => {
       }
 
       try {
-        const data = await getUserByIdAsync(userId);
+        const data = await apiUsers.getUserById(userId);
         console.log('Fetched user:', data);
         // якщо у користувача вже є інтереси встановлюю їх як вибрані
         // if (data.interests && data.interests.length > 0) {
@@ -82,7 +83,7 @@ export const GuestInterests: React.FC = () => {
     }
 
     try {
-      const result = await setUserInterestsAsync(userId, { add: selectedInterests });
+      const result = await apiUsers.userInterests(userId, { add: selectedInterests });
       console.log('Interests saved successfully:', result);
       // dashboard або іншу сторінку !!!!!
       navigate('/successResiter');

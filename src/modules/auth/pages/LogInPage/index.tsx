@@ -7,9 +7,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useLoginForm } from '@/modules/auth/hooks/useLoginForm';
 import type { LoginValues } from '@/modules/auth/schemas/loginSchema';
 import { InputField, SocialAuth, Button } from '@/shared/ui';
-import { logInAsync } from '@/modules/auth/api/authApi';
 import { AuthLayout } from '@/modules/auth/layouts';
 import { AppRoutesEnum } from '@/shared/constants/routes';
+import { logInAsync } from '../../api/apiLogIn';
 
 export const LogInPage: React.FC = () => {
   const methods = useLoginForm();

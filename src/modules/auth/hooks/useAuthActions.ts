@@ -7,7 +7,8 @@ import {
 } from '@/modules/auth/store/authStore';
 import { SignUpStepsEnum } from '../types/@auth.types';
 import type { RegisterValues } from '../schemas/registerSchema';
-import { confirmVerifyAsync, singUpAsync, updateUserAsync, verifyEmailAsync } from '../api/authApi';
+import { confirmVerifyAsync, singUpAsync, verifyEmailAsync } from '../api/apiSingUp';
+import { apiUsers } from '@/modules/users/api/apiUsers';
 
 export const useAuthActions = () => {
   const currentStep = useSignUpCurrentStep();
@@ -31,7 +32,7 @@ export const useAuthActions = () => {
   // Update user
   const updateUserMutation = useMutation({
     mutationFn: ({ userId, data }: { userId: string; data: Partial<RegisterValues> }) =>
-      updateUserAsync(userId, data),
+      apiUsers.update(userId, data),
     onSuccess: (response) => {
       console.log('Update success:', response);
       setStep(SignUpStepsEnum.ENTER_INTERESTS);

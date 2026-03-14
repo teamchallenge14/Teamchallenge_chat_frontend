@@ -5,8 +5,8 @@ import { Label } from '../../../../shared/ui/Label';
 import { Header } from '../../../../shared/ui/Header';
 import { MainTitle } from '../../../../shared/ui/MainTitle';
 import type React from 'react';
-import { sendResetCode } from '@/app/api/api';
 import { useMutation } from '@tanstack/react-query';
+import { apiResetPassword } from '../../api/apiRecovery';
 
 interface EmailPageProps {
   setStep: (step: number) => void;
@@ -20,7 +20,7 @@ export const EmailPage: React.FC<EmailPageProps> = ({ setStep, email, setEmail }
     return emailRegex.test(email);
   };
   const sendPasswordMutation = useMutation({
-    mutationFn: ({ email }: { email: string }) => sendResetCode(email),
+    mutationFn: ({ email }: { email: string }) => apiResetPassword.send(email),
     onSuccess: () => {
       setStep(2);
     },
