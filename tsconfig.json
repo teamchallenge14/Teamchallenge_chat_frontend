@@ -12,7 +12,8 @@
       "@features/*": ["./src/features/*"], // features alias
       "@entities/*": ["./src/entities/*"], // entities alias
       "@shared/*": ["./src/shared/*"], // shared alias
-      "@processes/*": ["./src/processes/*"] // processes alias
+      "@processes/*": ["./src/processes/*"], // processes alias
+      "@public/*": ["./src/public/*"] // public alias
     }
   }
 }

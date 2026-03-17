@@ -4,7 +4,7 @@ import { Label } from '../../../../shared/ui/Label';
 import { Header } from '../../../../shared/ui/Header';
 import { MainTitle } from '../../../../shared/ui/MainTitle';
 import type React from 'react';
-import { InputPassword } from '../../../../shared/ui/InputPassword';
+import { InputPassword } from '@/shared/ui/InputPassword';
 
 interface PasswordProps {
   setStep: (step: number) => void;
