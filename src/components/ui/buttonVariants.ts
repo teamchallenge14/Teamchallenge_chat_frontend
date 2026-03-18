@@ -16,12 +16,14 @@ export const buttonVariants = cva(
         media: 'border border-[#E5E5E5] w-[110px]',
         upload:
           'bg-[#0A0A0A] text-white hover:bg-[#333333] rounded-full absolute -bottom-[1px] -right-[1px]  p-2',
+        tag: 'border-[0.5px] border-[#E5E5E5] bg-[#FFFFFF] text-[#000000] rounded-lg px-3 py-1 text-xs shadow-tag font-medium',
       },
       size: {
         default: 'h-10 px-4 py-2',
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
+        tag: 'h-auto px-2.5 py-0.5',
       },
     },
     defaultVariants: {

@@ -1,65 +1,24 @@
-import { NavLink } from 'react-router-dom';
+import { BottomNavItem } from './BottomNavItem';
 
 type BottomNavProps = {
-  // Keep variant for future styling differences, even if we use only "lobby" now.
   variant?: 'lobby';
 };
 
 export const BottomNav = ({ variant = 'lobby' }: BottomNavProps) => {
   return (
-    // Fixed overlay nav like in Figma.
     <nav
-      className="fixed bottom-4 left-4 right-4 z-50 h-[72px] rounded-[72px] border border-[#FAFAFA] bg-[#FAFAFAE5] shadow-lg backdrop-blur"
+      className="fixed bottom-[36px] left-4 right-4 z-50 h-[72px] rounded-[72px] border border-neutral-50 bg-[#FAFAFACC] shadow-[0px_4px_4px_rgba(0,0,0,0.08)]"
       aria-label="Bottom navigation"
       data-variant={variant}
     >
       <ul className="flex h-full items-center justify-around">
-        <li>
-          <NavLink
-            to="/home"
-            className={({ isActive }) =>
-              `text-sm font-medium ${isActive ? 'text-black' : 'text-neutral-500'}`
-            }
-          >
-            Home
-          </NavLink>
-        </li>
+        <BottomNavItem to="/home" label="Home" icon="/img/home.svg" />
 
-        <li className="relative">
-          <NavLink
-            to="/messages"
-            className={({ isActive }) =>
-              `text-sm font-medium ${isActive ? 'text-black' : 'text-neutral-500'}`
-            }
-          >
-            Messages
-          </NavLink>
+        <BottomNavItem to="/messages" label="Messages" icon="/img/messages.svg" showBadge />
 
-          {/* Small badge dot */}
-          <span className="absolute -right-3 top-0 h-2 w-2 rounded-full bg-red-600" />
-        </li>
+        <BottomNavItem to="/contacts" label="Contacts" icon="/img/contacts.svg" />
 
-        <li>
-          <NavLink
-            to="/contacts"
-            className={({ isActive }) =>
-              `text-sm font-medium ${isActive ? 'text-black' : 'text-neutral-500'}`
-            }
-          >
-            Contacts
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink
-            to="/settings"
-            className={({ isActive }) =>
-              `text-sm font-medium ${isActive ? 'text-black' : 'text-neutral-500'}`
-            }
-          >
-            Settings
-          </NavLink>
-        </li>
+        <BottomNavItem to="/settings" label="Settings" icon="/img/settings.svg" />
       </ul>
     </nav>
   );

@@ -1,16 +1,27 @@
-import { LobbyHeader } from './components/LobbyHeader';
+import { LobbyHeader, type User } from './components/LobbyHeader';
 import { RandomChatCard } from './components/RandomChatCard';
 import { RoomsList } from './components/RoomsList';
 import { BottomNav } from './components/BottomNav';
 
-export const Lobby = () => {
+const mockUsers: User[] = [
+  {
+    firstName: 'John',
+    surname: 'Doe',
+    avatarUrl: '/img/avatar.png',
+    initials: 'JD',
+  },
+];
+
+export const Lobby = ({ users }: { users?: User[] }) => {
+  const user = users?.[0] ?? mockUsers[0];
+
   return (
     // Use dynamic viewport height for better mobile behavior.
-    <div className="relative flex min-h-dvh w-full flex-col bg-[#FAFAFA]">
-      <LobbyHeader />
+    <div className="relative flex h-dvh w-full flex-col">
+      <LobbyHeader user={user} />
 
       {/* Scrollable content area */}
-      <div className="flex-1 overflow-y-auto px-4 pb-[88px]">
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-[88px]">
         <div className="mt-4">
           <RandomChatCard />
         </div>
