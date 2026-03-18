@@ -21,7 +21,11 @@ export const RoomPage: React.FC = () => {
           <SheetContent className="w-full bg-[#fafafa] p-0">
             <SheetHeader className="w-full bg-white py-3 pb-5">
               <SheetClose asChild>
-                <img src="/img/back.svg" className="absolute left-7 top-7" alt="Close" />
+                <img
+                  src="/img/back.svg"
+                  className="absolute left-7 top-7 cursor-pointer"
+                  alt="Close"
+                />
               </SheetClose>
               <SheetTitle className="text-lg">Create Room</SheetTitle>
             </SheetHeader>
