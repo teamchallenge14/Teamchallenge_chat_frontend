@@ -1,4 +1,4 @@
-import { Button } from '../../ui/button';
+import { Button } from '@shared/ui';
 
 export type Room = {
   image?: string;

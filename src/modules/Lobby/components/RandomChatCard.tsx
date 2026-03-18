@@ -1,4 +1,4 @@
-import { Button } from '../../ui/button';
+import { Button } from '@shared/ui';
 
 type RandomChatCardProps = {
   onFilter?: () => void;

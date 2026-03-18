@@ -1,7 +1,7 @@
-import { LobbyHeader, type User } from './components/LobbyHeader';
-import { RandomChatCard } from './components/RandomChatCard';
-import { RoomsList } from './components/RoomsList';
-import { BottomNav } from './components/BottomNav';
+import { LobbyHeader, type User } from '../components/LobbyHeader';
+import { RandomChatCard } from '../components/RandomChatCard';
+import { RoomsList } from '../components/RoomsList';
+import { BottomNav } from '../components/BottomNav';
 
 const mockUsers: User[] = [
   {
@@ -12,7 +12,7 @@ const mockUsers: User[] = [
   },
 ];
 
-export const Lobby = ({ users }: { users?: User[] }) => {
+export const LobbyPage = ({ users }: { users?: User[] }) => {
   const user = users?.[0] ?? mockUsers[0];
 
   return (

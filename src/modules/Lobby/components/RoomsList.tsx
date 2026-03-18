@@ -1,6 +1,6 @@
 import { RoomItem } from './RoomItem';
 import type { Room } from './RoomItem';
-import { Button } from '../../ui/button';
+import { Button } from '@shared/ui';
 
 export type { Room } from './RoomItem';
 
