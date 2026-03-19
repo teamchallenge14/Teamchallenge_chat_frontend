@@ -4,4 +4,5 @@ export enum AppRoutesEnum {
   REGISTER = 'signup',
   RESET_PASSWORD = 'reset-password',
   GUEST = 'guest',
+  LOBBY = '/lobby',
 }
