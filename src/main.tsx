@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@/app/index.css'; // global styles
-import { Root } from './Root';
+import './App.css'; // global styles
+import { AuthProvider, QueryProvider, RouterProvider } from './app/providers';
 
 const rootElement = document.getElementById('root');
 
@@ -11,6 +11,10 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <Root />
+    <QueryProvider>
+      <AuthProvider>
+        <RouterProvider />
+      </AuthProvider>
+    </QueryProvider>
   </StrictMode>,
 );

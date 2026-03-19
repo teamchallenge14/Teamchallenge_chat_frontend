@@ -1,0 +1,91 @@
+import { useMutation } from '@tanstack/react-query';
+import {
+  useSignUpCurrentStep,
+  useSignUpSetStep,
+  useAuthSetUserID,
+  useAuthUserID,
+} from '@/modules/auth/store/authStore';
+import { SignUpStepsEnum } from '../types/@auth.types';
+import type { RegisterValues } from '../schemas/registerSchema';
+import { confirmVerifyAsync, singUpAsync, verifyEmailAsync } from '../api/apiSingUp';
+import { apiUsers } from '@/modules/users/api/apiUsers';
+
+export const useAuthActions = () => {
+  const currentStep = useSignUpCurrentStep();
+  const setStep = useSignUpSetStep();
+  const userId = useAuthUserID();
+  const setUserID = useAuthSetUserID();
+
+  // Create user
+  const signUpMutation = useMutation({
+    mutationFn: singUpAsync,
+    onSuccess: (response) => {
+      setUserID(response.user.id);
+      console.log('Sign up success:', response);
+      setStep(SignUpStepsEnum.EMAIL_VERIFICATION);
+    },
+    onError: (error) => {
+      console.error('Sign up error:', error);
+    },
+  });
+
+  // Update user
+  const updateUserMutation = useMutation({
+    mutationFn: ({ userId, data }: { userId: string; data: Partial<RegisterValues> }) =>
+      apiUsers.update(userId, data),
+    onSuccess: (response) => {
+      console.log('Update success:', response);
+      setStep(SignUpStepsEnum.ENTER_INTERESTS);
+    },
+    onError: (error) => {
+      console.error('Update error:', error);
+    },
+  });
+
+  // Функція для обробки відправлення форми
+  const handleStepSubmit = (data: Partial<RegisterValues>) => {
+    console.log('Form submit in hook:', data);
+    if (currentStep === SignUpStepsEnum.ENTER_EMAIL) {
+      const { email, password, confirmPassword } = data;
+      // Відправляємо тільки необхідні поля для першого кроку
+      signUpMutation.mutate({
+        email,
+        password,
+        confirmPassword,
+      } as RegisterValues);
+      return;
+    }
+
+    if (!userId) {
+      console.warn('No userId found for update');
+      return;
+    }
+
+    // Для наступних кроків (username, personal info тощо)
+    updateUserMutation.mutate({ userId, data });
+  };
+
+  const verifyEmailMutation = useMutation({
+    mutationFn: (email: string) => verifyEmailAsync(email),
+  });
+
+  const confirmCodeMutation = useMutation({
+    mutationFn: ({ email, code }: { email: string; code: string }) =>
+      confirmVerifyAsync(email, code),
+    onSuccess: () => setStep(SignUpStepsEnum.ENTER_USERNAME), // Або ENTER_PERSONAL_INFO
+  });
+
+  return {
+    handleStepSubmit,
+    isLoading: signUpMutation.isPending || updateUserMutation.isPending,
+    error: signUpMutation.error || updateUserMutation.error,
+    currentStep,
+    userId,
+    sendVerification: verifyEmailMutation.mutate,
+    confirmCode: confirmCodeMutation.mutate,
+    isVerifying: confirmCodeMutation.isPending,
+    isSendingCode: verifyEmailMutation.isPending,
+    isSendSuccess: verifyEmailMutation.isSuccess,
+    confirmError: confirmCodeMutation.error,
+  };
+};
