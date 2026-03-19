@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Vite-5-646CFF?logo=vite" />
   <img src="https://img.shields.io/badge/TailwindCSS-3-38BDF8?logo=tailwindcss" />
   <img src="https://img.shields.io/badge/UI-Shadcn-black" />
-  <img src="https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel" />
+  <img src="https://img.shields.io/badge/Deploy-Render-black?logo=Render" />
 </p>
 
 **QTalk** (Quick Chat) is a modern messaging platform developed as part of the Team Challenge initiative.
