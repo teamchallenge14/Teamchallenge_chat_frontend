@@ -5,7 +5,7 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-[#000000] text-primary-foreground hover:bg-primary/90 w-full justify-center',
+        default: 'bg-[#000000] text-primary-foreground hover:bg-primary/90 justify-center',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 w-full',
         outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         active: 'bg-[#FB923C] text-primary-foreground hover:bg-primary/90 justify-center',
