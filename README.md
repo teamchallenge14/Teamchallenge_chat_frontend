@@ -100,6 +100,28 @@ src/
 
 - `@/shared`, `@/features`, `@/app` mapping to `src/*` folders.
 
+## UI Kit & Icons
+
+The project uses a custom, type-safe icon system. All icons are automatically discovered and available via the unified `<Icon />` component.
+
+**Key Features:**
+
+- **Type-safe:** Auto-generated names provide full TypeScript autocomplete.
+- **Accessible by default:** Automatically handles `aria-hidden` for decorative icons.
+- **Customizable:** Fully supports Tailwind classes for size and color.
+
+```tsx
+import { Icon } from '@/shared/ui/Icon';
+
+// Decorative icon (hidden from screen readers automatically)
+<Icon name="Lock" size="md" className="text-slate-500" />
+
+// Meaningful icon (read by screen readers)
+<Icon name="Close" aria-label="Close modal" />
+```
+
+[Go to CONTRIBUTING.md SVG Icon Registry](./CONTRIBUTING.md#svg-icon-registry)
+
 ## Architectural Decision Records (ADR)
 
 Architectural principles and key technical decisions are documented
