@@ -1,5 +1,5 @@
 import { Avatar } from '@radix-ui/react-avatar';
-import { CreateSheet } from '../components/CreateSheet';
+import { CreateSheet } from '../components/CreateRoomSheet';
 import { InputSearch } from '../components/InputSearch';
 import { AvatarImage } from '@/shared/ui/avatar';
 
