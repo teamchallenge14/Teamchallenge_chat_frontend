@@ -5,13 +5,12 @@
   <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript" />
   <img src="https://img.shields.io/badge/Vite-5-646CFF?logo=vite" />
   <img src="https://img.shields.io/badge/TailwindCSS-3-38BDF8?logo=tailwindcss" />
-  <img src="https://img.shields.io/badge/Architecture-FSD--inspired-green" />
   <img src="https://img.shields.io/badge/UI-Shadcn-black" />
-  <img src="https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel" />
+  <img src="https://img.shields.io/badge/Deploy-Render-black?logo=Render" />
 </p>
 
 **QTalk** (Quick Chat) is a modern messaging platform developed as part of the Team Challenge initiative.
-The goal is to provide a responsive, real-time messaging experience powered by a clean, scalable **FSD-inspired architecture**.
+The goal is to provide a responsive, real-time messaging experience powered by a clean, scalable architecture.
 
 ---
 
@@ -19,7 +18,6 @@ The goal is to provide a responsive, real-time messaging experience powered by a
 
 This project highlights skills that are directly applicable in modern frontend and full-stack roles:
 
-- **FSD-inspired Architecture:** Uses Feature-Sliced principles (`app`, `features`, `entities`) where applicable — demonstrating a scalable, domain-oriented approach to frontend architecture.
 - **Real-Time Functionality:** Demonstrates ability to design and implement WebSocket-based, event-driven UI updates.
 - **TypeScript-Driven:** Shows comfort with strict typing, interfaces, and safe API contracts.
 - **Modern UI/UX:** Implementation of **Shadcn/UI**, Tailwind CSS, and accessible design patterns.
@@ -51,7 +49,6 @@ This project highlights skills that are directly applicable in modern frontend a
 
 | Task                             | Status             |
 | :------------------------------- | :----------------- |
-| Project Init & FSD Structure     | 🟢 **Done**        |
 | UI Kit Setup (Shadcn + Tailwind) | 🟢 **Done**        |
 | WebSocket Connection             | 🟡 **In Progress** |
 | Auth / User Logic                | 🟡 **In Progress** |
@@ -61,44 +58,20 @@ This project highlights skills that are directly applicable in modern frontend a
 
 ## Technology Stack
 
-| Category         | Technology          | Purpose                                                             |
-| :--------------- | :------------------ | :------------------------------------------------------------------ |
-| **Framework**    | **React 18** + Vite | High-performance rendering & tooling.                               |
-| **Language**     | **TypeScript**      | Type safety & scalability.                                          |
-| **Architecture** | **FSD**             | Folder structure follows Feature-Sliced principles where applicable |
-| **Styling**      | **Tailwind CSS**    | Utility-first styling.                                              |
-| **Components**   | **Shadcn/UI**       | Accessible, re-usable component library.                            |
-| **State**        | **Zustand**         | (Planned) Lightweight global state management.                      |
-| **Validation**   | **Zod**             | Schema validation.                                                  |
+| Category       | Technology          | Purpose                                        |
+| :------------- | :------------------ | :--------------------------------------------- |
+| **Framework**  | **React 18** + Vite | High-performance rendering & tooling.          |
+| **Language**   | **TypeScript**      | Type safety & scalability.                     |
+| **Styling**    | **Tailwind CSS**    | Utility-first styling.                         |
+| **Components** | **Shadcn/UI**       | Accessible, re-usable component library.       |
+| **State**      | **Zustand**         | (Planned) Lightweight global state management. |
+| **Validation** | **Zod**             | Schema validation.                             |
 
 ---
 
-## Architecture Overview (FSD)
-
-The project follows a **Feature-Sliced Design (FSD)–inspired architecture**.
-
-This approach helps organize the codebase by business responsibility
-rather than technical concerns, improving scalability and maintainability
-as the application grows.
-
-```
-src/
-├── app/        # Application entry point (global styles, providers)
-├── pages/      # Route-level components (page composition)
-├── widgets/    # Large UI blocks (e.g. ChatWindow, Sidebar)
-├── features/   # User interactions (SendMessage, Auth)
-├── entities/   # Core business entities (User, Message, Room)
-├── shared/     # Reusable primitives (UI, API, utilities)
-└── components/ # Temporary UI components (shadcn/ui integration)
-
-```
-
-> Note: The `components/` directory is temporary and will be gradually
-> merged into the appropriate FSD layers as the project evolves.
-
 **Key aliases:**
 
-- `@/shared`, `@/features`, `@/app` mapping to `src/*` folders.
+- `@/shared`, `@/app` mapping to `src/*` folders.
 
 ## Architectural Decision Records (ADR)
 

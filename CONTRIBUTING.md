@@ -7,7 +7,6 @@ Welcome to the team! Here are the guidelines to help you get started and ensure 
 - **Package manager:** Use `pnpm` only (no npm / yarn).
 - **Language:** English only (code, comments, commits, docs).
 - **Imports:** Use absolute imports via `@/` (avoid deep relative paths).
-- **Architecture:** Follow the FSD-inspired folder structure and boundaries.
 - **Commit conventions:** Follow Conventional Commits and add `QTAL-XXX` when applicable.
 - **Safety:** Do not use non-null assertions (`!`).
 - **UI components:** Add shadcn/ui components via `pnpm dlx shadcn@latest add ...`.

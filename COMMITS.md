@@ -58,7 +58,7 @@ Recommended scopes for this project:
 
 Architecture layers:
 
-- `app`, `pages`, `widgets`, `features`, `entities`, `shared`
+- `app`, `pages`, `modules`, `shared`
 
 Domain areas:
 
