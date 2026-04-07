@@ -6,7 +6,7 @@ import { AppRoutesEnum } from '@/shared/constants';
 export const HomePage: React.FC = () => {
   return (
     <section className="item-center flex h-screen flex-col justify-center">
-      <div className="flex flex-1 flex-col items-center justify-center">
+      <div className="mx-auto flex max-w-md flex-1 flex-col items-center justify-center">
         <img src="img/icon.svg" alt="icon" className="icon" />
 
         <div>
@@ -19,14 +19,20 @@ export const HomePage: React.FC = () => {
         </div>
         <div className="mt-[8px] flex w-full flex-col gap-3 gap-[8px]">
           <NavLink to={`/${AppRoutesEnum.REGISTER}`} className="flex w-full">
-            <Button variant="default">Sign Up</Button>
+            <Button variant="default" title="Sigh Up">
+              Sign Up
+            </Button>
           </NavLink>
 
           <NavLink to={`/${AppRoutesEnum.LOGIN}`} className="flex w-full">
-            <Button variant="secondary">Log In</Button>
+            <Button variant="ghost" title="Log In">
+              Log In
+            </Button>
           </NavLink>
           <NavLink to={`/${AppRoutesEnum.GUEST}`} className="flex w-full">
-            <Button variant="ghost">Guest Entry</Button>
+            <Button variant="ghost" title="Guest Entry">
+              Guest Entry
+            </Button>
           </NavLink>
         </div>
         <p className="mt-[14px] text-center text-[12px] font-medium leading-[100%] text-[#A3A3A3]">
