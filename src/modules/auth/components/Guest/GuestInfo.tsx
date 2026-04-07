@@ -5,13 +5,16 @@ import { AuthLayout } from '../../layouts';
 import { GuestStepsEnum } from '../../types/@auth.types';
 import { DatePickerField, SelectButtonsField, UploadAvatar, Button, FormInput } from '@/shared/ui';
 import type { GuestSchemaValues } from '../../schemas';
+import { useGuestSetStep } from '../../store/authStore';
 
 export const GuestInfo: React.FC = () => {
   const { watch } = useFormContext<GuestSchemaValues>();
   const currentBio = watch('description');
 
+  const setStep = useGuestSetStep();
+
   const handleNext = () => {
-    // setStep(3);
+    setStep(GuestStepsEnum.GUEST_INTERESTS);
   };
 
   return (
