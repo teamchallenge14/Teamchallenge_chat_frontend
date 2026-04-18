@@ -1,96 +1,29 @@
 import * as Progress from '@radix-ui/react-progress';
 import { Button } from '../../../../shared/ui/Button/button';
 import { Header } from '../../../../shared/ui/Header';
-import React, { useEffect, useState } from 'react';
-import type { Interest } from '@/types/Interest';
-import { useNavigate } from 'react-router-dom';
-import { useAuthUserID } from '../../store/authStore';
-import { apiUsers } from '@/modules/users/api/apiUsers';
-import { getInterestAsync } from '@/modules/interests/api/apiInterests';
+import React from 'react';
+import { useInterests } from '../../hooks/useInterest';
 
 export const GuestInterests: React.FC = () => {
-  const [interest, setInterest] = useState<Interest[]>([]);
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const {
+    isLoading,
+    isError,
+    selectedInterests,
+    toggleInterest,
+    grouperInterestByCategory,
+    formatCategory,
+    handleSubmit,
+    // isPending,
+    submitInterestsMutation,
+  } = useInterests();
 
-  const navigate = useNavigate();
+  if (isLoading) {
+    return <div>Loading interests...</div>;
+  }
 
-  const userId = useAuthUserID();
-
-  const grouperInterestByCategiry = interest.reduce<Record<string, Interest[]>>((acc, item) => {
-    if (!acc[item.category]) {
-      acc[item.category] = [];
-    }
-    acc[item.category].push(item);
-    return acc;
-  }, {});
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (!userId) {
-        console.error('User ID is missing in URL params');
-        return;
-      }
-
-      try {
-        const data = await apiUsers.getUserById(userId);
-        console.log('Fetched user:', data);
-        // якщо у користувача вже є інтереси встановлюю їх як вибрані
-        // if (data.interests && data.interests.length > 0) {
-        //   setSelectedInterests(data.interests.map((int: Interest) => int.id));
-        // }
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      }
-    };
-    fetchUser();
-  }, [userId]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getInterestAsync();
-        setInterest(data);
-        console.log('Fetched data:', data);
-      } catch (error) {
-        console.log('Error:', error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const toggleInterest = (interestId: string) => {
-    setSelectedInterests((prev) => {
-      if (prev.includes(interestId)) {
-        return prev.filter((id) => id !== interestId);
-      } else {
-        return [...prev, interestId];
-      }
-    });
-  };
-
-  const handleSubmit = async () => {
-    if (!userId) {
-      console.error('User ID is missing');
-      alert('User ID is missing. Please login again.');
-      return;
-    }
-
-    console.log('Selected interests:', selectedInterests);
-
-    if (selectedInterests.length === 0) {
-      alert('Please select at least one interest');
-      return;
-    }
-
-    try {
-      const result = await apiUsers.userInterests(userId, { add: selectedInterests });
-      console.log('Interests saved successfully:', result);
-      // dashboard або іншу сторінку !!!!!
-      navigate('/successResiter');
-    } catch (error) {
-      console.error('Error saving interests:', error);
-    }
-  };
+  if (isError) {
+    return <div>Error loading interests. Please try again later.</div>;
+  }
   return (
     <div className="flex flex-col">
       <Header title="Complete Profile" />
@@ -116,10 +49,10 @@ export const GuestInterests: React.FC = () => {
           </div>
 
           <div className="flex flex-col gap-[16px]">
-            {Object.entries(grouperInterestByCategiry).map(([categoty, items]) => (
+            {Object.entries(grouperInterestByCategory).map(([categoty, items]) => (
               <div key={categoty}>
                 <h3 className="text-left text-[14px] font-bold leading-[20px] text-[#000000]">
-                  {categoty}
+                  {formatCategory(categoty)}
                 </h3>
 
                 <div className="mt-[12px] flex w-full flex-wrap gap-[6px]">
@@ -143,8 +76,9 @@ export const GuestInterests: React.FC = () => {
             variant="default"
             className="mt-[16px] w-full"
             onClick={handleSubmit}
+            disabled={submitInterestsMutation.isPending}
           >
-            Continue
+            {submitInterestsMutation.isPending ? 'Saving...' : 'Continue'}
           </Button>
         </div>
       </div>

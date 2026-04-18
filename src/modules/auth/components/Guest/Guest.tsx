@@ -1,35 +1,77 @@
-// import { useState } from 'react';
-// import { GuestUserName } from './GuestUserName';
 // import { GuestInfo } from './GuestInfo';
-// import { useRegisterForm } from '@/features/auth';
 // import { FormProvider } from 'react-hook-form';
-// import { GuestInteres } from './GuestInterest';
+// import { useMutation } from '@tanstack/react-query';
+// import { useEffect } from 'react';
+// import {
+//   useAuthResetUserID,
+//   useAuthSetUserID,
+//   useAuthUserID,
+//   useGuestCurrentStep,
+//   useGuestSetStep,
+// } from '../../store/authStore';
+// import { GuestStepsEnum } from '../../types/@auth.types';
+// import { guestAuth, updateQuest } from '../../api/apiGuest';
+// import type { GuestSchemaValues } from '../../schemas';
+// import { GuestInterests } from './GuestInterests';
+// import { useGuestForm } from '../../hooks';
+// import { GuestUserName } from './GuestUserName';
 
 // export const Guest = () => {
-//   const [step, setStep] = useState(1);
-//   const [userId, setUserId] = useState<string | null>(null);
-//   console.log(setUserId);
-//   const profileMethods = useRegisterForm();
+//   const setStep = useGuestSetStep();
+//   const currentStep = useGuestCurrentStep();
+//   const userId = useAuthUserID();
+//   const setUserId = useAuthSetUserID();
+//   const resetUserID = useAuthResetUserID();
+//   const profileMethods = useGuestForm();
 
-//   const hondleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
+//   useEffect(() => {
+//     setStep(GuestStepsEnum.GUEST_USERNAME);
+//     resetUserID();
+//   }, []);
+
+//   const guestMutation = useMutation({
+//     mutationFn: guestAuth,
+//     onSuccess: (responce) => {
+//       setUserId(responce.user.id);
+//       setStep(GuestStepsEnum.GUEST_INFO);
+//     },
+//   });
+
+//   const updateUserMutation = useMutation({
+//     mutationFn: ({ userId, data }: { userId: string; data: GuestSchemaValues }) =>
+//       updateQuest(userId, data),
+//     onSuccess: (response) => {
+//       console.log('update success:', response);
+//       setStep(GuestStepsEnum.GUEST_INTERESTS);
+//     },
+//     onError: (error) => {
+//       console.error('update error:', error);
+//     },
+//   });
+
+//   const handleUsernameSubmit = () => {
+//     const login = profileMethods.getValues('login');
+//     guestMutation.mutate(login);
 //   };
 
-//   const handleUpdateAcount = async () => {
-//     setStep(3);
+//   const handleUpdateAccount = async (data: GuestSchemaValues) => {
+//     if (!userId) {
+//       console.error('User ID is missing');
+//       return;
+//     }
+
+//     updateUserMutation.mutate({ userId, data });
 //   };
+
 //   return (
-//     <>
-//       <form onSubmit={hondleSubmit}>{step === 1 && <GuestUserName setStep={setStep} />}</form>
-
-//       {step >= 2 && (
-//         <FormProvider {...profileMethods}>
-//           <form onSubmit={profileMethods.handleSubmit(handleUpdateAcount)}>
-//             {step === 2 && <GuestInfo setStep={setStep} />}
-//             {step === 3 && <GuestInteres userId={userId} />}
-//           </form>
-//         </FormProvider>
-//       )}
-//     </>
+//     <FormProvider {...profileMethods}>
+//       <form onSubmit={profileMethods.handleSubmit(handleUpdateAccount)}>
+//         {currentStep === GuestStepsEnum.GUEST_USERNAME && (
+//           <GuestUserName onContinue={handleUsernameSubmit} />
+//         )}
+//         {currentStep === GuestStepsEnum.GUEST_INFO && <GuestInfo />}
+//         {currentStep === GuestStepsEnum.GUEST_INTERESTS && <GuestInterests />}
+//       </form>
+//     </FormProvider>
 //   );
 // };

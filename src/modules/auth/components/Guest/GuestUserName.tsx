@@ -7,20 +7,24 @@ import { GuestStepsEnum } from '../../types/@auth.types';
 import { useFormContext } from 'react-hook-form';
 import type { GuestSchemaValues } from '../../schemas';
 import { Button, FormInput } from '@/shared/ui';
-import { useGuestSetStep } from '../../store/authStore';
 
-export const GuestUserName: React.FC = () => {
-  const { trigger, getValues } = useFormContext<GuestSchemaValues>();
+interface GuestUserNameProps {
+  onContinue: () => void;
+}
 
-  const setStep = useGuestSetStep();
+export const GuestUserName: React.FC<GuestUserNameProps> = ({ onContinue }) => {
+  const { trigger } = useFormContext<GuestSchemaValues>();
+  console.log('onContinue:', onContinue);
+  // const setStep = useGuestSetStep();
 
   const handleNext = async () => {
     const isValid = await trigger('login', { shouldFocus: true });
 
     if (isValid) {
-      const values = getValues();
-      console.log('Success:', values);
-      setStep(GuestStepsEnum.GUEST_INFO);
+      // const values = getValues();
+      // console.log('Success:', values);
+      // setStep(GuestStepsEnum.GUEST_INFO);
+      onContinue();
     } else {
       console.log('Field login is invalid');
     }
